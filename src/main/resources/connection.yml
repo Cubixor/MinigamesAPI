@@ -1,0 +1,10 @@
+bungee-socket:
+  server-name: "srv1"
+  host: "localhost"
+  port: 3006
+
+database:
+  address: "jdbc:mysql://localhost:3306/minigame?useSSL=false&autoReConnect=true"
+  username: "root"
+  password: ""
+  table: "stats"

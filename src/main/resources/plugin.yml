@@ -1,0 +1,5 @@
+name: MinigamesAPI
+version: '${project.version}'
+main: me.cubixor.minigamesapi.MinigamesAPI
+api-version: "1.13"
+authors: [Cubixor]

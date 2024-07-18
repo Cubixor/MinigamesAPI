@@ -1,0 +1,4 @@
+name: ${project.name}
+main: me.cubixor.minigamesapi.bungee.MinigamesAPIBungee
+version: ${project.version}
+author: Cubixor

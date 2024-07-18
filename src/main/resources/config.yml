@@ -1,0 +1,281 @@
+database:
+  enabled-stats: false
+  enabled-arenas: false
+  host: "localhost"
+  port: "3306"
+  username: "user"
+  password: "12345"
+  database: "kalambury"
+  table-stats: "stats"
+  table-arenas: "arenas"
+  ping-period: 180
+
+bungee:
+  bungee-mode: false
+  on-leave: JOIN_SERVER
+  lobby-server: hub
+  leave-commands:
+    - "custom command %player%"
+    - "custom command2"
+
+cooldown: 1
+waiting-time: 40
+full-waiting-time: 10
+ending-time: 10
+use-main-lobby: true
+auto-join-on-end: true
+date-format: "yyyy-MM-dd"
+time-format: "mm:ss"
+rounds-per-player: 2
+round-time: 60
+time-between-rounds: 5
+hint-word-percentage: 0.5
+clean-canvas-block: white_wool
+
+words:
+  - diament
+  - portal
+  - ghast
+  - miecz
+  - kilof
+  - herobrine
+  - wither
+
+items-blacklist:
+  - tnt
+  - lava
+  - flint_and_steel
+  - ender_pearl
+  - eye_of_ender
+  - experience_bottle
+  - potion
+  - splash_potion
+  - lingering_potion
+  - fire_charge
+
+default-color: BLACK_WOOL
+
+colors:
+  red_wool: 0
+  orange_wool: 1
+  yellow_wool: 2
+  lime_wool: 3
+  green_wool: 4
+  cyan_wool: 5
+  light_blue_wool: 6
+  blue_wool: 7
+  purple_wool: 8
+  red_terracotta: 9
+  orange_terracotta: 10
+  yellow_terracotta: 11
+  lime_terracotta: 12
+  green_terracotta: 13
+  cyan_terracotta: 14
+  light_blue_terracotta: 15
+  blue_terracotta: 16
+  purple_terracotta: 17
+  red_concrete: 18
+  orange_concrete: 19
+  yellow_concrete: 20
+  lime_concrete: 21
+  green_concrete: 22
+  cyan_concrete: 23
+  light_blue_concrete: 24
+  blue_concrete: 25
+  purple_concrete: 26
+  magenta_wool: 27
+  pink_wool: 28
+  white_wool: 31
+  light_gray_wool: 32
+  gray_wool: 33
+  black_wool: 34
+  brown_wool: 35
+  magenta_terracotta: 36
+  pink_terracotta: 37
+  white_terracotta: 40
+  light_gray_terracotta: 41
+  gray_terracotta: 42
+  black_terracotta: 43
+  brown_terracotta: 44
+  magenta_concrete: 45
+  pink_concrete: 46
+  white_concrete: 49
+  light_gray_concrete: 50
+  gray_concrete: 51
+  black_concrete: 52
+  brown_concrete: 53
+
+build-particles:
+  explosion_large:
+    name: "&7&lEksplozja"
+    item: tnt
+  note:
+    name: "&7&lMuzyka"
+    item: note_block
+  flame:
+    name: "&7&lPłomień"
+    item: blaze_powder
+  cloud:
+    name: "&7&lChmura"
+    item: white_wool
+  heart:
+    name: "&7&lSerca"
+    item: poppy
+  damage_indicator:
+    name: "&7&lObrażenia"
+    item: ink_sac
+  villager_angry:
+    name: "&7&lZłość"
+    item: gunpowder
+  villager_happy:
+    name: "&7&lSzczęście"
+    item: emerald
+  enchantment_table:
+    name: "&7&lZaklęcie"
+    item: enchanting_table
+
+items:
+  vote-item:
+    type: END_CRYSTAL
+    slot: 0
+  draw-item:
+    type: PAINTING
+  build-item:
+    type: BRICKS
+  leave-item:
+    type: CLOCK
+    slot: 8
+  thin-brush-item:
+    type: WOODEN_SWORD
+    slot: 0
+  thick-brush-item:
+    type: DIAMOND_SWORD
+    slot: 1
+  spray-can-item:
+    type: SHEARS
+    slot: 2
+  fill-can-item:
+    type: BUCKET
+    slot: 4
+  background-picker-item:
+    type: BOOK
+    slot: 6
+  background-item:
+    type: BOOK
+  burn-canvas-item:
+    type: BLAZE_POWDER
+    slot: 8
+  build-menu-item:
+    type: BOOK
+    slot: 8
+  change-weather-item:
+    type: ender_eye
+    slot: 10
+  change-time-item:
+    type: clock
+    slot: 12
+  particles-item:
+    type: blaze_powder
+    slot: 14
+  change-floor-item:
+    type: stone
+    slot: 16
+  remove-particle-item:
+    type: barrier
+
+sounds:
+  join:
+    enabled: true
+    sound: ENTITY_ENDERMAN_TELEPORT
+    volume: 1
+    pitch: 1
+  leave:
+    enabled: true
+    sound: ENTITY_ENDERMAN_TELEPORT
+    volume: 1
+    pitch: 1
+  click:
+    enabled: true
+    sound: UI_BUTTON_CLICK
+    volume: 1
+    pitch: 1
+  countdown:
+    enabled: true
+    sound: BLOCK_NOTE_BLOCK_PLING
+    volume: 100
+  start:
+    enabled: true
+    sound: ENTITY_ENDER_DRAGON_GROWL
+    volume: 100
+    pitch: 1
+  win:
+    enabled: true
+    sound: ENTITY_ENDER_DRAGON_DEATH
+    volume: 100
+    pitch: 1
+  defeat:
+    enabled: true
+    sound: ENTITY_WITHER_SPAWN
+    volume: 100
+    pitch: 1
+  round-start:
+    enabled: true
+    sound: ENTITY_WITHER_AMBIENT
+    volume: 100
+    pitch: 1
+  round-end:
+    enabled: true
+    sound: ENTITY_ELDER_GUARDIAN_CURSE
+    volume: 100
+    pitch: 1
+  guess:
+    enabled: true
+    sound: BLOCK_ANVIL_LAND
+    volume: 100
+    pitch: 1
+
+
+particles:
+  join:
+    enabled: true
+    particle: CLOUD
+    count: 50
+    offset: 1
+    speed: 0.1
+  leave:
+    enabled: true
+    particle: CLOUD
+    count: 50
+    offset: 1
+    speed: 0.1
+  win:
+    enabled: true
+    particle: HEART
+    count: 30
+    offset: 0.5
+    speed: 0.1
+
+color-signs: true
+sign-colors:
+  offline: LIGHT_GRAY_STAINED_GLASS
+  inactive: BLACK_STAINED_GLASS
+  waiting: LIME_STAINED_GLASS
+  starting: CYAN_STAINED_GLASS
+  ingame: RED_STAINED_GLASS
+  ending: PURPLE_STAINED_GLASS
+
+command-blocker: BLACKLIST
+command-blocker-list:
+  - me
+  - spawn
+guess-rewards-enabled: true
+guess-rewards:
+  - say %player% guessed
+win-rewards-enabled: true
+win-rewards:
+  1:
+    - eco give %player% 100
+  2:
+    - eco give %player% 50
+  3:
+    - eco give %player% 25

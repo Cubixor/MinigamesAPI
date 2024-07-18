@@ -1,0 +1,85 @@
+package me.cubixor.minigamesapi.spigot.commands;
+
+import me.cubixor.minigamesapi.spigot.arena.ArenasManager;
+import me.cubixor.minigamesapi.spigot.commands.arguments.CommandArgument;
+import me.cubixor.minigamesapi.spigot.commands.arguments.impl.*;
+import me.cubixor.minigamesapi.spigot.config.arenas.ArenaSetupChecker;
+import me.cubixor.minigamesapi.spigot.config.stats.StatsManager;
+import me.cubixor.minigamesapi.spigot.utils.Messages;
+import me.cubixor.minigamesapi.spigot.utils.Permissions;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+public class MainCommand implements CommandExecutor {
+
+    private final Map<String, CommandArgument> arguments;
+    private final CooldownManager cooldownManager;
+
+    public MainCommand(List<CommandArgument> arguments) {
+        this.arguments = arguments.stream()
+                .collect(Collectors.toMap(CommandArgument::getName, arg -> arg));
+        cooldownManager = new CooldownManager();
+    }
+
+    public static List<CommandArgument> getCommonArguments(ArenasManager arenasManager, ArenaSetupChecker arenaSetupChecker, StatsManager statsManager) {
+        //TODO Implement reload and help
+        return Arrays.asList(
+                new ArgCreate(arenasManager),
+                new ArgDelete(arenasManager),
+                new ArgCheck(arenasManager, arenaSetupChecker),
+                new ArgSetActive(arenasManager, arenaSetupChecker),
+                new ArgSetVip(arenasManager),
+                new ArgSetMainLobby(arenasManager),
+                new ArgSetWaitingLobby(arenasManager),
+                new ArgSetMinPlayers(arenasManager),
+                new ArgSetMaxPlayers(arenasManager),
+                new ArgForceStart(arenasManager),
+                new ArgForceStop(arenasManager),
+                new ArgKick(arenasManager),
+                new ArgJoin(arenasManager),
+                new ArgLeave(arenasManager),
+                new ArgQuickJoin(arenasManager),
+                new ArgList(arenasManager),
+                new ArgStats(statsManager)
+        );
+    }
+
+    @Override
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if (!(sender instanceof Player)) {
+            Messages.send(sender, "general.must-be-player");
+            return true;
+        }
+        Player player = (Player) sender;
+
+        if (cooldownManager.check(player)) {
+            return true;
+        }
+        cooldownManager.add(player);
+
+        if (args.length == 0 || args[0].equalsIgnoreCase("help")) {
+            help(player, "play.help", "help.general-help");
+            return true;
+        }
+
+        arguments.get(args[0]).validateAndHandle(player, args);
+
+        return true;
+    }
+
+    public void help(Player player, String permission, String messagesPath) {
+        if (!Permissions.has(player, permission)) {
+            Messages.send(player, "general.no-permission");
+            return;
+        }
+
+        Messages.sendList(player, messagesPath);
+    }
+}
