@@ -8,13 +8,12 @@ public class Arena implements Serializable {
 
     private final String name;
     private final String server;
+    private final List<String> playersLeft = new ArrayList<>();
     private boolean vip;
     private int minPlayers;
     private int maxPlayers;
-
     private GameState state;
     private List<String> players = new ArrayList<>();
-    private final List<String> playersLeft = new ArrayList<>();
 
 
     public Arena(String name, String server, boolean active, boolean vip, int minPlayers, int maxPlayers) {

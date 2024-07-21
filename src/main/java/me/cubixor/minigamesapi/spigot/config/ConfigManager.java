@@ -6,7 +6,6 @@ import me.cubixor.minigamesapi.spigot.config.stats.DBStatsManager;
 import me.cubixor.minigamesapi.spigot.config.stats.FileStatsManager;
 import me.cubixor.minigamesapi.spigot.config.stats.StatsField;
 import me.cubixor.minigamesapi.spigot.config.stats.StatsManager;
-import me.cubixor.socketsmc.spigot.SocketClient;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 

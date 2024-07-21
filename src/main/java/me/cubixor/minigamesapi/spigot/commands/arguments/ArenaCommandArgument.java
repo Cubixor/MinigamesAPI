@@ -1,25 +1,25 @@
 package me.cubixor.minigamesapi.spigot.commands.arguments;
 
-import me.cubixor.minigamesapi.spigot.arena.objects.Arena;
 import me.cubixor.minigamesapi.spigot.arena.ArenasManager;
 import me.cubixor.minigamesapi.spigot.arena.ArenasRegistry;
+import me.cubixor.minigamesapi.spigot.arena.objects.Arena;
 import me.cubixor.minigamesapi.spigot.utils.Messages;
 import org.bukkit.entity.Player;
 
 public abstract class ArenaCommandArgument extends CommandArgument {
 
-    private final boolean requireInServer;
-    private final Boolean shouldBeActive;
     protected final ArenasManager arenasManager;
     protected final ArenasRegistry arenasRegistry;
+    private final boolean requireInServer;
+    private final Boolean shouldBeActive;
 
     protected ArenaCommandArgument(ArenasManager arenasManager,
-                                String name,
-                                String permission,
-                                int argLength,
-                                String messagesPath,
-                                boolean requireInServer,
-                                Boolean shouldBeActive) {
+                                   String name,
+                                   String permission,
+                                   int argLength,
+                                   String messagesPath,
+                                   boolean requireInServer,
+                                   Boolean shouldBeActive) {
         super(name, permission, argLength, messagesPath);
         this.arenasManager = arenasManager;
         this.arenasRegistry = arenasManager.getRegistry();

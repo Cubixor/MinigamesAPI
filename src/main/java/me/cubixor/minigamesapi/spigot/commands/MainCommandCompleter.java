@@ -1,6 +1,5 @@
 package me.cubixor.minigamesapi.spigot.commands;
 
-import me.cubixor.minigamesapi.spigot.arena.ArenasManager;
 import me.cubixor.minigamesapi.spigot.arena.ArenasRegistry;
 import me.cubixor.minigamesapi.spigot.commands.arguments.CommandArgument;
 import me.cubixor.minigamesapi.spigot.utils.Permissions;

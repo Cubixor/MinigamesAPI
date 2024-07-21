@@ -33,7 +33,7 @@ public class ArenasManager {
         arenaPlayersManager = new ArenaPlayersManager(this);
 
         loadArenas();
-        bungee =MinigamesAPI.getPlugin().getConfig().getBoolean("bungee.bungee-mode");
+        bungee = MinigamesAPI.getPlugin().getConfig().getBoolean("bungee.bungee-mode");
     }
 
     private void loadArenas() {
@@ -168,6 +168,7 @@ public class ArenasManager {
     public ArenasConfigManager getConfigManager() {
         return configManager;
     }
+
     public PacketSenderSpigot getPacketSender() {
         return packetSender;
     }
