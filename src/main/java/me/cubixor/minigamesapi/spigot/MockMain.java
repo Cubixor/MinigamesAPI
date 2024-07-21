@@ -1,7 +1,9 @@
 package me.cubixor.minigamesapi.spigot;
 
 import me.cubixor.minigamesapi.spigot.arena.ArenasManager;
+import me.cubixor.minigamesapi.spigot.arena.ArenasRegistry;
 import me.cubixor.minigamesapi.spigot.arena.ChatBlocker;
+import me.cubixor.minigamesapi.spigot.arena.SignManager;
 import me.cubixor.minigamesapi.spigot.commands.MainCommand;
 import me.cubixor.minigamesapi.spigot.commands.MainCommandCompleter;
 import me.cubixor.minigamesapi.spigot.commands.arguments.CommandArgument;
@@ -30,23 +32,25 @@ public class MockMain extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        load();
+        //load();
     }
 
     private void load() {
         MinigamesAPI.INIT(this);
         ConfigManager configManager = new ConfigManager(Arrays.asList(BasicStatsField.values()));
 
+        ArenasRegistry arenasRegistry = new ArenasRegistry();
         PacketSenderSpigot packetSender = new PacketSenderSpigot(configManager.getConnectionConfig());
-        ArenasManager arenasManager = new ArenasManager(configManager.getArenasConfigManager(), packetSender);
+        SignManager signManager = new SignManager(configManager.getArenasConfigManager(), arenasRegistry);
+        ArenasManager arenasManager = new ArenasManager(arenasRegistry, configManager.getArenasConfigManager(), signManager, packetSender);
         PacketManagerSpigot packetManager = new PacketManagerSpigot(arenasManager, packetSender);
 
-        ChatBlocker chatBlocker = new ChatBlocker(arenasManager);
+        ChatBlocker chatBlocker = new ChatBlocker(arenasRegistry);
         ArenaSetupChecker arenaSetupChecker = new ArenaSetupChecker(configManager.getArenasConfigManager());
 
         List<CommandArgument> args = MainCommand.getCommonArguments(arenasManager, arenaSetupChecker, configManager.getStatsManager());
         MainCommand mainCommand = new MainCommand(args);
-        MainCommandCompleter mainCommandCompleter = new MainCommandCompleter(args, arenasManager);
+        MainCommandCompleter mainCommandCompleter = new MainCommandCompleter(args, arenasRegistry);
 
         getServer().getPluginCommand(getName()).setExecutor(mainCommand);
         getServer().getPluginCommand(getName()).setTabCompleter(mainCommandCompleter);

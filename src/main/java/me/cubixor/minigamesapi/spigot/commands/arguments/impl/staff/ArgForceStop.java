@@ -16,7 +16,7 @@ public class ArgForceStop extends ArenaCommandArgument {
     @Override
     public void handle(Player player, String[] args) {
         String arenaName = args[1];
-        Arena arena = arenasManager.getArena(arenaName);
+        Arena arena = arenasRegistry.getArena(arenaName);
 
         if (arena.getState().isWaitingStarting()) {
             Messages.send(player, "arena-moderate.force-stop-not-started", "%arena%", arenaName);

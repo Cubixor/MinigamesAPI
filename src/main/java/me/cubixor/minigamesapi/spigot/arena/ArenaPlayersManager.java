@@ -18,13 +18,15 @@ import java.util.Set;
 public class ArenaPlayersManager {
 
     private final ArenasManager arenasManager;
+    private final ArenasRegistry arenasRegistry;
 
     public ArenaPlayersManager(ArenasManager arenasManager) {
         this.arenasManager = arenasManager;
+        this.arenasRegistry = arenasManager.getRegistry();
     }
 
     public boolean joinArena(Player player, String arenaString) {
-        Arena arena = arenasManager.getArena(arenaString);
+        Arena arena = arenasRegistry.getArena(arenaString);
         if (!checkArenaJoin(player, arena)) {
             return false;
         }
@@ -37,7 +39,7 @@ public class ArenaPlayersManager {
     private boolean checkArenaJoin(Player player, Arena arena) {
         String arenaString = arena.getName();
 
-        if (arenasManager.isInArena(player)) {
+        if (arenasRegistry.isInArena(player)) {
             Messages.send(player, "game.arena-join-already-in-game");
             return false;
         }
@@ -71,7 +73,7 @@ public class ArenaPlayersManager {
     }
 
     public void joinRandomArena(Player player) {
-        if (arenasManager.isInArena(player)) {
+        if (arenasRegistry.isInArena(player)) {
             Messages.send(player, "game.arena-join-already-in-game");
             return;
         }
@@ -90,11 +92,11 @@ public class ArenaPlayersManager {
     }
 
     private LinkedHashMap<Arena, Integer> getAvailableArenas(Player player) {
-        Set<String> arenas = arenasManager.getAllArenaNames();
+        Set<String> arenas = arenasRegistry.getAllArenaNames();
         LinkedHashMap<Arena, Integer> playersCount = new LinkedHashMap<>();
 
         for (String arenaString : arenas) {
-            Arena arena = arenasManager.getArena(arenaString);
+            Arena arena = arenasRegistry.getArena(arenaString);
 
             if (arena.getState().isWaitingStarting()
                     && !arena.isFull()

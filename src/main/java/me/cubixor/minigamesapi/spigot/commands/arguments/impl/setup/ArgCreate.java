@@ -18,7 +18,7 @@ public class ArgCreate extends CommandArgument {
     public void handle(Player player, String[] args) {
         String arena = args[1];
 
-        if (arenasManager.isValidArena(arena)) {
+        if (arenasManager.getRegistry().isValidArena(arena)) {
             Messages.send(player, "arena-setup.create-already-exists", "%arena%", arena);
             return;
         }

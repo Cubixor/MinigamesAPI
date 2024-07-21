@@ -21,7 +21,7 @@ public abstract class LocationArgument extends ArenaCommandArgument {
     @Override
     protected void handle(Player player, String[] args) {
         String arena = args[1];
-        arenasManager.getConfigManager().updateField(arena, configField, player.getLocation());
+        arenasManager.updateArenaField(arena, configField, player.getLocation());
         Messages.send(player, messagesPath + "-success", "%arena%", arena);
     }
 }

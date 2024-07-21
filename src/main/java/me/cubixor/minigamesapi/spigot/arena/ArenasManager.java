@@ -3,33 +3,31 @@ package me.cubixor.minigamesapi.spigot.arena;
 import me.cubixor.minigamesapi.spigot.MinigamesAPI;
 import me.cubixor.minigamesapi.spigot.config.arenas.ArenasConfigManager;
 import me.cubixor.minigamesapi.spigot.config.arenas.BasicConfigField;
+import me.cubixor.minigamesapi.spigot.config.arenas.ConfigField;
 import me.cubixor.minigamesapi.spigot.sockets.PacketSenderSpigot;
 import me.cubixor.minigamesapi.spigot.utils.Messages;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.Collections;
+import java.util.Map;
 
 public class ArenasManager {
 
+    private final ArenasRegistry registry;
     private final ArenaPlayersManager arenaPlayersManager;
     private final ArenasConfigManager configManager;
     private final SignManager signManager;
     private final PacketSenderSpigot packetSender;
-    private final Map<String, LocalArena> localArenas = new HashMap<>();
-    private final Map<String, Arena> remoteArenas = new HashMap<>();
     private final boolean bungee;
 
-    public ArenasManager(ArenasConfigManager configManager, PacketSenderSpigot packetSender) {
+    public ArenasManager(ArenasRegistry registry, ArenasConfigManager configManager, SignManager signManager, PacketSenderSpigot packetSender) {
+        this.registry = registry;
         this.configManager = configManager;
+        this.signManager = signManager;
         this.packetSender = packetSender;
 
         //TODO Decouple that
         arenaPlayersManager = new ArenaPlayersManager(this);
-        signManager = new SignManager(this);
-        MinigamesAPI.getPlugin().getServer().getPluginManager().registerEvents(signManager, MinigamesAPI.getPlugin());
 
         loadArenas();
         bungee =MinigamesAPI.getPlugin().getConfig().getBoolean("bungee.bungee-mode");
@@ -46,14 +44,14 @@ public class ArenasManager {
                     configManager.getInt(name, BasicConfigField.MIN_PLAYERS),
                     configManager.getInt(name, BasicConfigField.MAX_PLAYERS)
             );
-            localArenas.put(name, localArena);
+            registry.getLocalArenas().put(name, localArena);
         }
     }
 
     public void addArena(String arena) {
         LocalArena localArena = new LocalArena(arena);
 
-        localArenas.put(arena, localArena);
+        registry.getLocalArenas().put(arena, localArena);
         configManager.insertArena(arena);
         signManager.addArena(arena);
 
@@ -61,7 +59,7 @@ public class ArenasManager {
     }
 
     public void removeArena(String arena) {
-        localArenas.remove(arena);
+        registry.getLocalArenas().remove(arena);
         configManager.removeArena(arena);
         signManager.removeArena(arena);
 
@@ -72,7 +70,7 @@ public class ArenasManager {
     }
 
     public void updateArenaMinPlayers(String arena, int count) {
-        LocalArena localArena = localArenas.get(arena);
+        LocalArena localArena = registry.getLocalArenas().get(arena);
         localArena.setMinPlayers(count);
         configManager.updateField(arena, BasicConfigField.MIN_PLAYERS, count);
 
@@ -80,7 +78,7 @@ public class ArenasManager {
     }
 
     public void updateArenaMaxPlayers(String arena, int count) {
-        LocalArena localArena = localArenas.get(arena);
+        LocalArena localArena = registry.getLocalArenas().get(arena);
         localArena.setMaxPlayers(count);
         configManager.updateField(arena, BasicConfigField.MAX_PLAYERS, count);
 
@@ -88,7 +86,7 @@ public class ArenasManager {
     }
 
     public void updateArenaVip(String arena, boolean vip) {
-        LocalArena localArena = localArenas.get(arena);
+        LocalArena localArena = registry.getLocalArenas().get(arena);
         localArena.setVip(vip);
         configManager.updateField(arena, BasicConfigField.VIP, vip);
 
@@ -100,11 +98,15 @@ public class ArenasManager {
             //TODO Force stop
         }
 
-        LocalArena localArena = localArenas.get(arena);
-        localArena.setState(GameState.INACTIVE);
+        LocalArena localArena = registry.getLocalArenas().get(arena);
+        localArena.setState(active ? GameState.WAITING : GameState.INACTIVE);
         configManager.updateField(arena, BasicConfigField.ACTIVE, active);
 
         updateArena(localArena);
+    }
+
+    public void updateArenaField(String arena, ConfigField configField, Object value) {
+        getConfigManager().updateField(arena, configField, value);
     }
 
     public void updateArena(LocalArena localArena) {
@@ -121,11 +123,11 @@ public class ArenasManager {
     public void updateRemoteArenas(Map<String, Arena> updatedArenas) {
         for (Map.Entry<String, Arena> entry : updatedArenas.entrySet()) {
             if (entry.getValue() == null) {
-                remoteArenas.remove(entry.getKey());
+                registry.getRemoteArenas().remove(entry.getKey());
                 continue;
             }
 
-            remoteArenas.put(entry.getKey(), entry.getValue());
+            registry.getRemoteArenas().put(entry.getKey(), entry.getValue());
             signManager.updateSigns(entry.getKey());
         }
     }
@@ -160,68 +162,9 @@ public class ArenasManager {
         //TODO Update state
     }
 
-    public boolean isInArena(Player player) {
-        return localArenas.values().stream().anyMatch(arena -> arena.getPlayers().contains(player.getName()))
-                || remoteArenas.values().stream().anyMatch(arena -> arena.getPlayers().contains(player.getName()));
-    }
-
-    public Arena getArena(String name) {
-        if (localArenas.containsKey(name)) {
-            return localArenas.get(name);
-        } else if (remoteArenas.containsKey(name)) {
-            return remoteArenas.get(name);
-        }
-
-        return null;
-    }
-
-    public Arena getPlayerArena(String playerName) {
-        Player player = Bukkit.getPlayerExact(playerName);
-        if (player != null) {
-            return getPlayerLocalArena(player);
-        } else {
-            Optional<Arena> arena = remoteArenas.values().stream().filter(a -> a.getPlayers().contains(playerName)).findFirst();
-            return arena.orElse(null);
-        }
-    }
-
-    public LocalArena getPlayerLocalArena(Player player) {
-        Optional<LocalArena> arena = localArenas.values().stream().filter(a -> a.getBukkitPlayers().contains(player)).findFirst();
-        return arena.orElse(null);
-    }
-
-    public boolean isValidArena(String arena) {
-        return isLocalArena(arena) || isRemoteArena(arena);
-    }
-
-    public boolean isLocalArena(String arena) {
-        return localArenas.containsKey(arena);
-    }
-
-    public boolean isRemoteArena(String arena) {
-        return remoteArenas.containsKey(arena);
-    }
-
     public ArenasConfigManager getConfigManager() {
         return configManager;
     }
-
-    public Map<String, LocalArena> getLocalArenas() {
-        return localArenas;
-    }
-
-    public Map<String, Arena> getRemoteArenas() {
-        return remoteArenas;
-    }
-
-    public Set<String> getLocalArenaNames() {
-        return localArenas.keySet();
-    }
-
-    public Set<String> getAllArenaNames() {
-        return Stream.concat(localArenas.keySet().stream(), remoteArenas.keySet().stream()).collect(Collectors.toSet());
-    }
-
     public PacketSenderSpigot getPacketSender() {
         return packetSender;
     }
@@ -232,5 +175,9 @@ public class ArenasManager {
 
     public boolean isBungee() {
         return bungee;
+    }
+
+    public ArenasRegistry getRegistry() {
+        return registry;
     }
 }

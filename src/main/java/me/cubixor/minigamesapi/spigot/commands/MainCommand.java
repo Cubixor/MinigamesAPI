@@ -51,7 +51,7 @@ public class MainCommand implements CommandExecutor {
                 new ArgJoin(arenasManager),
                 new ArgLeave(arenasManager),
                 new ArgQuickJoin(arenasManager),
-                new ArgList(arenasManager),
+                new ArgList(arenasManager.getRegistry()),
                 new ArgStats(statsManager)
         );
     }

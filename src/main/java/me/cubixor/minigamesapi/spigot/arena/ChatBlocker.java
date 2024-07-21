@@ -12,12 +12,12 @@ import java.util.List;
 
 public class ChatBlocker implements Listener {
 
-    private final ArenasManager arenasManager;
+    private final ArenasRegistry arenasRegistry;
     private final boolean whitelist;
     private final List<String> commands;
 
-    public ChatBlocker(ArenasManager arenasManager) {
-        this.arenasManager = arenasManager;
+    public ChatBlocker(ArenasRegistry arenasRegistry) {
+        this.arenasRegistry = arenasRegistry;
         this.whitelist = MinigamesAPI.getPlugin().getConfig().getString("command-blocker").equals("WHITELIST");
         this.commands = MinigamesAPI.getPlugin().getConfig().getStringList("command-blocker-list");
 
@@ -26,7 +26,7 @@ public class ChatBlocker implements Listener {
 
     @EventHandler
     public void blockCommand(PlayerCommandPreprocessEvent evt) {
-        if (!arenasManager.isInArena(evt.getPlayer())) {
+        if (!arenasRegistry.isInArena(evt.getPlayer())) {
             return;
         }
         if (Permissions.has(evt.getPlayer(), "bypass")) {

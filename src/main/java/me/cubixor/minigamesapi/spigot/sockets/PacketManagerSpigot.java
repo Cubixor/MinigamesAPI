@@ -7,6 +7,7 @@ import me.cubixor.minigamesapi.common.packets.KickPacket;
 import me.cubixor.minigamesapi.spigot.MinigamesAPI;
 import me.cubixor.minigamesapi.spigot.arena.Arena;
 import me.cubixor.minigamesapi.spigot.arena.ArenasManager;
+import me.cubixor.minigamesapi.spigot.arena.ArenasRegistry;
 import me.cubixor.minigamesapi.spigot.arena.LocalArena;
 import me.cubixor.socketsmc.common.packets.Packet;
 import me.cubixor.socketsmc.spigot.event.PacketReceivedEventSpigot;
@@ -25,12 +26,14 @@ public class PacketManagerSpigot implements Listener {
 
 
     private final ArenasManager arenasManager;
+    private final ArenasRegistry arenasRegistry;
     private final PacketSenderSpigot packetSender;
 
     private final Map<String, Arena> playersToJoin = new HashMap<>();
 
     public PacketManagerSpigot(ArenasManager arenasManager, PacketSenderSpigot packetSender) {
         this.arenasManager = arenasManager;
+        this.arenasRegistry = arenasManager.getRegistry();
         this.packetSender = packetSender;
 
         Bukkit.getServer().getPluginManager().registerEvents(this, MinigamesAPI.getPlugin());
@@ -38,7 +41,7 @@ public class PacketManagerSpigot implements Listener {
 
     @EventHandler
     public void onServerConnect(SocketConnectedEventSpigot evt) {
-        Map<String, Arena> arenas = arenasManager
+        Map<String, Arena> arenas = arenasRegistry
                 .getLocalArenas()
                 .entrySet()
                 .stream()
@@ -55,7 +58,7 @@ public class PacketManagerSpigot implements Listener {
             arenasManager.updateRemoteArenas(arenaUpdatePacket.getArenas());
         } else if (packet instanceof ForceStartStopPacket) {
             ForceStartStopPacket forceStartStopPacket = (ForceStartStopPacket) packet;
-            LocalArena localArena = arenasManager.getLocalArenas().get(forceStartStopPacket.getArenaName());
+            LocalArena localArena = arenasRegistry.getLocalArenas().get(forceStartStopPacket.getArenaName());
 
             if (forceStartStopPacket.isActionStart()) {
                 arenasManager.forceLocalStart(localArena, forceStartStopPacket.getPlayer());
@@ -64,7 +67,7 @@ public class PacketManagerSpigot implements Listener {
             }
         } else if (packet instanceof JoinPacket) {
             JoinPacket joinPacket = (JoinPacket) packet;
-            LocalArena localArena = arenasManager.getLocalArenas().get(joinPacket.getArenaName());
+            LocalArena localArena = arenasRegistry.getLocalArenas().get(joinPacket.getArenaName());
 
             playersToJoin.put(joinPacket.getPlayerName(), localArena);
             new BukkitRunnable() {
@@ -75,7 +78,7 @@ public class PacketManagerSpigot implements Listener {
             }.runTaskLater(MinigamesAPI.getPlugin(), 100L);
         } else if (packet instanceof KickPacket) {
             KickPacket kickPacket = (KickPacket) packet;
-            LocalArena localArena = arenasManager.getLocalArenas().get(((KickPacket) packet).getArenaName());
+            LocalArena localArena = arenasRegistry.getLocalArenas().get(((KickPacket) packet).getArenaName());
             if (!localArena.getPlayers().contains(kickPacket.getTarget())) return;
 
             //TODO Kick messages

@@ -4,6 +4,7 @@ import com.cryptomorin.xseries.XBlock;
 import com.cryptomorin.xseries.XMaterial;
 import com.google.common.collect.ImmutableMap;
 import me.cubixor.minigamesapi.spigot.MinigamesAPI;
+import me.cubixor.minigamesapi.spigot.config.arenas.ArenasConfigManager;
 import me.cubixor.minigamesapi.spigot.utils.MessageUtils;
 import me.cubixor.minigamesapi.spigot.utils.Messages;
 import me.cubixor.minigamesapi.spigot.utils.Permissions;
@@ -29,31 +30,32 @@ import java.util.*;
 public class SignManager implements Listener {
 
     private final JavaPlugin plugin;
-    private final ArenasManager arenasManager;
     private final Map<String, List<Location>> signs;
-
+    private final ArenasConfigManager arenasConfigManager;
+    private final ArenasRegistry arenasRegistry;
     private final boolean colorSigns;
     private final Map<GameState, ItemStack> colorItems;
 
-    public SignManager(ArenasManager arenasManager) {
+    public SignManager(ArenasConfigManager arenasConfigManager, ArenasRegistry arenasRegistry) {
         this.plugin = MinigamesAPI.getPlugin();
-        this.arenasManager = arenasManager;
+        this.arenasConfigManager = arenasConfigManager;
+        this.arenasRegistry = arenasRegistry;
 
         this.colorSigns = plugin.getConfig().getBoolean("color-signs");
         this.colorItems = loadStateColors();
 
-        signs = arenasManager.getConfigManager().getAllSigns();
+        signs = arenasConfigManager.getAllSigns();
         Bukkit.getServer().getPluginManager().registerEvents(this, MinigamesAPI.getPlugin());
     }
 
     private void addSign(String arena, Location loc) {
         signs.get(arena).add(loc);
-        arenasManager.getConfigManager().addSign(arena, loc);
+        arenasConfigManager.addSign(arena, loc);
     }
 
     private void removeSign(String arena, Location location) {
         signs.get(arena).remove(location);
-        arenasManager.getConfigManager().removeSign(arena, location);
+        arenasConfigManager.removeSign(arena, location);
     }
 
     private void removeSignBlock(Block sign) {
@@ -91,7 +93,7 @@ public class SignManager implements Listener {
             removeSignBlock(location.getBlock());
         }
 
-        arenasManager.getConfigManager().removeSigns(arena);
+        arenasConfigManager.removeSigns(arena);
 
         updateSigns("quickjoin");
     }
@@ -216,7 +218,7 @@ public class SignManager implements Listener {
         }
 
 
-        Arena arena = arenasManager.getArena(arenaString);
+        Arena arena = arenasRegistry.getArena(arenaString);
         String count = String.valueOf(arena.getPlayers().size());
         String max = String.valueOf(arena.getMaxPlayers());
         String gameState = MessageUtils.getStringState(arena);
@@ -265,7 +267,7 @@ public class SignManager implements Listener {
     }
 
     private Map<GameState, ItemStack> loadStateColors() {
-        Map<GameState, ItemStack> stateColors = new HashMap<>();
+        Map<GameState, ItemStack> stateColors = new EnumMap<>(GameState.class);
 
         ConfigurationSection signColorsSection = plugin.getConfig().getConfigurationSection("sign-colors");
         for (GameState state : GameState.values()) {

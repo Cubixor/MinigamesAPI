@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import me.cubixor.minigamesapi.spigot.MinigamesAPI;
 import me.cubixor.minigamesapi.spigot.arena.Arena;
 import me.cubixor.minigamesapi.spigot.arena.ArenasManager;
+import me.cubixor.minigamesapi.spigot.arena.ArenasRegistry;
 import me.cubixor.minigamesapi.spigot.commands.arguments.CommandArgument;
 import me.cubixor.minigamesapi.spigot.utils.MessageUtils;
 import me.cubixor.minigamesapi.spigot.utils.Messages;
@@ -18,26 +19,26 @@ import java.util.Map;
 
 public class ArgList extends CommandArgument {
 
-    private final ArenasManager arenasManager;
+    private final ArenasRegistry arenasRegistry;
 
-    public ArgList(ArenasManager arenasManager) {
+    public ArgList(ArenasRegistry arenasRegistry) {
         //TODO No usage in messages
         super("list", "play.list", 1, "other.list");
-        this.arenasManager = arenasManager;
+        this.arenasRegistry = arenasRegistry;
     }
 
     @SuppressWarnings("deprecation")
     @Override
     protected void handle(Player player, String[] args) {
-        if (arenasManager.getAllArenaNames().isEmpty()) {
+        if (arenasRegistry.getAllArenaNames().isEmpty()) {
             Messages.send(player, "other.list-empty");
             return;
         }
 
         LinkedList<TextComponent> msg = new LinkedList<>();
 
-        for (String arenaString : arenasManager.getAllArenaNames()) {
-            Arena arena = arenasManager.getArena(arenaString);
+        for (String arenaString : arenasRegistry.getAllArenaNames()) {
+            Arena arena = arenasRegistry.getArena(arenaString);
 
             String count = Integer.toString(arena.getPlayers().size());
             String gameState = MessageUtils.getStringState(arena);

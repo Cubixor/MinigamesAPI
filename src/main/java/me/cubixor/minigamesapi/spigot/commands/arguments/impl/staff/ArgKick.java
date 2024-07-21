@@ -20,7 +20,7 @@ public class ArgKick extends CommandArgument {
     public void handle(Player player, String[] args) {
         String targetName = args[1];
 
-        Arena arena = arenasManager.getPlayerArena(targetName);
+        Arena arena = arenasManager.getRegistry().getPlayerArena(targetName);
         if (arena == null) {
             Messages.send(player, "arena-moderate.kick-player-not-playing", "%player%", targetName);
             return;

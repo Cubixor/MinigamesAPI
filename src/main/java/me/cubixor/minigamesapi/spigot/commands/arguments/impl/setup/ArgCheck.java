@@ -24,7 +24,7 @@ public class ArgCheck extends ArenaCommandArgument {
     @Override
     public void handle(Player player, String[] args) {
         String arena = args[1];
-        LocalArena localArena = arenasManager.getLocalArenas().get(arena);
+        LocalArena localArena = arenasRegistry.getLocalArenas().get(arena);
 
         String setStr = Messages.get("arena-setup.check-set");
         String notSetStr = Messages.get("arena-setup.check-notset");

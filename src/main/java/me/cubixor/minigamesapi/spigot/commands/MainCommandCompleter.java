@@ -1,6 +1,7 @@
 package me.cubixor.minigamesapi.spigot.commands;
 
 import me.cubixor.minigamesapi.spigot.arena.ArenasManager;
+import me.cubixor.minigamesapi.spigot.arena.ArenasRegistry;
 import me.cubixor.minigamesapi.spigot.commands.arguments.CommandArgument;
 import me.cubixor.minigamesapi.spigot.utils.Permissions;
 import org.bukkit.command.Command;
@@ -16,12 +17,12 @@ import java.util.stream.Collectors;
 public class MainCommandCompleter implements TabCompleter {
 
     private final Map<String, CommandArgument> arguments;
-    private final ArenasManager arenasManager;
+    private final ArenasRegistry arenasRegistry;
 
-    public MainCommandCompleter(List<CommandArgument> arguments, ArenasManager arenasManager) {
+    public MainCommandCompleter(List<CommandArgument> arguments, ArenasRegistry arenasRegistry) {
         this.arguments = arguments.stream()
                 .collect(Collectors.toMap(CommandArgument::getName, arg -> arg));
-        this.arenasManager = arenasManager;
+        this.arenasRegistry = arenasRegistry;
     }
 
 
@@ -50,7 +51,7 @@ public class MainCommandCompleter implements TabCompleter {
                     }
                 }
                 if (found) {
-                    for (String arena : arenasManager.getAllArenaNames()) {
+                    for (String arena : arenasRegistry.getAllArenaNames()) {
                         if (arena.toLowerCase().startsWith(args[1].toLowerCase())) {
                             result.add(arena);
                         }

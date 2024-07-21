@@ -17,7 +17,7 @@ public class ArgLeave extends CommandArgument {
 
     @Override
     public void handle(Player player, String[] args) {
-        LocalArena arena = arenasManager.getPlayerLocalArena(player);
+        LocalArena arena = arenasManager.getRegistry().getPlayerLocalArena(player);
 
         if (arena == null) {
             Messages.send(player, "game.arena-leave-not-in-game");

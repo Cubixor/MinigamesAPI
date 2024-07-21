@@ -25,7 +25,7 @@ public class ArgSetActive extends ArenaCommandArgument {
             return;
         }
 
-        LocalArena localArena = arenasManager.getLocalArenas().get(arena);
+        LocalArena localArena = arenasRegistry.getLocalArenas().get(arena);
 
         if (!arenaSetupChecker.checkReady(localArena)) {
             Messages.send(player, "arena-moderate.active-not-ready", "%arena%", arena);

@@ -2,6 +2,7 @@ package me.cubixor.minigamesapi.spigot.commands.arguments;
 
 import me.cubixor.minigamesapi.spigot.arena.Arena;
 import me.cubixor.minigamesapi.spigot.arena.ArenasManager;
+import me.cubixor.minigamesapi.spigot.arena.ArenasRegistry;
 import me.cubixor.minigamesapi.spigot.utils.Messages;
 import org.bukkit.entity.Player;
 
@@ -9,7 +10,8 @@ public abstract class ArenaCommandArgument extends CommandArgument {
 
     private final boolean requireInServer;
     private final Boolean shouldBeActive;
-    protected ArenasManager arenasManager;
+    protected final ArenasManager arenasManager;
+    protected final ArenasRegistry arenasRegistry;
 
     protected ArenaCommandArgument(ArenasManager arenasManager,
                                 String name,
@@ -20,6 +22,7 @@ public abstract class ArenaCommandArgument extends CommandArgument {
                                 Boolean shouldBeActive) {
         super(name, permission, argLength, messagesPath);
         this.arenasManager = arenasManager;
+        this.arenasRegistry = arenasManager.getRegistry();
         this.requireInServer = requireInServer;
         this.shouldBeActive = shouldBeActive;
     }
@@ -32,18 +35,18 @@ public abstract class ArenaCommandArgument extends CommandArgument {
 
         String arenaName = args[1];
 
-        if (!arenasManager.isValidArena(arenaName)) {
+        if (!arenasRegistry.isValidArena(arenaName)) {
             Messages.send(player, "general.arena-invalid");
             return false;
         }
 
-        if (requireInServer && arenasManager.isRemoteArena(arenaName)) {
+        if (requireInServer && arenasRegistry.isRemoteArena(arenaName)) {
             Messages.send(player, "bungee.not-on-server");
             return false;
         }
 
         if (shouldBeActive != null) {
-            Arena arena = arenasManager.getArena(arenaName);
+            Arena arena = arenasRegistry.getArena(arenaName);
 
             if (shouldBeActive && !arena.isActive()) {
                 Messages.send(player, "arena-setup.active-block", "%arena%", arenaName);

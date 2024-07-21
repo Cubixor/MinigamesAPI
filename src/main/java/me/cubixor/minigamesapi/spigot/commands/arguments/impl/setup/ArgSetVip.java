@@ -21,7 +21,7 @@ public class ArgSetVip extends ArenaCommandArgument {
             return;
         }
 
-        LocalArena localArena = arenasManager.getLocalArenas().get(arena);
+        LocalArena localArena = arenasRegistry.getLocalArenas().get(arena);
 
         boolean cmdVip = Boolean.parseBoolean(args[2]);
         boolean currVip = localArena.isVip();
