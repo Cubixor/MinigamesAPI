@@ -1,7 +1,7 @@
 package me.cubixor.minigamesapi.spigot.events;
 
-import me.cubixor.minigamesapi.spigot.arena.Arena;
-import me.cubixor.minigamesapi.spigot.arena.LocalArena;
+import me.cubixor.minigamesapi.spigot.arena.objects.Arena;
+import me.cubixor.minigamesapi.spigot.arena.objects.LocalArena;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 

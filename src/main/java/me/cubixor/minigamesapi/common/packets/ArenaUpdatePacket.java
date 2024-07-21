@@ -1,6 +1,6 @@
 package me.cubixor.minigamesapi.common.packets;
 
-import me.cubixor.minigamesapi.spigot.arena.Arena;
+import me.cubixor.minigamesapi.spigot.arena.objects.Arena;
 import me.cubixor.socketsmc.common.packets.Packet;
 
 import java.util.Map;

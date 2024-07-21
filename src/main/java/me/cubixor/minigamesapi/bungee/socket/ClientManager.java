@@ -1,7 +1,7 @@
 package me.cubixor.minigamesapi.bungee.socket;
 
 import me.cubixor.minigamesapi.common.packets.*;
-import me.cubixor.minigamesapi.spigot.arena.Arena;
+import me.cubixor.minigamesapi.spigot.arena.objects.Arena;
 import me.cubixor.socketsmc.bungee.SocketServer;
 import me.cubixor.socketsmc.bungee.SocketServerSender;
 import me.cubixor.socketsmc.bungee.event.PacketReceivedEventBungee;

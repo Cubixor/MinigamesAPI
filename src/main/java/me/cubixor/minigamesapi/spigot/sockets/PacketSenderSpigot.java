@@ -5,7 +5,7 @@ import me.cubixor.minigamesapi.common.packets.ForceStartStopPacket;
 import me.cubixor.minigamesapi.common.packets.JoinPacket;
 import me.cubixor.minigamesapi.common.packets.LeavePacket;
 import me.cubixor.minigamesapi.spigot.MinigamesAPI;
-import me.cubixor.minigamesapi.spigot.arena.Arena;
+import me.cubixor.minigamesapi.spigot.arena.objects.Arena;
 import me.cubixor.minigamesapi.spigot.config.CustomConfig;
 import me.cubixor.socketsmc.spigot.SocketClient;
 import me.cubixor.socketsmc.spigot.SocketClientSender;

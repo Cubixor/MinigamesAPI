@@ -1,7 +1,7 @@
 package me.cubixor.minigamesapi.spigot.commands.arguments.impl.staff;
 
 import me.cubixor.minigamesapi.spigot.arena.ArenasManager;
-import me.cubixor.minigamesapi.spigot.arena.LocalArena;
+import me.cubixor.minigamesapi.spigot.arena.objects.LocalArena;
 import me.cubixor.minigamesapi.spigot.commands.arguments.ArenaCommandArgument;
 import me.cubixor.minigamesapi.spigot.config.arenas.ArenaSetupChecker;
 import me.cubixor.minigamesapi.spigot.utils.Messages;

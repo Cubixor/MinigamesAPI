@@ -2,8 +2,7 @@ package me.cubixor.minigamesapi.spigot.commands.arguments.impl.play;
 
 import com.google.common.collect.ImmutableMap;
 import me.cubixor.minigamesapi.spigot.MinigamesAPI;
-import me.cubixor.minigamesapi.spigot.arena.Arena;
-import me.cubixor.minigamesapi.spigot.arena.ArenasManager;
+import me.cubixor.minigamesapi.spigot.arena.objects.Arena;
 import me.cubixor.minigamesapi.spigot.arena.ArenasRegistry;
 import me.cubixor.minigamesapi.spigot.commands.arguments.CommandArgument;
 import me.cubixor.minigamesapi.spigot.utils.MessageUtils;

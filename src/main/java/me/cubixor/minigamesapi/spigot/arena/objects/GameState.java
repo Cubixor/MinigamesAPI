@@ -1,4 +1,4 @@
-package me.cubixor.minigamesapi.spigot.arena;
+package me.cubixor.minigamesapi.spigot.arena.objects;
 
 import java.io.Serializable;
 

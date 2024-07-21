@@ -4,6 +4,8 @@ import be.seeseemelk.mockbukkit.MockBukkit;
 import be.seeseemelk.mockbukkit.ServerMock;
 import me.cubixor.minigamesapi.spigot.MinigamesAPI;
 import me.cubixor.minigamesapi.spigot.MockMain;
+import me.cubixor.minigamesapi.spigot.arena.objects.Arena;
+import me.cubixor.minigamesapi.spigot.arena.objects.GameState;
 import me.cubixor.minigamesapi.spigot.config.CustomConfig;
 import me.cubixor.minigamesapi.spigot.config.arenas.ArenasConfigManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -12,7 +14,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class ArenasManagerTest {
+class ArenasManagerTest {
 
     private ServerMock mock;
     private JavaPlugin plugin;
@@ -37,7 +39,7 @@ public class ArenasManagerTest {
     }
 
     @Test
-    void testArenaCreate() {
+    void testArenaSetup() {
         final String name = "test";
         arenasManager.addArena(name);
         arenasManager.updateArenaMinPlayers(name, 2);
@@ -51,5 +53,21 @@ public class ArenasManagerTest {
         Assertions.assertEquals(10, arena.getMaxPlayers());
         Assertions.assertTrue(arena.isVip());
         Assertions.assertTrue(arena.isActive());
+        Assertions.assertEquals(GameState.WAITING, arena.getState());
+    }
+
+    @Test
+    void testArenaRemove(){
+        final String name = "test";
+        ArenasRegistry arenasRegistry = arenasManager.getRegistry();
+        arenasManager.addArena(name);
+
+        Assertions.assertTrue(arenasRegistry.isValidArena(name));
+        Assertions.assertTrue(arenasRegistry.isLocalArena(name));
+
+        arenasManager.removeArena(name);
+
+        Assertions.assertFalse(arenasRegistry.isValidArena(name));
+        Assertions.assertFalse(arenasRegistry.isLocalArena(name));
     }
 }

@@ -1,6 +1,9 @@
 package me.cubixor.minigamesapi.spigot.arena;
 
 import me.cubixor.minigamesapi.spigot.MinigamesAPI;
+import me.cubixor.minigamesapi.spigot.arena.objects.Arena;
+import me.cubixor.minigamesapi.spigot.arena.objects.GameState;
+import me.cubixor.minigamesapi.spigot.arena.objects.LocalArena;
 import me.cubixor.minigamesapi.spigot.config.arenas.ArenasConfigManager;
 import me.cubixor.minigamesapi.spigot.config.arenas.BasicConfigField;
 import me.cubixor.minigamesapi.spigot.config.arenas.ConfigField;
@@ -33,7 +36,7 @@ public class ArenasManager {
         bungee =MinigamesAPI.getPlugin().getConfig().getBoolean("bungee.bungee-mode");
     }
 
-    public void loadArenas() {
+    private void loadArenas() {
         for (String name : configManager.getArenas()) {
             //TODO Proper server name
             LocalArena localArena = new LocalArena(

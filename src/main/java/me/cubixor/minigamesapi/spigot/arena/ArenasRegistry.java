@@ -1,5 +1,7 @@
 package me.cubixor.minigamesapi.spigot.arena;
 
+import me.cubixor.minigamesapi.spigot.arena.objects.Arena;
+import me.cubixor.minigamesapi.spigot.arena.objects.LocalArena;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 

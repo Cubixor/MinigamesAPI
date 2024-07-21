@@ -4,6 +4,8 @@ import com.cryptomorin.xseries.XBlock;
 import com.cryptomorin.xseries.XMaterial;
 import com.google.common.collect.ImmutableMap;
 import me.cubixor.minigamesapi.spigot.MinigamesAPI;
+import me.cubixor.minigamesapi.spigot.arena.objects.Arena;
+import me.cubixor.minigamesapi.spigot.arena.objects.GameState;
 import me.cubixor.minigamesapi.spigot.config.arenas.ArenasConfigManager;
 import me.cubixor.minigamesapi.spigot.utils.MessageUtils;
 import me.cubixor.minigamesapi.spigot.utils.Messages;

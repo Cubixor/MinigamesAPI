@@ -1,7 +1,7 @@
 package me.cubixor.minigamesapi.spigot.config.arenas;
 
 
-import me.cubixor.minigamesapi.spigot.arena.LocalArena;
+import me.cubixor.minigamesapi.spigot.arena.objects.LocalArena;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

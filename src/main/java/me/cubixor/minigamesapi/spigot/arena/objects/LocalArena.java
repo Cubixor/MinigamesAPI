@@ -1,7 +1,8 @@
-package me.cubixor.minigamesapi.spigot.arena;
+package me.cubixor.minigamesapi.spigot.arena.objects;
 
 
 import me.cubixor.minigamesapi.spigot.MinigamesAPI;
+import me.cubixor.minigamesapi.spigot.arena.StateManager;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;

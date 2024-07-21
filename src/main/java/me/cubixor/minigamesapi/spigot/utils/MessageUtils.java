@@ -1,7 +1,7 @@
 package me.cubixor.minigamesapi.spigot.utils;
 
 
-import me.cubixor.minigamesapi.spigot.arena.Arena;
+import me.cubixor.minigamesapi.spigot.arena.objects.Arena;
 
 public class MessageUtils {
 

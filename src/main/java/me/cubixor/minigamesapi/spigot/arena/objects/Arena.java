@@ -1,4 +1,4 @@
-package me.cubixor.minigamesapi.spigot.arena;
+package me.cubixor.minigamesapi.spigot.arena.objects;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -41,7 +41,7 @@ public class Arena implements Serializable {
     }
 
     public boolean isActive() {
-        return state.equals(GameState.INACTIVE);
+        return !state.equals(GameState.INACTIVE);
     }
 
     public boolean isVip() {
