@@ -7,6 +7,7 @@ import me.cubixor.minigamesapi.spigot.MinigamesAPI;
 import me.cubixor.minigamesapi.spigot.utils.MessageUtils;
 import me.cubixor.minigamesapi.spigot.utils.Messages;
 import me.cubixor.minigamesapi.spigot.utils.Permissions;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -21,12 +22,13 @@ import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.*;
 
 public class SignManager implements Listener {
 
-    private final MinigamesAPI plugin;
+    private final JavaPlugin plugin;
     private final ArenasManager arenasManager;
     private final Map<String, List<Location>> signs;
 
@@ -34,13 +36,14 @@ public class SignManager implements Listener {
     private final Map<GameState, ItemStack> colorItems;
 
     public SignManager(ArenasManager arenasManager) {
-        this.plugin = MinigamesAPI.getInstance();
+        this.plugin = MinigamesAPI.getPlugin();
         this.arenasManager = arenasManager;
 
         this.colorSigns = plugin.getConfig().getBoolean("color-signs");
         this.colorItems = loadStateColors();
 
         signs = arenasManager.getConfigManager().getAllSigns();
+        Bukkit.getServer().getPluginManager().registerEvents(this, MinigamesAPI.getPlugin());
     }
 
     private void addSign(String arena, Location loc) {

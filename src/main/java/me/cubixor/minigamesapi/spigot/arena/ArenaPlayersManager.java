@@ -6,7 +6,6 @@ import me.cubixor.minigamesapi.spigot.Utils;
 import me.cubixor.minigamesapi.spigot.config.arenas.BasicConfigField;
 import me.cubixor.minigamesapi.spigot.events.GameJoinEvent;
 import me.cubixor.minigamesapi.spigot.events.GameLeaveEvent;
-import me.cubixor.minigamesapi.spigot.game.PlayerData;
 import me.cubixor.minigamesapi.spigot.utils.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -111,7 +110,7 @@ public class ArenaPlayersManager {
         if (arena.isLocal()) {
             LocalArena localArena = (LocalArena) arena;
             putInLocalArena(player, localArena);
-            if (MinigamesAPI.isBungee()) {
+            if (arenasManager.isBungee()) {
                 arenasManager.getPacketSender().sendJoinPacket(localArena.toArena(), player, true);
             }
         } else {
@@ -159,7 +158,7 @@ public class ArenaPlayersManager {
         //TODO Update state, scoreboard
 
         arenasManager.updateArena(localArena);
-        MinigamesAPI.getInstance().getServer().getPluginManager().callEvent(new GameJoinEvent(localArena, player));
+        MinigamesAPI.getPlugin().getServer().getPluginManager().callEvent(new GameJoinEvent(localArena, player));
     }
 
     public void leaveArena(Player player, LocalArena localArena) {
@@ -194,7 +193,7 @@ public class ArenaPlayersManager {
 
         //TODO Add playtime stats
 
-        if (MinigamesAPI.getInstance().getConfig().getBoolean("use-main-lobby")) {
+        if (MinigamesAPI.getPlugin().getConfig().getBoolean("use-main-lobby")) {
             player.teleport(arenasManager.getConfigManager().getLocation(localArena.getName(), BasicConfigField.MAIN_LOBBY));
         } else {
             player.teleport(playerData.getLocation());
@@ -207,7 +206,7 @@ public class ArenaPlayersManager {
         //TODO Update state, scoreboard
 
         arenasManager.updateArena(localArena);
-        MinigamesAPI.getInstance().getServer().getPluginManager().callEvent(new GameLeaveEvent(localArena, player));
+        MinigamesAPI.getPlugin().getServer().getPluginManager().callEvent(new GameLeaveEvent(localArena, player));
     }
 
     private boolean checkVIP(Arena arena, Player player) {

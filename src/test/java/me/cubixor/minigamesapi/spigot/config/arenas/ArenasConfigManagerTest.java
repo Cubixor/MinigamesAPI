@@ -3,6 +3,7 @@ package me.cubixor.minigamesapi.spigot.config.arenas;
 import be.seeseemelk.mockbukkit.MockBukkit;
 import be.seeseemelk.mockbukkit.ServerMock;
 import me.cubixor.minigamesapi.spigot.MinigamesAPI;
+import me.cubixor.minigamesapi.spigot.MockMain;
 import me.cubixor.minigamesapi.spigot.config.CustomConfig;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -26,7 +27,7 @@ class ArenasConfigManagerTest {
     @BeforeEach
     public void setUp() {
         mock = MockBukkit.mock();
-        plugin = MockBukkit.load(MinigamesAPI.class);
+        plugin = MockBukkit.load(MockMain.class);
 
         CustomConfig config = new CustomConfig("arenas.yml");
         arenasConfigManager = new ArenasConfigManager(config);

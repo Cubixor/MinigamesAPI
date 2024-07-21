@@ -3,6 +3,7 @@ package me.cubixor.minigamesapi.spigot.config.stats;
 import be.seeseemelk.mockbukkit.MockBukkit;
 import be.seeseemelk.mockbukkit.ServerMock;
 import me.cubixor.minigamesapi.spigot.MinigamesAPI;
+import me.cubixor.minigamesapi.spigot.MockMain;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -24,7 +25,7 @@ public abstract class StatsManagerTest {
     @BeforeEach
     public void setUp() {
         mock = MockBukkit.mock();
-        plugin = MockBukkit.load(MinigamesAPI.class);
+        plugin = MockBukkit.load(MockMain.class);
     }
 
     @AfterEach

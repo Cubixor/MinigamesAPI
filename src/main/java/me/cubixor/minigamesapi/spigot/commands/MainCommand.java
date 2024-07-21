@@ -2,7 +2,12 @@ package me.cubixor.minigamesapi.spigot.commands;
 
 import me.cubixor.minigamesapi.spigot.arena.ArenasManager;
 import me.cubixor.minigamesapi.spigot.commands.arguments.CommandArgument;
-import me.cubixor.minigamesapi.spigot.commands.arguments.impl.*;
+import me.cubixor.minigamesapi.spigot.commands.arguments.impl.play.*;
+import me.cubixor.minigamesapi.spigot.commands.arguments.impl.setup.*;
+import me.cubixor.minigamesapi.spigot.commands.arguments.impl.staff.ArgForceStart;
+import me.cubixor.minigamesapi.spigot.commands.arguments.impl.staff.ArgForceStop;
+import me.cubixor.minigamesapi.spigot.commands.arguments.impl.staff.ArgKick;
+import me.cubixor.minigamesapi.spigot.commands.arguments.impl.staff.ArgSetActive;
 import me.cubixor.minigamesapi.spigot.config.arenas.ArenaSetupChecker;
 import me.cubixor.minigamesapi.spigot.config.stats.StatsManager;
 import me.cubixor.minigamesapi.spigot.utils.Messages;

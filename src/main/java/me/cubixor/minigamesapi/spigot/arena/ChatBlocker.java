@@ -3,6 +3,7 @@ package me.cubixor.minigamesapi.spigot.arena;
 import me.cubixor.minigamesapi.spigot.MinigamesAPI;
 import me.cubixor.minigamesapi.spigot.utils.Messages;
 import me.cubixor.minigamesapi.spigot.utils.Permissions;
+import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
@@ -17,8 +18,10 @@ public class ChatBlocker implements Listener {
 
     public ChatBlocker(ArenasManager arenasManager) {
         this.arenasManager = arenasManager;
-        this.whitelist = MinigamesAPI.getInstance().getConfig().getString("command-blocker").equals("WHITELIST");
-        this.commands = MinigamesAPI.getInstance().getConfig().getStringList("command-blocker-list");
+        this.whitelist = MinigamesAPI.getPlugin().getConfig().getString("command-blocker").equals("WHITELIST");
+        this.commands = MinigamesAPI.getPlugin().getConfig().getStringList("command-blocker-list");
+
+        Bukkit.getServer().getPluginManager().registerEvents(this, MinigamesAPI.getPlugin());
     }
 
     @EventHandler

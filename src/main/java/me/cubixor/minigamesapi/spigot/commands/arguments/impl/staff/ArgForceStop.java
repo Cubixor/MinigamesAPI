@@ -1,4 +1,4 @@
-package me.cubixor.minigamesapi.spigot.commands.arguments.impl;
+package me.cubixor.minigamesapi.spigot.commands.arguments.impl.staff;
 
 import me.cubixor.minigamesapi.spigot.arena.Arena;
 import me.cubixor.minigamesapi.spigot.arena.ArenasManager;

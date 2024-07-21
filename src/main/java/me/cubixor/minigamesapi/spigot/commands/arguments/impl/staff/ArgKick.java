@@ -1,4 +1,4 @@
-package me.cubixor.minigamesapi.spigot.commands.arguments.impl;
+package me.cubixor.minigamesapi.spigot.commands.arguments.impl.staff;
 
 import com.google.common.collect.ImmutableMap;
 import me.cubixor.minigamesapi.spigot.arena.Arena;

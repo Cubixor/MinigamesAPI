@@ -69,6 +69,6 @@ public class FileStatsManager extends StatsManager {
             public void run() {
                 statsConfig.save();
             }
-        }.runTaskTimerAsynchronously(MinigamesAPI.getInstance(), 600, 600);
+        }.runTaskTimerAsynchronously(MinigamesAPI.getPlugin(), 600, 600);
     }
 }

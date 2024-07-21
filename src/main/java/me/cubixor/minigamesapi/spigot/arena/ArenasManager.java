@@ -20,24 +20,27 @@ public class ArenasManager {
     private final PacketSenderSpigot packetSender;
     private final Map<String, LocalArena> localArenas = new HashMap<>();
     private final Map<String, Arena> remoteArenas = new HashMap<>();
+    private final boolean bungee;
 
-    public ArenasManager(ArenasConfigManager configManager, ArenaPlayersManager arenaPlayersManager, PacketSenderSpigot packetSender) {
-        this.arenaPlayersManager = arenaPlayersManager;
+    public ArenasManager(ArenasConfigManager configManager, PacketSenderSpigot packetSender) {
         this.configManager = configManager;
         this.packetSender = packetSender;
 
         //TODO Decouple that
+        arenaPlayersManager = new ArenaPlayersManager(this);
         signManager = new SignManager(this);
-        MinigamesAPI.getInstance().getServer().getPluginManager().registerEvents(signManager, MinigamesAPI.getInstance());
+        MinigamesAPI.getPlugin().getServer().getPluginManager().registerEvents(signManager, MinigamesAPI.getPlugin());
 
         loadArenas();
+        bungee =MinigamesAPI.getPlugin().getConfig().getBoolean("bungee.bungee-mode");
     }
 
     public void loadArenas() {
         for (String name : configManager.getArenas()) {
+            //TODO Proper server name
             LocalArena localArena = new LocalArena(
                     name,
-                    MinigamesAPI.getInstance().getName(),
+                    MinigamesAPI.getPlugin().getName(),
                     configManager.getBoolean(name, BasicConfigField.ACTIVE),
                     configManager.getBoolean(name, BasicConfigField.VIP),
                     configManager.getInt(name, BasicConfigField.MIN_PLAYERS),
@@ -62,7 +65,7 @@ public class ArenasManager {
         configManager.removeArena(arena);
         signManager.removeArena(arena);
 
-        if (MinigamesAPI.isBungee()) {
+        if (isBungee()) {
             Map<String, Arena> arenaMap = Collections.singletonMap(arena, null);
             packetSender.sendUpdateArenasPacket(arenaMap);
         }
@@ -107,7 +110,7 @@ public class ArenasManager {
     public void updateArena(LocalArena localArena) {
         signManager.updateSigns(localArena.getName());
 
-        if (MinigamesAPI.isBungee()) {
+        if (isBungee()) {
             Arena arenaObj = localArena.toArena();
 
             Map<String, Arena> arenaMap = Collections.singletonMap(arenaObj.getName(), arenaObj);
@@ -225,5 +228,9 @@ public class ArenasManager {
 
     public ArenaPlayersManager getArenaPlayersManager() {
         return arenaPlayersManager;
+    }
+
+    public boolean isBungee() {
+        return bungee;
     }
 }

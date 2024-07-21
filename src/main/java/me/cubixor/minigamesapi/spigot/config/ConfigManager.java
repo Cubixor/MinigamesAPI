@@ -8,12 +8,13 @@ import me.cubixor.minigamesapi.spigot.config.stats.StatsField;
 import me.cubixor.minigamesapi.spigot.config.stats.StatsManager;
 import me.cubixor.socketsmc.spigot.SocketClient;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.List;
 
 public class ConfigManager {
 
-    private final MinigamesAPI plugin = MinigamesAPI.getInstance();
+    private final JavaPlugin plugin = MinigamesAPI.getPlugin();
     private final CustomConfig messagesConfig;
     private final CustomConfig arenasConfig;
     private final CustomConfig connectionConfig;
@@ -49,22 +50,16 @@ public class ConfigManager {
         );
     }
 
-    public SocketClient setupSocket() {
-        return new SocketClient(
-                MinigamesAPI.getInstance(),
-                connectionConfig.get().getString("bungee-socket.host"),
-                connectionConfig.get().getInt("bungee-socket.port"),
-                connectionConfig.get().getString("bungee-socket.server-name"),
-                connectionConfig.get().getBoolean("bungee-socket.debug")
-        );
-    }
-
     public FileConfiguration getConfig() {
         return plugin.getConfig();
     }
 
     public FileConfiguration getMessagesConfig() {
         return messagesConfig.get();
+    }
+
+    public CustomConfig getConnectionConfig() {
+        return connectionConfig;
     }
 
     public StatsManager getStatsManager() {

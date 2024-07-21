@@ -3,13 +3,14 @@ package me.cubixor.minigamesapi.spigot.config;
 import me.cubixor.minigamesapi.spigot.MinigamesAPI;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
 
 public class CustomConfig {
 
-    private final MinigamesAPI plugin = MinigamesAPI.getInstance();
+    private final JavaPlugin plugin = MinigamesAPI.getPlugin();
     private final File file;
     private final FileConfiguration fileConfiguration;
 

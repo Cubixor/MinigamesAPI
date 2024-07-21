@@ -11,7 +11,7 @@ public abstract class ArenaCommandArgument extends CommandArgument {
     private final Boolean shouldBeActive;
     protected ArenasManager arenasManager;
 
-    public ArenaCommandArgument(ArenasManager arenasManager,
+    protected ArenaCommandArgument(ArenasManager arenasManager,
                                 String name,
                                 String permission,
                                 int argLength,

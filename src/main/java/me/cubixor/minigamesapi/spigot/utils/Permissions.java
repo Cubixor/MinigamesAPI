@@ -9,6 +9,6 @@ public class Permissions {
     }
 
     public static boolean has(CommandSender player, String permission) {
-        return player.hasPermission(MinigamesAPI.getInstance().getName() + "." + permission);
+        return player.hasPermission(MinigamesAPI.getPlugin().getName() + "." + permission);
     }
 }

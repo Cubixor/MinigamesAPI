@@ -1,4 +1,4 @@
-package me.cubixor.minigamesapi.spigot.commands.arguments.impl;
+package me.cubixor.minigamesapi.spigot.commands.arguments.impl.setup;
 
 import me.cubixor.minigamesapi.spigot.MinigamesAPI;
 import me.cubixor.minigamesapi.spigot.arena.ArenasManager;
@@ -42,6 +42,6 @@ public class ArgDelete extends ArenaCommandArgument {
             public void run() {
                 awaitingConfirm.remove(player);
             }
-        }.runTaskLater(MinigamesAPI.getInstance(), 400);
+        }.runTaskLater(MinigamesAPI.getPlugin(), 400);
     }
 }

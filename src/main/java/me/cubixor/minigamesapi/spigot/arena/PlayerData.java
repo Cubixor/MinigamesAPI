@@ -1,4 +1,4 @@
-package me.cubixor.minigamesapi.spigot.game;
+package me.cubixor.minigamesapi.spigot.arena;
 
 import com.cryptomorin.xseries.messages.ActionBar;
 import com.cryptomorin.xseries.messages.Titles;

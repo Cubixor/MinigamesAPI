@@ -32,6 +32,8 @@ public class PacketManagerSpigot implements Listener {
     public PacketManagerSpigot(ArenasManager arenasManager, PacketSenderSpigot packetSender) {
         this.arenasManager = arenasManager;
         this.packetSender = packetSender;
+
+        Bukkit.getServer().getPluginManager().registerEvents(this, MinigamesAPI.getPlugin());
     }
 
     @EventHandler
@@ -70,7 +72,7 @@ public class PacketManagerSpigot implements Listener {
                 public void run() {
                     playersToJoin.remove(joinPacket.getPlayerName());
                 }
-            }.runTaskLater(MinigamesAPI.getInstance(), 100L);
+            }.runTaskLater(MinigamesAPI.getPlugin(), 100L);
         } else if (packet instanceof KickPacket) {
             KickPacket kickPacket = (KickPacket) packet;
             LocalArena localArena = arenasManager.getLocalArenas().get(((KickPacket) packet).getArenaName());

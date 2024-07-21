@@ -6,6 +6,8 @@ import me.cubixor.minigamesapi.common.packets.JoinPacket;
 import me.cubixor.minigamesapi.common.packets.LeavePacket;
 import me.cubixor.minigamesapi.spigot.MinigamesAPI;
 import me.cubixor.minigamesapi.spigot.arena.Arena;
+import me.cubixor.minigamesapi.spigot.config.CustomConfig;
+import me.cubixor.socketsmc.spigot.SocketClient;
 import me.cubixor.socketsmc.spigot.SocketClientSender;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -18,10 +20,18 @@ public class PacketSenderSpigot {
     private final LeaveStrategy leaveStrategy;
     private final String lobbyServer;
 
-    public PacketSenderSpigot(SocketClientSender socketSender) {
-        this.socketSender = socketSender;
-        this.leaveStrategy = LeaveStrategy.valueOf(MinigamesAPI.getInstance().getConfig().getString("bungee.on-leave"));
-        this.lobbyServer = MinigamesAPI.getInstance().getConfig().getString("bungee.lobby-server");
+    public PacketSenderSpigot(CustomConfig connectionConfig) {
+        SocketClient socketClient = new SocketClient(
+                MinigamesAPI.getPlugin(),
+                connectionConfig.get().getString("bungee-socket.host"),
+                connectionConfig.get().getInt("bungee-socket.port"),
+                connectionConfig.get().getString("bungee-socket.server-name"),
+                connectionConfig.get().getBoolean("bungee-socket.debug")
+        );
+
+        this.socketSender = socketClient.getSender();
+        this.leaveStrategy = LeaveStrategy.valueOf(MinigamesAPI.getPlugin().getConfig().getString("bungee.on-leave"));
+        this.lobbyServer = MinigamesAPI.getPlugin().getConfig().getString("bungee.lobby-server");
     }
 
     public void sendUpdateArenasPacket(Map<String, Arena> arenas) {
@@ -70,7 +80,7 @@ public class PacketSenderSpigot {
         }, LEAVE_COMMAND {
             @Override
             public void invoke(PacketSenderSpigot sender, String player) {
-                for (String s : MinigamesAPI.getInstance().getConfig().getStringList("bungee.leave-commands")) {
+                for (String s : MinigamesAPI.getPlugin().getConfig().getStringList("bungee.leave-commands")) {
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), s.replace("%player%", player));
                 }
             }

@@ -12,7 +12,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class ChatBlockerTest {
+public class ArenasManagerTest {
 
     private ServerMock mock;
     private JavaPlugin plugin;
@@ -37,5 +37,4 @@ class ChatBlockerTest {
     void testCommandBlock() {
         PlayerMock player = mock.addPlayer();
     }
-
 }

@@ -4,13 +4,14 @@ import me.cubixor.minigamesapi.spigot.MinigamesAPI;
 import me.cubixor.minigamesapi.spigot.utils.Messages;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashSet;
 import java.util.Set;
 
 public class CooldownManager {
 
-    private final MinigamesAPI plugin = MinigamesAPI.getInstance();
+    private final JavaPlugin plugin = MinigamesAPI.getPlugin();
     private final Set<Player> cooldown = new HashSet<>();
     private final int cooldownTime;
 

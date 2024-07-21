@@ -2,7 +2,6 @@ package me.cubixor.minigamesapi.spigot.arena;
 
 
 import me.cubixor.minigamesapi.spigot.MinigamesAPI;
-import me.cubixor.minigamesapi.spigot.game.PlayerData;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -16,7 +15,7 @@ public class LocalArena extends Arena {
     private int timer = -1;
 
     public LocalArena(String name) {
-        super(name, MinigamesAPI.getInstance().getName(), false, false, 0, 0);
+        super(name, MinigamesAPI.getPlugin().getName(), false, false, 0, 0);
     }
 
     public LocalArena(String name, String server, boolean active, boolean vip, int minPlayers, int maxPlayers) {
