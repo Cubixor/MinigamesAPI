@@ -50,6 +50,7 @@
                                     </excludes>
                                 </filter>
                             </filters>
+                            <outputFile>D:\Kuba\MINECRAFT\Serwer latest\plugins\MinigamesAPI-${project.version}.jar</outputFile>
                         </configuration>
                     </execution>
                 </executions>

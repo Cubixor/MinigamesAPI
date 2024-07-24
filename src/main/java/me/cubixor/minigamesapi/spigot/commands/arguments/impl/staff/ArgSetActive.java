@@ -1,7 +1,7 @@
 package me.cubixor.minigamesapi.spigot.commands.arguments.impl.staff;
 
-import me.cubixor.minigamesapi.spigot.arena.ArenasManager;
-import me.cubixor.minigamesapi.spigot.arena.objects.LocalArena;
+import me.cubixor.minigamesapi.spigot.game.ArenasManager;
+import me.cubixor.minigamesapi.spigot.game.arena.LocalArena;
 import me.cubixor.minigamesapi.spigot.commands.arguments.ArenaCommandArgument;
 import me.cubixor.minigamesapi.spigot.config.arenas.ArenaSetupChecker;
 import me.cubixor.minigamesapi.spigot.utils.Messages;
@@ -21,7 +21,7 @@ public class ArgSetActive extends ArenaCommandArgument {
         String arena = args[1];
 
         if (!args[2].equalsIgnoreCase("true") && !args[2].equalsIgnoreCase("false")) {
-            Messages.send(player, "arena-setup.active-usage");
+            Messages.send(player, "arena-moderate.active-usage");
             return;
         }
 
@@ -49,9 +49,9 @@ public class ArgSetActive extends ArenaCommandArgument {
         arenasManager.updateArenaActive(arena, cmdActive);
 
         if (cmdActive) {
-            Messages.send(player, "arena-setup.set-vip-success-vip", "%arena%", arena);
+            Messages.send(player, "arena-moderate.active-activate", "%arena%", arena);
         } else {
-            Messages.send(player, "arena-setup.set-vip-success-not-vip", "%arena%", arena);
+            Messages.send(player, "arena-moderate.active-deactivate", "%arena%", arena);
         }
 
     }

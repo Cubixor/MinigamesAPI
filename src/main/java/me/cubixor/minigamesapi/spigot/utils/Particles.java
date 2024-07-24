@@ -8,10 +8,12 @@ public class Particles {
 
     private static FileConfiguration config;
 
-    public Particles(FileConfiguration config) {
-        Particles.config = config;
+    private Particles() {
     }
 
+    public static void init(FileConfiguration config) {
+        Particles.config = config;
+    }
 
     public static void spawnParticle(Location loc, String path) {
         if (!config.getBoolean("particles." + path + ".enabled")) {

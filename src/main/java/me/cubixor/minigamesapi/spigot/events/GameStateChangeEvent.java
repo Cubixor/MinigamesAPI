@@ -1,8 +1,7 @@
 package me.cubixor.minigamesapi.spigot.events;
 
-import me.cubixor.minigamesapi.spigot.arena.objects.Arena;
-import me.cubixor.minigamesapi.spigot.arena.objects.GameState;
-import me.cubixor.minigamesapi.spigot.arena.objects.LocalArena;
+import me.cubixor.minigamesapi.spigot.game.arena.GameState;
+import me.cubixor.minigamesapi.spigot.game.arena.LocalArena;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
@@ -28,7 +27,7 @@ public class GameStateChangeEvent extends Event {
         return HANDLERS;
     }
 
-    public Arena getLocalArena() {
+    public LocalArena getLocalArena() {
         return localArena;
     }
 

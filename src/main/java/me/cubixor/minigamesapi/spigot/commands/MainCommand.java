@@ -1,6 +1,6 @@
 package me.cubixor.minigamesapi.spigot.commands;
 
-import me.cubixor.minigamesapi.spigot.arena.ArenasManager;
+import me.cubixor.minigamesapi.spigot.game.ArenasManager;
 import me.cubixor.minigamesapi.spigot.commands.arguments.CommandArgument;
 import me.cubixor.minigamesapi.spigot.commands.arguments.impl.play.*;
 import me.cubixor.minigamesapi.spigot.commands.arguments.impl.setup.*;
@@ -74,7 +74,14 @@ public class MainCommand implements CommandExecutor {
             return true;
         }
 
-        arguments.get(args[0]).validateAndHandle(player, args);
+        String arg = args[0].toLowerCase();
+
+        if(!arguments.containsKey(arg)){
+            Messages.send(sender, "general.unknown-command");
+            return true;
+        }
+
+        arguments.get(args[0].toLowerCase()).validateAndHandle(player, args);
 
         return true;
     }

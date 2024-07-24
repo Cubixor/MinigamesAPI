@@ -8,11 +8,13 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class Items {
 
+    private Items(){
+    }
+
     private static FileConfiguration config;
     private static GameItem leaveItem;
 
-
-    public Items(FileConfiguration config) {
+    public static void init(FileConfiguration config) {
         Items.config = config;
         Items.leaveItem = new GameItem("items.leave-item", "game.leave-item-name", "game.leave-item-lore");
     }

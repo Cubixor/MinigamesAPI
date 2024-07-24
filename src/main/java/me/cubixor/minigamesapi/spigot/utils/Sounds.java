@@ -11,7 +11,10 @@ public class Sounds {
 
     private static FileConfiguration config;
 
-    public Sounds(FileConfiguration config) {
+    private Sounds() {
+    }
+
+    public static void init(FileConfiguration config) {
         Sounds.config = config;
     }
 
@@ -19,5 +22,12 @@ public class Sounds {
         //TODO Edit format in config
         XSound.Record soundRecord = XSound.parse(config.getString("sounds." + path));
         soundRecord.soundPlayer().atLocation(loc).forPlayers(players).play();
+    }
+
+    public static void playSoundWithPitch(String path, Player player, float pitch) {
+        XSound.Record soundRecord = XSound
+                .parse(config.getString("sounds." + path))
+                .withPitch(pitch);
+        soundRecord.soundPlayer().forPlayers(player).play();
     }
 }

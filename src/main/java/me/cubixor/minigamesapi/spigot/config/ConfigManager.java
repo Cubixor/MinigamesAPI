@@ -6,6 +6,10 @@ import me.cubixor.minigamesapi.spigot.config.stats.DBStatsManager;
 import me.cubixor.minigamesapi.spigot.config.stats.FileStatsManager;
 import me.cubixor.minigamesapi.spigot.config.stats.StatsField;
 import me.cubixor.minigamesapi.spigot.config.stats.StatsManager;
+import me.cubixor.minigamesapi.spigot.utils.Items;
+import me.cubixor.minigamesapi.spigot.utils.Messages;
+import me.cubixor.minigamesapi.spigot.utils.Particles;
+import me.cubixor.minigamesapi.spigot.utils.Sounds;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -38,6 +42,11 @@ public class ConfigManager {
 
             statsManager = new DBStatsManager(statsFields, dbManager);
         }
+
+        Messages.init(messagesConfig.get());
+        Items.init(getConfig());
+        Particles.init(getConfig());
+        Sounds.init(getConfig());
     }
 
     public DBManager setupDB() {

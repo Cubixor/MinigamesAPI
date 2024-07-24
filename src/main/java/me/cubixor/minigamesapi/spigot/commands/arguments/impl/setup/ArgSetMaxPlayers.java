@@ -1,6 +1,6 @@
 package me.cubixor.minigamesapi.spigot.commands.arguments.impl.setup;
 
-import me.cubixor.minigamesapi.spigot.arena.ArenasManager;
+import me.cubixor.minigamesapi.spigot.game.ArenasManager;
 import me.cubixor.minigamesapi.spigot.commands.arguments.ArenaCommandArgument;
 import me.cubixor.minigamesapi.spigot.utils.Messages;
 import org.bukkit.entity.Player;
@@ -13,7 +13,7 @@ public class ArgSetMaxPlayers extends ArenaCommandArgument {
 
     @Override
     public void handle(Player player, String[] args) {
-        String arenaName = args[0];
+        String arenaName = args[1];
 
         int max;
         try {

@@ -1,4 +1,4 @@
-package me.cubixor.minigamesapi.spigot.arena.objects;
+package me.cubixor.minigamesapi.spigot.game.arena;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -8,11 +8,11 @@ public class Arena implements Serializable {
 
     private final String name;
     private final String server;
-    private final List<String> playersLeft = new ArrayList<>();
-    private boolean vip;
-    private int minPlayers;
-    private int maxPlayers;
-    private GameState state;
+    //private final List<String> playersLeft = new ArrayList<>();
+    protected boolean vip;
+    protected int minPlayers;
+    protected int maxPlayers;
+    protected GameState state;
     private List<String> players = new ArrayList<>();
 
 
@@ -47,32 +47,16 @@ public class Arena implements Serializable {
         return vip;
     }
 
-    public void setVip(boolean vip) {
-        this.vip = vip;
-    }
-
     public int getMinPlayers() {
         return minPlayers;
-    }
-
-    public void setMinPlayers(int minPlayers) {
-        this.minPlayers = minPlayers;
     }
 
     public int getMaxPlayers() {
         return maxPlayers;
     }
 
-    public void setMaxPlayers(int maxPlayers) {
-        this.maxPlayers = maxPlayers;
-    }
-
     public GameState getState() {
         return state;
-    }
-
-    public void setState(GameState state) {
-        this.state = state;
     }
 
     public List<String> getPlayers() {

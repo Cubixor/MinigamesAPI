@@ -15,9 +15,12 @@ public class Messages {
     private static FileConfiguration messagesConfig;
     private static String prefix;
 
-    public Messages(FileConfiguration messagesConfig) {
+    private Messages(){
+    }
+
+    public static void init(FileConfiguration messagesConfig) {
         Messages.messagesConfig = messagesConfig;
-        prefix = ChatColor.translateAlternateColorCodes('&', messagesConfig.getString("prefix"));
+        Messages.prefix = ChatColor.translateAlternateColorCodes('&', messagesConfig.getString("prefix"));
     }
 
     public static String get(String path) {

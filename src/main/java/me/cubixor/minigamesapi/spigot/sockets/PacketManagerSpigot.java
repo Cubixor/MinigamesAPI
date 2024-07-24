@@ -5,10 +5,10 @@ import me.cubixor.minigamesapi.common.packets.ForceStartStopPacket;
 import me.cubixor.minigamesapi.common.packets.JoinPacket;
 import me.cubixor.minigamesapi.common.packets.KickPacket;
 import me.cubixor.minigamesapi.spigot.MinigamesAPI;
-import me.cubixor.minigamesapi.spigot.arena.ArenasManager;
-import me.cubixor.minigamesapi.spigot.arena.ArenasRegistry;
-import me.cubixor.minigamesapi.spigot.arena.objects.Arena;
-import me.cubixor.minigamesapi.spigot.arena.objects.LocalArena;
+import me.cubixor.minigamesapi.spigot.game.ArenasManager;
+import me.cubixor.minigamesapi.spigot.game.ArenasRegistry;
+import me.cubixor.minigamesapi.spigot.game.arena.Arena;
+import me.cubixor.minigamesapi.spigot.game.arena.LocalArena;
 import me.cubixor.socketsmc.common.packets.Packet;
 import me.cubixor.socketsmc.spigot.event.PacketReceivedEventSpigot;
 import me.cubixor.socketsmc.spigot.event.SocketConnectedEventSpigot;
@@ -82,7 +82,7 @@ public class PacketManagerSpigot implements Listener {
             if (!localArena.getPlayers().contains(kickPacket.getTarget())) return;
 
             //TODO Kick messages
-            arenasManager.getArenaPlayersManager().kickFromLocalArena(Bukkit.getPlayerExact(kickPacket.getTarget()), localArena);
+            arenasManager.getArenaPlayersManager().kickFromLocalArena(Bukkit.getPlayerExact(kickPacket.getTarget()), localArena,false);
         }
     }
 

@@ -1,9 +1,9 @@
 package me.cubixor.minigamesapi.spigot;
 
-import me.cubixor.minigamesapi.spigot.arena.ArenasManager;
-import me.cubixor.minigamesapi.spigot.arena.ArenasRegistry;
-import me.cubixor.minigamesapi.spigot.arena.ChatBlocker;
-import me.cubixor.minigamesapi.spigot.arena.SignManager;
+import me.cubixor.minigamesapi.spigot.game.ArenasManager;
+import me.cubixor.minigamesapi.spigot.game.ArenasRegistry;
+import me.cubixor.minigamesapi.spigot.game.ChatBlocker;
+import me.cubixor.minigamesapi.spigot.game.SignManager;
 import me.cubixor.minigamesapi.spigot.commands.MainCommand;
 import me.cubixor.minigamesapi.spigot.commands.MainCommandCompleter;
 import me.cubixor.minigamesapi.spigot.commands.arguments.CommandArgument;
@@ -32,7 +32,7 @@ public class MockMain extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        //load();
+        load();
     }
 
     private void load() {

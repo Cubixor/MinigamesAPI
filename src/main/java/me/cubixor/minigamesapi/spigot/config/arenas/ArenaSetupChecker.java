@@ -1,7 +1,7 @@
 package me.cubixor.minigamesapi.spigot.config.arenas;
 
 
-import me.cubixor.minigamesapi.spigot.arena.objects.LocalArena;
+import me.cubixor.minigamesapi.spigot.game.arena.LocalArena;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -15,7 +15,7 @@ public class ArenaSetupChecker {
     }
 
     public boolean checkReady(LocalArena arena) {
-        return getReadyMap(arena).containsValue(false);
+        return !getReadyMap(arena).containsValue(false);
     }
 
     public Map<ConfigField, Boolean> getReadyMap(LocalArena arena) {

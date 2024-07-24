@@ -1,20 +1,23 @@
-package me.cubixor.minigamesapi.spigot.arena;
+package me.cubixor.minigamesapi.spigot.game;
 
 import me.cubixor.minigamesapi.spigot.MinigamesAPI;
-import me.cubixor.minigamesapi.spigot.arena.objects.Arena;
-import me.cubixor.minigamesapi.spigot.arena.objects.GameState;
-import me.cubixor.minigamesapi.spigot.arena.objects.LocalArena;
 import me.cubixor.minigamesapi.spigot.config.arenas.ArenasConfigManager;
 import me.cubixor.minigamesapi.spigot.config.arenas.BasicConfigField;
 import me.cubixor.minigamesapi.spigot.config.arenas.ConfigField;
+import me.cubixor.minigamesapi.spigot.events.GameStateChangeEvent;
+import me.cubixor.minigamesapi.spigot.game.arena.Arena;
+import me.cubixor.minigamesapi.spigot.game.arena.GameState;
+import me.cubixor.minigamesapi.spigot.game.arena.LocalArena;
 import me.cubixor.minigamesapi.spigot.sockets.PacketSenderSpigot;
 import me.cubixor.minigamesapi.spigot.utils.Messages;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 
 import java.util.Collections;
 import java.util.Map;
 
-public class ArenasManager {
+public class ArenasManager implements Listener {
 
     private final ArenasRegistry registry;
     private final ArenaPlayersManager arenaPlayersManager;
@@ -36,10 +39,16 @@ public class ArenasManager {
         bungee = MinigamesAPI.getPlugin().getConfig().getBoolean("bungee.bungee-mode");
     }
 
+    @EventHandler
+    public void onStateChange(GameStateChangeEvent evt) {
+        updateArena(evt.getLocalArena());
+    }
+
     private void loadArenas() {
         for (String name : configManager.getArenas()) {
             //TODO Proper server name
             LocalArena localArena = new LocalArena(
+                    getArenaPlayersManager(),
                     name,
                     MinigamesAPI.getPlugin().getName(),
                     configManager.getBoolean(name, BasicConfigField.ACTIVE),
@@ -52,7 +61,7 @@ public class ArenasManager {
     }
 
     public void addArena(String arena) {
-        LocalArena localArena = new LocalArena(arena);
+        LocalArena localArena = new LocalArena(getArenaPlayersManager(), arena);
 
         registry.getLocalArenas().put(arena, localArena);
         configManager.insertArena(arena);
@@ -144,9 +153,9 @@ public class ArenasManager {
     }
 
     public void forceLocalStart(LocalArena localArena, String playerName) {
-        Messages.sendAll(localArena.getBukkitPlayers(), "arena-moderate.force-start-success", "%player%", playerName);
+        localArena.getStateManager().setGame();
 
-        //TODO Update state
+        Messages.sendAll(localArena.getBukkitPlayers(), "arena-moderate.force-start-success", "%player%", playerName);
     }
 
     public void forceStop(Arena arena, Player player) {
@@ -158,11 +167,9 @@ public class ArenasManager {
     }
 
     public void forceLocalStop(LocalArena localArena, String playerName) {
-
+        localArena.getStateManager().reset();
 
         Messages.sendAll(localArena.getBukkitPlayers(), "arena-moderate.force-stop-success", "%player%", playerName);
-
-        //TODO Update state
     }
 
     public ArenasConfigManager getConfigManager() {

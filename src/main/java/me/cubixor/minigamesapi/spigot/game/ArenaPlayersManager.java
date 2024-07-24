@@ -1,11 +1,11 @@
-package me.cubixor.minigamesapi.spigot.arena;
+package me.cubixor.minigamesapi.spigot.game;
 
 import com.google.common.collect.ImmutableMap;
 import me.cubixor.minigamesapi.spigot.MinigamesAPI;
 import me.cubixor.minigamesapi.spigot.Utils;
-import me.cubixor.minigamesapi.spigot.arena.objects.Arena;
-import me.cubixor.minigamesapi.spigot.arena.objects.LocalArena;
-import me.cubixor.minigamesapi.spigot.arena.objects.PlayerData;
+import me.cubixor.minigamesapi.spigot.game.arena.Arena;
+import me.cubixor.minigamesapi.spigot.game.arena.LocalArena;
+import me.cubixor.minigamesapi.spigot.game.arena.PlayerData;
 import me.cubixor.minigamesapi.spigot.config.arenas.BasicConfigField;
 import me.cubixor.minigamesapi.spigot.events.GameJoinEvent;
 import me.cubixor.minigamesapi.spigot.events.GameLeaveEvent;
@@ -52,7 +52,7 @@ public class ArenaPlayersManager {
             return false;
         }
 
-        if (checkVIP(arena, player)) {
+        if (!checkVIP(arena, player)) {
             Messages.send(player, "game.arena-join-vip");
             return false;
         }
@@ -161,13 +161,14 @@ public class ArenaPlayersManager {
         );
 
         //TODO Update state, scoreboard
+        localArena.getStateManager().updateOnJoin();
 
         arenasManager.updateArena(localArena);
-        MinigamesAPI.getPlugin().getServer().getPluginManager().callEvent(new GameJoinEvent(localArena, player));
+        Bukkit.getPluginManager().callEvent(new GameJoinEvent(localArena, player));
     }
 
     public void leaveArena(Player player, LocalArena localArena) {
-        kickFromLocalArena(player, localArena);
+        kickFromLocalArena(player, localArena, false);
 
         Set<Player> players = localArena.getBukkitPlayers();
         String count = String.valueOf(players.size());
@@ -180,18 +181,15 @@ public class ArenaPlayersManager {
     }
 
     public void kickFromArena(String playerName, Arena arena) {
-
         if (arena.isLocal()) {
             LocalArena localArena = (LocalArena) arena;
-            kickFromLocalArena(Bukkit.getPlayerExact(playerName), localArena);
+            kickFromLocalArena(Bukkit.getPlayerExact(playerName), localArena, false);
         } else {
             arenasManager.getPacketSender().sendLeavePacket(playerName);
         }
     }
 
-    public void kickFromLocalArena(Player player, LocalArena localArena) {
-        localArena.getBukkitPlayers().remove(player);
-
+    public void kickFromLocalArena(Player player, LocalArena localArena, boolean reset) {
         Location playerLocation = player.getLocation();
         PlayerData playerData = localArena.getPlayerData().remove(player);
         playerData.restorePlayerData();
@@ -210,8 +208,14 @@ public class ArenaPlayersManager {
 
         //TODO Update state, scoreboard
 
-        arenasManager.updateArena(localArena);
-        MinigamesAPI.getPlugin().getServer().getPluginManager().callEvent(new GameLeaveEvent(localArena, player));
+        localArena.getPlayers().remove(player.getName());
+
+        if(!reset) {
+            localArena.getStateManager().updateOnLeave();
+            arenasManager.updateArena(localArena);
+        }
+
+        Bukkit.getPluginManager().callEvent(new GameLeaveEvent(localArena, player));
     }
 
     private boolean checkVIP(Arena arena, Player player) {

@@ -1,8 +1,8 @@
 package me.cubixor.minigamesapi.spigot.commands.arguments;
 
-import me.cubixor.minigamesapi.spigot.arena.ArenasManager;
-import me.cubixor.minigamesapi.spigot.arena.ArenasRegistry;
-import me.cubixor.minigamesapi.spigot.arena.objects.Arena;
+import me.cubixor.minigamesapi.spigot.game.ArenasManager;
+import me.cubixor.minigamesapi.spigot.game.ArenasRegistry;
+import me.cubixor.minigamesapi.spigot.game.arena.Arena;
 import me.cubixor.minigamesapi.spigot.utils.Messages;
 import org.bukkit.entity.Player;
 
@@ -49,12 +49,12 @@ public abstract class ArenaCommandArgument extends CommandArgument {
             Arena arena = arenasRegistry.getArena(arenaName);
 
             if (shouldBeActive && !arena.isActive()) {
-                Messages.send(player, "arena-setup.active-block", "%arena%", arenaName);
+                Messages.send(player, "game.arena-join-not-active", "%arena%", arenaName);
                 return false;
             }
 
             if (!shouldBeActive && arena.isActive()) {
-                Messages.send(player, "game.arena-join-not-active", "%arena%", arenaName);
+                Messages.send(player, "arena-setup.active-block", "%arena%", arenaName);
                 return false;
             }
         }

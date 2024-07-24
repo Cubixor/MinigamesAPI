@@ -3,3 +3,7 @@ version: '${project.version}'
 main: me.cubixor.minigamesapi.spigot.MockMain
 api-version: "1.13"
 authors: [Cubixor]
+
+commands:
+  minigamesapi:
+    aliases: mg

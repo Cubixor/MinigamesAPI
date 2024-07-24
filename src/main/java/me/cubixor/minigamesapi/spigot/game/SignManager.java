@@ -1,11 +1,11 @@
-package me.cubixor.minigamesapi.spigot.arena;
+package me.cubixor.minigamesapi.spigot.game;
 
 import com.cryptomorin.xseries.XBlock;
 import com.cryptomorin.xseries.XMaterial;
 import com.google.common.collect.ImmutableMap;
 import me.cubixor.minigamesapi.spigot.MinigamesAPI;
-import me.cubixor.minigamesapi.spigot.arena.objects.Arena;
-import me.cubixor.minigamesapi.spigot.arena.objects.GameState;
+import me.cubixor.minigamesapi.spigot.game.arena.Arena;
+import me.cubixor.minigamesapi.spigot.game.arena.GameState;
 import me.cubixor.minigamesapi.spigot.config.arenas.ArenasConfigManager;
 import me.cubixor.minigamesapi.spigot.utils.MessageUtils;
 import me.cubixor.minigamesapi.spigot.utils.Messages;
@@ -115,11 +115,10 @@ public class SignManager implements Listener {
         if (!signs.containsKey(arena) && !evt.getLine(1).equalsIgnoreCase("quickjoin")) {
             return;
         }
+        evt.setCancelled(true);
 
         addSign(arena, sign.getLocation());
         updateSign(sign.getLocation(), arena);
-
-        evt.setCancelled(true);
     }
 
     @EventHandler
@@ -256,7 +255,7 @@ public class SignManager implements Listener {
         sign.setLine(2, Messages.get("other.sign-third-line", replacement));
         sign.setLine(3, Messages.get("other.sign-fourth-line", replacement));
 
-        sign.update(true);
+        Bukkit.getScheduler().runTask(plugin,  () -> sign.update(true));
     }
 
     private String getSignArena(Sign sign) {
