@@ -22,7 +22,7 @@ public class FileStatsManager extends StatsManager {
     }
 
     @Override
-    public int getStats(String player, StatsField field) {
+    public int fetchSavedStats(String player, StatsField field) {
         if (playersSection.getConfigurationSection(player) == null) {
             return 0;
         }
@@ -33,7 +33,7 @@ public class FileStatsManager extends StatsManager {
     }
 
     @Override
-    public void addStats(String player, StatsField field, int count) {
+    public void addSavedStats(String player, StatsField field, int count) {
         ConfigurationSection playerSection = playersSection.getConfigurationSection(player);
         if (playerSection == null) {
             playerSection = playersSection.createSection(player);

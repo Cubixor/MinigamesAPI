@@ -7,6 +7,7 @@ import me.cubixor.minigamesapi.spigot.config.ConfigManager;
 import me.cubixor.minigamesapi.spigot.config.arenas.ArenaSetupChecker;
 import me.cubixor.minigamesapi.spigot.config.stats.BasicStatsField;
 import me.cubixor.minigamesapi.spigot.game.*;
+import me.cubixor.minigamesapi.spigot.integrations.PlaceholderExpansion;
 import me.cubixor.minigamesapi.spigot.sockets.PacketManagerSpigot;
 import me.cubixor.minigamesapi.spigot.sockets.PacketSenderSpigot;
 import org.bukkit.plugin.PluginDescriptionFile;
@@ -52,5 +53,7 @@ public class MockMain extends JavaPlugin {
 
         getServer().getPluginCommand(getName()).setExecutor(mainCommand);
         getServer().getPluginCommand(getName()).setTabCompleter(mainCommandCompleter);
+
+        new PlaceholderExpansion(arenasRegistry, configManager.getStatsManager());
     }
 }

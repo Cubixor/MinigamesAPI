@@ -23,4 +23,29 @@ public class MessageUtils {
         }
         return "";
     }
+
+    public static String convertPlaytime(int playtime) {
+        int hours;
+        int minutes;
+        int seconds;
+        String h = Messages.get("other.stats-playtime-hours");
+        String min = Messages.get("other.stats-playtime-minutes");
+        String sec = Messages.get("other.stats-playtime-seconds");
+        String timeString;
+        if (playtime < 60) {
+            seconds = playtime;
+            timeString = seconds + sec;
+        } else if (playtime < 3600) {
+            minutes = playtime / 60;
+            seconds = playtime % 60;
+            timeString = minutes + min + " " + seconds + sec;
+        } else {
+            hours = playtime / 3600;
+            minutes = (playtime % 3600) / 60;
+            seconds = playtime % 60;
+            timeString = hours + h + " " + minutes + min + " " + seconds + sec;
+        }
+
+        return timeString;
+    }
 }

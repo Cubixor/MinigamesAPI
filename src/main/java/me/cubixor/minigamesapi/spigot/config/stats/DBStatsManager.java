@@ -21,7 +21,7 @@ public class DBStatsManager extends StatsManager {
     }
 
     @Override
-    public int getStats(String player, StatsField field) {
+    public int fetchSavedStats(String player, StatsField field) {
         //assert (!Bukkit.isPrimaryThread());
 
         String query = "SELECT $field FROM $table WHERE player=?"
@@ -45,7 +45,7 @@ public class DBStatsManager extends StatsManager {
     }
 
     @Override
-    public void addStats(String player, StatsField field, int count) {
+    public void addSavedStats(String player, StatsField field, int count) {
         //assert (!Bukkit.isPrimaryThread());
 
         String query = "INSERT INTO $table (player, $field) VALUES (?, ?) ON DUPLICATE KEY UPDATE $field = $field + VALUES($field);"
