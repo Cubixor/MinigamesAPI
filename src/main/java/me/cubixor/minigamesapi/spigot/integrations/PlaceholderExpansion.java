@@ -27,7 +27,7 @@ public class PlaceholderExpansion extends me.clip.placeholderapi.expansion.Place
 
     @Override
     public @NotNull String getIdentifier() {
-        return MinigamesAPI.getPlugin().getName();
+        return MinigamesAPI.getPlugin().getName().toLowerCase();
     }
 
     @Override
@@ -55,13 +55,10 @@ public class PlaceholderExpansion extends me.clip.placeholderapi.expansion.Place
     public String onRequest(OfflinePlayer player, @NotNull String params) {
         String[] paramsSplit = params.split("_");
 
-        if (paramsSplit.length != 2) {
+        if (paramsSplit.length < 1 || (paramsSplit.length == 1 && player == null)) {
             return null;
         }
-        String param1 = paramsSplit[1];
-        if (param1.equalsIgnoreCase("{player-name}")) {
-            param1 = player.getName();
-        }
+        String param1 = paramsSplit.length > 1 ? paramsSplit[1] : player.getName();
 
         switch (paramsSplit[0]) {
             case "status": {

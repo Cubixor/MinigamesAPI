@@ -14,6 +14,7 @@ general:
   no-permission: "%prefix% &cYou do not have permission to do this!"
   reload-success: "%prefix% &aAll plugin files were reloaded successfully!"
   unknown-command: "%prefix% &cUnknown command. &7Type &e/%cmd% help &7for help."
+  state-offline: "&4&lOFFLINE"
   state-inactive: "&8&lINACTIVE"
   state-waiting: "&a&lWAITING"
   state-starting: "&3&lSTARTING"
