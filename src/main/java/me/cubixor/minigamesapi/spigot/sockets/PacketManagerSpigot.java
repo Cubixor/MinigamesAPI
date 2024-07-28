@@ -61,9 +61,9 @@ public class PacketManagerSpigot implements Listener {
             LocalArena localArena = arenasRegistry.getLocalArenas().get(forceStartStopPacket.getArenaName());
 
             if (forceStartStopPacket.isActionStart()) {
-                arenasManager.forceLocalStart(localArena, forceStartStopPacket.getPlayer());
+                arenasManager.forceLocalStart(localArena);
             } else {
-                arenasManager.forceLocalStop(localArena, forceStartStopPacket.getPlayer());
+                arenasManager.forceLocalStop(localArena);
             }
         } else if (packet instanceof JoinPacket) {
             JoinPacket joinPacket = (JoinPacket) packet;

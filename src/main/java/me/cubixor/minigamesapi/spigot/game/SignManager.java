@@ -4,9 +4,9 @@ import com.cryptomorin.xseries.XBlock;
 import com.cryptomorin.xseries.XMaterial;
 import com.google.common.collect.ImmutableMap;
 import me.cubixor.minigamesapi.spigot.MinigamesAPI;
+import me.cubixor.minigamesapi.spigot.config.arenas.ArenasConfigManager;
 import me.cubixor.minigamesapi.spigot.game.arena.Arena;
 import me.cubixor.minigamesapi.spigot.game.arena.GameState;
-import me.cubixor.minigamesapi.spigot.config.arenas.ArenasConfigManager;
 import me.cubixor.minigamesapi.spigot.utils.MessageUtils;
 import me.cubixor.minigamesapi.spigot.utils.Messages;
 import me.cubixor.minigamesapi.spigot.utils.Permissions;
@@ -47,6 +47,7 @@ public class SignManager implements Listener {
         this.colorItems = loadStateColors();
 
         signs = arenasConfigManager.getAllSigns();
+        signs.put("quickjoin", new ArrayList<>());
         Bukkit.getServer().getPluginManager().registerEvents(this, MinigamesAPI.getPlugin());
     }
 
@@ -118,7 +119,7 @@ public class SignManager implements Listener {
         evt.setCancelled(true);
 
         addSign(arena, sign.getLocation());
-        updateSign(sign.getLocation(), arena);
+        checkUpdateSign(sign.getLocation(), arena);
     }
 
     @EventHandler
@@ -155,9 +156,6 @@ public class SignManager implements Listener {
         if (evt.getClickedBlock() == null) {
             return;
         }
-        if (evt.getPlayer().isSneaking()) {
-            return;
-        }
         if (!evt.getClickedBlock().getType().toString().contains("SIGN")) {
             return;
         }
@@ -169,65 +167,37 @@ public class SignManager implements Listener {
             return;
         }
 
+        if (evt.getPlayer().isSneaking()) {
+            return;
+        }//todo
+
+        evt.setCancelled(true);
+
         if (!Permissions.has(evt.getPlayer(), "play.signs")) {
             Messages.send(evt.getPlayer(), "general.no-permission");
             return;
         }
-        evt.setCancelled(true);
 
-        //TODO Join arena
         if (arena.equals("quickjoin")) {
-            evt.getPlayer().performCommand(plugin.getName() + " quickjoin");
-            //new PlayCommands().quickJoin(evt.getPlayer());
+            evt.getPlayer().performCommand(plugin.getName().toLowerCase() + " quickjoin");
         } else {
-            evt.getPlayer().performCommand(plugin.getName() + " join " + arena);
-            //new PlayCommands().join(evt.getPlayer(), new String[]{"join", arena});
+            evt.getPlayer().performCommand(plugin.getName().toLowerCase() + " join " + arena);
         }
     }
 
     public void updateSigns(String arena) {
         List<Location> signList = signs.getOrDefault(arena, Collections.emptyList());
         for (Location location : signList) {
-            updateSign(location, arena);
+            checkUpdateSign(location, arena);
         }
     }
 
-    private void updateSign(Location location, String arenaString) {
-        if (arenaString.equals("quickjoin")) {
-            Block block;
-            Sign sign;
-
-            try {
-                block = location.getBlock();
-                sign = (Sign) block.getState();
-                if (!block.getType().toString().contains("SIGN")) {
-                    removeSign(arenaString, location);
-                    return;
-                }
-            } catch (Exception e) {
-                removeSign(arenaString, location);
-                return;
-            }
-
-            Map<String, String> replacement = Collections.singletonMap("%count%", String.valueOf(signs.size()));
-            sign.setLine(0, Messages.get("other.sign-quickjoin-first-line", replacement));
-            sign.setLine(1, Messages.get("other.sign-quickjoin-second-line", replacement));
-            sign.setLine(2, Messages.get("other.sign-quickjoin-third-line", replacement));
-            sign.setLine(3, Messages.get("other.sign-quickjoin-fourth-line", replacement));
-            sign.update(true);
-            return;
-        }
-
-
-        Arena arena = arenasRegistry.getArena(arenaString);
-        String count = String.valueOf(arena.getPlayers().size());
-        String max = String.valueOf(arena.getMaxPlayers());
-        String gameState = MessageUtils.getStringState(arena);
-        String vip = arena.isVip() ? Messages.get("general.vip-prefix") : "";
-
+    private void checkUpdateSign(Location location, String arenaString) {
+        Block block;
         Sign sign;
+
         try {
-            Block block = location.getBlock();
+            block = location.getBlock();
             sign = (Sign) block.getState();
             if (!block.getType().toString().contains("SIGN")) {
                 removeSign(arenaString, location);
@@ -238,6 +208,18 @@ public class SignManager implements Listener {
             return;
         }
 
+        if (arenaString.equals("quickjoin")) {
+            updateQuickJoinSign(sign);
+        } else {
+            Arena arena = arenasRegistry.getArena(arenaString);
+            updateArenaSign(sign, arena);
+            updateSignColors(sign, arena);
+        }
+
+        Bukkit.getScheduler().runTask(plugin,  () -> sign.update(true));
+    }
+
+    private void updateSignColors(Sign sign, Arena arena) {
         if (plugin.getConfig().getBoolean("color-signs")) {
             ItemStack blockType = colorItems.get(arena.getState());
             Block attachedBlock = getAttachedBlock(sign.getBlock());
@@ -248,14 +230,32 @@ public class SignManager implements Listener {
             state.setData(blockType.getData());
             state.update();
         }
+    }
 
-        Map<String, String> replacement = ImmutableMap.of("%arena%", arenaString, "%count%", count, "%max%", max, "%state%", gameState, "%?vip?%", vip);
+    private void updateArenaSign(Sign sign, Arena arena) {
+        String count = String.valueOf(arena.getPlayers().size());
+        String max = String.valueOf(arena.getMaxPlayers());
+        String gameState = MessageUtils.getStringState(arena);
+        String vip = arena.isVip() ? Messages.get("general.vip-prefix") : "";
+
+        Map<String, String> replacement = ImmutableMap.of(
+                "%arena%", arena.getName(),
+                "%count%", count,
+                "%max%", max,
+                "%state%", gameState,
+                "%?vip?%", vip);
         sign.setLine(0, Messages.get("other.sign-first-line", replacement));
         sign.setLine(1, Messages.get("other.sign-second-line", replacement));
         sign.setLine(2, Messages.get("other.sign-third-line", replacement));
         sign.setLine(3, Messages.get("other.sign-fourth-line", replacement));
+    }
 
-        Bukkit.getScheduler().runTask(plugin,  () -> sign.update(true));
+    private void updateQuickJoinSign(Sign sign) {
+        Map<String, String> replacement = Collections.singletonMap("%count%", String.valueOf(signs.size() - 1));
+        sign.setLine(0, Messages.get("other.sign-quickjoin-first-line", replacement));
+        sign.setLine(1, Messages.get("other.sign-quickjoin-second-line", replacement));
+        sign.setLine(2, Messages.get("other.sign-quickjoin-third-line", replacement));
+        sign.setLine(3, Messages.get("other.sign-quickjoin-fourth-line", replacement));
     }
 
     private String getSignArena(Sign sign) {

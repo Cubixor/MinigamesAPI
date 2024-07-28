@@ -23,6 +23,11 @@ public class ArgSetMaxPlayers extends ArenaCommandArgument {
             return;
         }
 
+        if (max < 2) {
+            Messages.send(player, "arena-setup.set-max-players-too-small");
+            return;
+        }
+
         arenasManager.updateArenaMaxPlayers(arenaName, max);
         Messages.send(player, "arena-setup.set-max-players-success", "%arena%", arenaName);
     }

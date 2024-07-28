@@ -34,16 +34,16 @@ public class ConfigManager {
         arenasConfigManager = new ArenasConfigManager(arenasConfig);
 
         if (getConfig().getBoolean("database.enabled-stats")) {
-            CustomConfig playersConfig = new CustomConfig("players.yml");
-            statsManager = new FileStatsManager(statsFields, playersConfig);
-        } else {
             DBManager dbManager = setupDB();
             dbManager.createStatsTable(statsFields);
 
             statsManager = new DBStatsManager(statsFields, dbManager);
+        } else {
+            CustomConfig playersConfig = new CustomConfig("players.yml");
+            statsManager = new FileStatsManager(statsFields, playersConfig);
         }
 
-        Messages.init(messagesConfig.get());
+        Messages.init(messagesConfig.get(), plugin.getCommand(plugin.getName()).getAliases().get(0));
         Items.init(getConfig());
         Particles.init(getConfig());
         Sounds.init(getConfig());

@@ -4,20 +4,17 @@ import me.cubixor.minigamesapi.spigot.MinigamesAPI;
 import me.cubixor.minigamesapi.spigot.config.arenas.ArenasConfigManager;
 import me.cubixor.minigamesapi.spigot.config.arenas.BasicConfigField;
 import me.cubixor.minigamesapi.spigot.config.arenas.ConfigField;
-import me.cubixor.minigamesapi.spigot.events.GameStateChangeEvent;
 import me.cubixor.minigamesapi.spigot.game.arena.Arena;
 import me.cubixor.minigamesapi.spigot.game.arena.GameState;
 import me.cubixor.minigamesapi.spigot.game.arena.LocalArena;
 import me.cubixor.minigamesapi.spigot.sockets.PacketSenderSpigot;
 import me.cubixor.minigamesapi.spigot.utils.Messages;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 
 import java.util.Collections;
 import java.util.Map;
 
-public class ArenasManager implements Listener {
+public class ArenasManager {
 
     private final ArenasRegistry registry;
     private final ArenaPlayersManager arenaPlayersManager;
@@ -39,16 +36,11 @@ public class ArenasManager implements Listener {
         bungee = MinigamesAPI.getPlugin().getConfig().getBoolean("bungee.bungee-mode");
     }
 
-    @EventHandler
-    public void onStateChange(GameStateChangeEvent evt) {
-        updateArena(evt.getLocalArena());
-    }
-
     private void loadArenas() {
         for (String name : configManager.getArenas()) {
             //TODO Proper server name
             LocalArena localArena = new LocalArena(
-                    getArenaPlayersManager(),
+                    this,
                     name,
                     MinigamesAPI.getPlugin().getName(),
                     configManager.getBoolean(name, BasicConfigField.ACTIVE),
@@ -61,7 +53,7 @@ public class ArenasManager implements Listener {
     }
 
     public void addArena(String arena) {
-        LocalArena localArena = new LocalArena(getArenaPlayersManager(), arena);
+        LocalArena localArena = new LocalArena(this, arena);
 
         registry.getLocalArenas().put(arena, localArena);
         configManager.insertArena(arena);
@@ -106,11 +98,11 @@ public class ArenasManager implements Listener {
     }
 
     public void updateArenaActive(String arena, boolean active) {
+        LocalArena localArena = registry.getLocalArenas().get(arena);
         if (active) {
-            //TODO Force stop
+            forceLocalStop(localArena);
         }
 
-        LocalArena localArena = registry.getLocalArenas().get(arena);
         localArena.setState(active ? GameState.WAITING : GameState.INACTIVE);
         configManager.updateField(arena, BasicConfigField.ACTIVE, active);
 
@@ -146,30 +138,30 @@ public class ArenasManager implements Listener {
 
     public void forceStart(Arena arena, Player player) {
         if (arena.isLocal()) {
-            forceLocalStart((LocalArena) arena, player.getName());
+            forceLocalStart((LocalArena) arena);
         } else {
             packetSender.sendForceStartPacket(arena, player);
         }
     }
 
-    public void forceLocalStart(LocalArena localArena, String playerName) {
+    public void forceLocalStart(LocalArena localArena) {
         localArena.getStateManager().setGame();
 
-        Messages.sendAll(localArena.getBukkitPlayers(), "arena-moderate.force-start-success", "%player%", playerName);
+        Messages.sendAll(localArena.getBukkitPlayers(), "arena-moderate.force-start-success");
     }
 
     public void forceStop(Arena arena, Player player) {
         if (arena.isLocal()) {
-            forceLocalStop((LocalArena) arena, player.getName());
+            forceLocalStop((LocalArena) arena);
         } else {
             packetSender.sendForceStopPacket(arena, player);
         }
     }
 
-    public void forceLocalStop(LocalArena localArena, String playerName) {
-        localArena.getStateManager().reset();
+    public void forceLocalStop(LocalArena localArena) {
+        Messages.sendAll(localArena.getBukkitPlayers(), "arena-moderate.force-stop-success");
 
-        Messages.sendAll(localArena.getBukkitPlayers(), "arena-moderate.force-stop-success", "%player%", playerName);
+        localArena.getStateManager().reset();
     }
 
     public ArenasConfigManager getConfigManager() {

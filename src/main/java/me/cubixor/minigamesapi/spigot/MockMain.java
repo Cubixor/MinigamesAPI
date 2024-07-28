@@ -1,15 +1,12 @@
 package me.cubixor.minigamesapi.spigot;
 
-import me.cubixor.minigamesapi.spigot.game.ArenasManager;
-import me.cubixor.minigamesapi.spigot.game.ArenasRegistry;
-import me.cubixor.minigamesapi.spigot.game.ChatBlocker;
-import me.cubixor.minigamesapi.spigot.game.SignManager;
 import me.cubixor.minigamesapi.spigot.commands.MainCommand;
 import me.cubixor.minigamesapi.spigot.commands.MainCommandCompleter;
 import me.cubixor.minigamesapi.spigot.commands.arguments.CommandArgument;
 import me.cubixor.minigamesapi.spigot.config.ConfigManager;
 import me.cubixor.minigamesapi.spigot.config.arenas.ArenaSetupChecker;
 import me.cubixor.minigamesapi.spigot.config.stats.BasicStatsField;
+import me.cubixor.minigamesapi.spigot.game.*;
 import me.cubixor.minigamesapi.spigot.sockets.PacketManagerSpigot;
 import me.cubixor.minigamesapi.spigot.sockets.PacketSenderSpigot;
 import org.bukkit.plugin.PluginDescriptionFile;
@@ -44,7 +41,8 @@ public class MockMain extends JavaPlugin {
         SignManager signManager = new SignManager(configManager.getArenasConfigManager(), arenasRegistry);
         ArenasManager arenasManager = new ArenasManager(arenasRegistry, configManager.getArenasConfigManager(), signManager, packetSender);
         PacketManagerSpigot packetManager = new PacketManagerSpigot(arenasManager, packetSender);
-
+        ArenaProtection arenaProtection = new ArenaProtection(arenasManager);
+        ItemHandler itemHandler = new ItemHandler(arenasManager);
         ChatBlocker chatBlocker = new ChatBlocker(arenasRegistry);
         ArenaSetupChecker arenaSetupChecker = new ArenaSetupChecker(configManager.getArenasConfigManager());
 

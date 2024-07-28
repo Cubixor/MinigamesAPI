@@ -1,5 +1,6 @@
 package me.cubixor.minigamesapi.spigot.game;
 
+import com.cryptomorin.xseries.messages.Titles;
 import com.google.common.collect.ImmutableMap;
 import me.cubixor.minigamesapi.spigot.MinigamesAPI;
 import me.cubixor.minigamesapi.spigot.Utils;
@@ -205,6 +206,7 @@ public class ArenaPlayersManager {
 
         Sounds.playSound("leave", playerLocation, localArena.getBukkitPlayers());
         Particles.spawnParticle(playerLocation.add(0, 1.5, 0), "leave");
+        Titles.clearTitle(player);
 
         //TODO Update state, scoreboard
 

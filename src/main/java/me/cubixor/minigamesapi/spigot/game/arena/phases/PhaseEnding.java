@@ -30,7 +30,6 @@ public class PhaseEnding extends GamePhase {
                 int time = localArena.getTimer();
                 if (time <= 0) {
                     end();
-                    this.cancel();
                     return;
                 }
 
@@ -47,6 +46,8 @@ public class PhaseEnding extends GamePhase {
     }
 
     private void end() {
+        stop();
+
         Set<Player> players = new HashSet<>(localArena.getBukkitPlayers());
 
         localArena.getStateManager().reset();

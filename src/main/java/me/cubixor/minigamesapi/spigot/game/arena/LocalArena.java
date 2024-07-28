@@ -4,6 +4,7 @@ package me.cubixor.minigamesapi.spigot.game.arena;
 import me.cubixor.minigamesapi.spigot.MinigamesAPI;
 import me.cubixor.minigamesapi.spigot.events.GameStateChangeEvent;
 import me.cubixor.minigamesapi.spigot.game.ArenaPlayersManager;
+import me.cubixor.minigamesapi.spigot.game.ArenasManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -17,13 +18,13 @@ public class LocalArena extends Arena {
     private final Map<Player, PlayerData> playerData = new HashMap<>();
     private int timer = -1;
 
-    public LocalArena(ArenaPlayersManager arenaPlayersManager, String name) {
-        this(arenaPlayersManager, name, MinigamesAPI.getPlugin().getName(), false, false, 0, 0);
+    public LocalArena(ArenasManager arenasManager, String name) {
+        this(arenasManager, name, MinigamesAPI.getPlugin().getName(), false, false, 0, 0);
     }
 
-    public LocalArena(ArenaPlayersManager arenaPlayersManager, String name, String server, boolean active, boolean vip, int minPlayers, int maxPlayers) {
+    public LocalArena(ArenasManager arenasManager, String name, String server, boolean active, boolean vip, int minPlayers, int maxPlayers) {
         super(name, server, active, vip, minPlayers, maxPlayers);
-        this.stateManager = new StateManager(this, arenaPlayersManager);
+        this.stateManager = new StateManager(this, arenasManager);
     }
 
     public Arena toArena() {

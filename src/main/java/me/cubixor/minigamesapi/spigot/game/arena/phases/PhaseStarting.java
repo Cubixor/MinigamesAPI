@@ -32,11 +32,10 @@ public class PhaseStarting extends GamePhase {
                 int time = localArena.getTimer();
 
                 if (time <= 0) {
-                    localArena.getStateManager().setGame();
                     stop();
+                    localArena.getStateManager().setGame();
                     return;
                 }
-
 
                 updateCosmetics(time);
 
@@ -54,6 +53,7 @@ public class PhaseStarting extends GamePhase {
         for (Player p : localArena.getBukkitPlayers()) {
             p.setLevel(0);
             p.setExp(0);
+            p.getInventory().clear();
             Titles.clearTitle(p);
             ActionBar.clearActionBar(p);
         }
@@ -65,6 +65,10 @@ public class PhaseStarting extends GamePhase {
     }
 
     private void updateCosmetics(int time) {
+        for (Player p : localArena.getBukkitPlayers()) {
+            p.setLevel(localArena.getTimer());
+        }
+
         float pitch;
         int titleFade;
         int titleStay;
@@ -90,7 +94,7 @@ public class PhaseStarting extends GamePhase {
 
         for (Player p : localArena.getBukkitPlayers()) {
             p.setLevel(localArena.getTimer());
-            Sounds.playSoundWithPitch("sounds.countdown", p, pitch);
+            Sounds.playSoundWithPitch("countdown", p, pitch);
             Titles.sendTitle(p, titleFade, titleStay, titleFade, title, subTitle);
         }
     }
@@ -98,7 +102,7 @@ public class PhaseStarting extends GamePhase {
     private void runXPCountdown() {
         for (Player p : localArena.getBukkitPlayers()) {
             p.setLevel(localArena.getTimer());
-            p.setExp(0.95F);
+            p.setExp(1F);
         }
 
         //TODO Check these numbers
@@ -109,7 +113,7 @@ public class PhaseStarting extends GamePhase {
             @Override
             public void run() {
                 if (counter % 20 == 0) {
-                    exp = 0.95f;
+                    exp = 1f;
                 } else {
                     exp -= 0.05f;
                 }

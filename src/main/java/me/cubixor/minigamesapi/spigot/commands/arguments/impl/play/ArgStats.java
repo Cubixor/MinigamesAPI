@@ -46,8 +46,9 @@ public class ArgStats extends CommandArgument {
 
         //TODO Playtime
         for (StatsField field : statsManager.getFields()) {
-            String toReplace = "%" + field.toString() + "%";
-            statsPage.replaceAll(s -> s.replace(toReplace, String.valueOf(statsManager.getStats(target, field))));
+            String toReplace = "%" + field.getCode() + "%";
+            String statsValue =  String.valueOf(statsManager.getStats(target, field));
+            statsPage.replaceAll(s -> s.replace(toReplace, statsValue));
         }
 
         for (String s : statsPage) {

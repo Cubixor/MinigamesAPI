@@ -14,17 +14,21 @@ public class Messages {
 
     private static FileConfiguration messagesConfig;
     private static String prefix;
+    private static String cmd;
 
     private Messages(){
     }
 
-    public static void init(FileConfiguration messagesConfig) {
+    public static void init(FileConfiguration messagesConfig, String cmd) {
         Messages.messagesConfig = messagesConfig;
         Messages.prefix = ChatColor.translateAlternateColorCodes('&', messagesConfig.getString("prefix"));
+        Messages.cmd = cmd;
     }
 
     public static String get(String path) {
-        String message = messagesConfig.getString(path).replace("%prefix%", prefix);
+        String message = messagesConfig.getString(path)
+                .replace("%prefix%", prefix)
+                .replace("%cmd%", cmd);
         return ChatColor.translateAlternateColorCodes('&', message);
     }
 
@@ -32,6 +36,7 @@ public class Messages {
         List<String> message = messagesConfig.getStringList(path);
         return message.stream()
                 .map(msg -> ChatColor.translateAlternateColorCodes('&', msg))
+                .map(msg -> msg.replace("%cmd%", cmd))
                 .collect(Collectors.toList());
     }
 
@@ -62,6 +67,10 @@ public class Messages {
 
     public static void send(CommandSender player, String path, Map<String, String> replacement) {
         player.sendMessage(get(path, replacement));
+    }
+
+    public static void sendAll(Set<? extends CommandSender> players, String path) {
+        players.forEach(p -> p.sendMessage(get(path)));
     }
 
     public static void sendAll(Set<? extends CommandSender> players, String path, String toReplace, String replacement) {

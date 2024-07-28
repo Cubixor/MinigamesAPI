@@ -3,12 +3,8 @@ package me.cubixor.minigamesapi.spigot.game.arena;
 import me.cubixor.minigamesapi.spigot.MinigamesAPI;
 import me.cubixor.minigamesapi.spigot.events.GameEndEvent;
 import me.cubixor.minigamesapi.spigot.events.GameStartEvent;
-import me.cubixor.minigamesapi.spigot.game.ArenaPlayersManager;
 import me.cubixor.minigamesapi.spigot.game.ArenasManager;
-import me.cubixor.minigamesapi.spigot.game.arena.phases.GamePhase;
-import me.cubixor.minigamesapi.spigot.game.arena.phases.PhaseEnding;
-import me.cubixor.minigamesapi.spigot.game.arena.phases.PhaseGame;
-import me.cubixor.minigamesapi.spigot.game.arena.phases.PhaseStarting;
+import me.cubixor.minigamesapi.spigot.game.arena.phases.*;
 import me.cubixor.minigamesapi.spigot.utils.Messages;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -22,13 +18,13 @@ public class StateManager {
 
     private final JavaPlugin plugin;
     private final LocalArena localArena;
-    private final ArenaPlayersManager arenaPlayersManager;
+    private final ArenasManager arenasManager;
 
     private GamePhase gamePhase;
 
-    public StateManager(LocalArena localArena, ArenaPlayersManager arenaPlayersManager) {
+    public StateManager(LocalArena localArena, ArenasManager arenasManager) {
         this.localArena = localArena;
-        this.arenaPlayersManager = arenaPlayersManager;
+        this.arenasManager = arenasManager;
         this.plugin = MinigamesAPI.getPlugin();
     }
 
@@ -36,6 +32,7 @@ public class StateManager {
         localArena.setState(phase.getGameState());
         gamePhase = phase;
         gamePhase.run();
+        arenasManager.updateArena(localArena);
     }
 
     public void updateOnJoin() {
@@ -67,6 +64,7 @@ public class StateManager {
 
     private void setWaiting() {
         gamePhase.stop();
+        updatePhase(new PhaseWaiting(localArena));
 
         for (Player p : localArena.getBukkitPlayers()) {
             Messages.send(p, "game.start-cancelled");
@@ -113,7 +111,7 @@ public class StateManager {
 
         List<Player> players = new ArrayList<>(localArena.getBukkitPlayers());
         for (Player p : players) {
-            arenaPlayersManager.kickFromLocalArena(p, localArena, true);
+            arenasManager.getArenaPlayersManager().kickFromLocalArena(p, localArena, true);
         }
 
         localArena.setState(GameState.WAITING);
@@ -123,7 +121,7 @@ public class StateManager {
     public void autoJoin(Set<Player> players){
         if (MinigamesAPI.getPlugin().getConfig().getBoolean("auto-join-on-end")) {
             for (Player p : players) {
-                arenaPlayersManager.joinRandomArena(p);
+                arenasManager.getArenaPlayersManager().joinRandomArena(p);
             }
         }
     }

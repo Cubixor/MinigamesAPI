@@ -48,7 +48,7 @@ public class ArgList extends CommandArgument {
 
             TextComponent message = new TextComponent(Messages.get("other.list-arena", replacement));
             message.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(Messages.get("other.list-hover")).create()));
-            message.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/" + MinigamesAPI.getPlugin().getName() + " join " + arenaString));
+            message.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/" + MinigamesAPI.getPlugin().getName().toLowerCase() + " join " + arenaString));
             msg.add(message);
         }
 

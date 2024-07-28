@@ -1,7 +1,9 @@
 package me.cubixor.minigamesapi.spigot.commands;
 
-import me.cubixor.minigamesapi.spigot.game.ArenasManager;
 import me.cubixor.minigamesapi.spigot.commands.arguments.CommandArgument;
+import me.cubixor.minigamesapi.spigot.commands.arguments.impl.help.ArgHelpAdmin;
+import me.cubixor.minigamesapi.spigot.commands.arguments.impl.help.ArgHelpGeneral;
+import me.cubixor.minigamesapi.spigot.commands.arguments.impl.help.ArgHelpStaff;
 import me.cubixor.minigamesapi.spigot.commands.arguments.impl.play.*;
 import me.cubixor.minigamesapi.spigot.commands.arguments.impl.setup.*;
 import me.cubixor.minigamesapi.spigot.commands.arguments.impl.staff.ArgForceStart;
@@ -10,8 +12,8 @@ import me.cubixor.minigamesapi.spigot.commands.arguments.impl.staff.ArgKick;
 import me.cubixor.minigamesapi.spigot.commands.arguments.impl.staff.ArgSetActive;
 import me.cubixor.minigamesapi.spigot.config.arenas.ArenaSetupChecker;
 import me.cubixor.minigamesapi.spigot.config.stats.StatsManager;
+import me.cubixor.minigamesapi.spigot.game.ArenasManager;
 import me.cubixor.minigamesapi.spigot.utils.Messages;
-import me.cubixor.minigamesapi.spigot.utils.Permissions;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -36,6 +38,9 @@ public class MainCommand implements CommandExecutor {
     public static List<CommandArgument> getCommonArguments(ArenasManager arenasManager, ArenaSetupChecker arenaSetupChecker, StatsManager statsManager) {
         //TODO Implement reload and help
         return Arrays.asList(
+                new ArgHelpGeneral(),
+                new ArgHelpStaff(),
+                new ArgHelpAdmin(),
                 new ArgCreate(arenasManager),
                 new ArgDelete(arenasManager),
                 new ArgCheck(arenasManager, arenaSetupChecker),
@@ -69,12 +74,7 @@ public class MainCommand implements CommandExecutor {
         }
         cooldownManager.add(player);
 
-        if (args.length == 0 || args[0].equalsIgnoreCase("help")) {
-            help(player, "play.help", "help.general-help");
-            return true;
-        }
-
-        String arg = args[0].toLowerCase();
+        String arg = args.length == 0 ? "help" : args[0].toLowerCase();
 
         if(!arguments.containsKey(arg)){
             Messages.send(sender, "general.unknown-command");
@@ -84,14 +84,5 @@ public class MainCommand implements CommandExecutor {
         arguments.get(args[0].toLowerCase()).validateAndHandle(player, args);
 
         return true;
-    }
-
-    public void help(Player player, String permission, String messagesPath) {
-        if (!Permissions.has(player, permission)) {
-            Messages.send(player, "general.no-permission");
-            return;
-        }
-
-        Messages.sendList(player, messagesPath);
     }
 }
