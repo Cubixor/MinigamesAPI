@@ -58,11 +58,6 @@ public class ArenaPlayersManager {
             return false;
         }
 
-        //TODO Rejoin
-        /*if (arena.getState().equals(GameState.GAME) && arena.getPlayersLeft().contains(player.getName())) {
-            return true;
-        }*/
-
         if (!arena.getState().isWaitingStarting()) {
             Messages.send(player, "game.arena-join-arena-in-game", "%arena%", arenaString);
             return false;
@@ -125,12 +120,6 @@ public class ArenaPlayersManager {
     }
 
     public void putInLocalArena(Player player, LocalArena localArena) {
-        //TODO Rejoin
-        /*if (localArena.getPlayersLeft().contains(player.getName())) {
-            rejoinLocalArena(player, localArena);
-            return;
-        }*/
-
         String arenaString = localArena.getName();
 
         localArena.getPlayers().add(player.getName());

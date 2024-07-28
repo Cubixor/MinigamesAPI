@@ -53,7 +53,7 @@ public class PhaseStarting extends GamePhase {
         for (Player p : localArena.getBukkitPlayers()) {
             p.setLevel(0);
             p.setExp(0);
-            p.getInventory().clear();
+            //p.getInventory().clear();
             Titles.clearTitle(p);
             ActionBar.clearActionBar(p);
         }
@@ -105,7 +105,6 @@ public class PhaseStarting extends GamePhase {
             p.setExp(1F);
         }
 
-        //TODO Check these numbers
         xpTask = new BukkitRunnable() {
             int counter = 0;
             private float exp;

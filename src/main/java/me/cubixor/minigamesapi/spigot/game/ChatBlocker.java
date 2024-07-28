@@ -4,9 +4,11 @@ import me.cubixor.minigamesapi.spigot.MinigamesAPI;
 import me.cubixor.minigamesapi.spigot.utils.Messages;
 import me.cubixor.minigamesapi.spigot.utils.Permissions;
 import org.bukkit.Bukkit;
+import org.bukkit.command.PluginCommand;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.List;
 
@@ -32,8 +34,13 @@ public class ChatBlocker implements Listener {
         if (Permissions.has(evt.getPlayer(), "bypass")) {
             return;
         }
-        //TODO Proper command
-        if (evt.getMessage().startsWith("/minewars") || evt.getMessage().startsWith("/mw")) {
+
+        JavaPlugin plugin = MinigamesAPI.getPlugin();
+        PluginCommand pluginCmd = plugin.getCommand(MinigamesAPI.getPlugin().getName());
+
+
+        if (evt.getMessage().toLowerCase().startsWith("/" + pluginCmd.getName()) ||
+                evt.getMessage().toLowerCase().startsWith("/" + pluginCmd.getAliases().get(0))) {
             return;
         }
 

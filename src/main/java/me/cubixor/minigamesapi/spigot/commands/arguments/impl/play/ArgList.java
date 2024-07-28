@@ -21,7 +21,6 @@ public class ArgList extends CommandArgument {
     private final ArenasRegistry arenasRegistry;
 
     public ArgList(ArenasRegistry arenasRegistry) {
-        //TODO No usage in messages
         super("list", "play.list", 1, "other.list");
         this.arenasRegistry = arenasRegistry;
     }

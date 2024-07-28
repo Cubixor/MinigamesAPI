@@ -29,7 +29,6 @@ public class ArenasManager {
         this.signManager = signManager;
         this.packetSender = packetSender;
 
-        //TODO Decouple that
         arenaPlayersManager = new ArenaPlayersManager(this);
 
         loadArenas();

@@ -6,7 +6,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-//TODO Unused
 public class GameLeaveEvent extends Event {
     private static final HandlerList HANDLERS = new HandlerList();
 

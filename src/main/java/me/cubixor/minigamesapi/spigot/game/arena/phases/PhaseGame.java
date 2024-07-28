@@ -3,6 +3,7 @@ package me.cubixor.minigamesapi.spigot.game.arena.phases;
 import me.cubixor.minigamesapi.spigot.MinigamesAPI;
 import me.cubixor.minigamesapi.spigot.game.arena.GameState;
 import me.cubixor.minigamesapi.spigot.game.arena.LocalArena;
+import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
@@ -35,7 +36,9 @@ public class PhaseGame extends GamePhase {
     }
 
     private void start() {
-
+        for(Player p : localArena.getBukkitPlayers()){
+            p.getInventory().clear();
+        }
     }
 
     public void finish(){

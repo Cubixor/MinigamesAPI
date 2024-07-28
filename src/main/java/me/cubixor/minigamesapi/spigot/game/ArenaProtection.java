@@ -8,6 +8,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -33,6 +35,16 @@ public class ArenaProtection implements Listener {
         if (localArena == null) return;
 
         arenasManager.getArenaPlayersManager().leaveArena(evt.getPlayer(), localArena);
+    }
+
+    @EventHandler
+    public void onBreak(BlockBreakEvent evt) {
+        cancelWaitingStarting(evt.getPlayer(), evt);
+    }
+
+    @EventHandler
+    public void onPlace(BlockPlaceEvent evt) {
+        cancelWaitingStarting(evt.getPlayer(), evt);
     }
 
     @EventHandler

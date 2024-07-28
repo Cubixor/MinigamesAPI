@@ -36,7 +36,7 @@ public class MainCommand implements CommandExecutor {
     }
 
     public static List<CommandArgument> getCommonArguments(ArenasManager arenasManager, ArenaSetupChecker arenaSetupChecker, StatsManager statsManager) {
-        //TODO Implement reload and help
+        //TODO Implement reload
         return Arrays.asList(
                 new ArgHelpGeneral(),
                 new ArgHelpStaff(),
@@ -81,7 +81,7 @@ public class MainCommand implements CommandExecutor {
             return true;
         }
 
-        arguments.get(args[0].toLowerCase()).validateAndHandle(player, args);
+        arguments.get(arg).validateAndHandle(player, args);
 
         return true;
     }
