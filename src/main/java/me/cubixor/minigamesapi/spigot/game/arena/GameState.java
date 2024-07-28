@@ -3,7 +3,7 @@ package me.cubixor.minigamesapi.spigot.game.arena;
 import java.io.Serializable;
 
 public enum GameState implements Serializable {
-    WAITING, STARTING, GAME, ENDING, INACTIVE;
+    WAITING, STARTING, GAME, ENDING, INACTIVE, OFFLINE;
 
 
     @Override

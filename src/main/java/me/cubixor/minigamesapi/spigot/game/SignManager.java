@@ -212,16 +212,20 @@ public class SignManager implements Listener {
             updateQuickJoinSign(sign);
         } else {
             Arena arena = arenasRegistry.getArena(arenaString);
-            updateArenaSign(sign, arena);
-            updateSignColors(sign, arena);
+            if (arena == null) {
+                updateArenaSignOffline(sign, arenaString);
+            } else {
+                updateArenaSignOnline(sign, arena);
+            }
+            updateSignColors(sign, arena.getState());
         }
 
         Bukkit.getScheduler().runTask(plugin,  () -> sign.update(true));
     }
 
-    private void updateSignColors(Sign sign, Arena arena) {
+    private void updateSignColors(Sign sign, GameState gameState) {
         if (plugin.getConfig().getBoolean("color-signs")) {
-            ItemStack blockType = colorItems.get(arena.getState());
+            ItemStack blockType = colorItems.get(gameState);
             Block attachedBlock = getAttachedBlock(sign.getBlock());
 
             attachedBlock.setType(blockType.getType());
@@ -232,14 +236,27 @@ public class SignManager implements Listener {
         }
     }
 
-    private void updateArenaSign(Sign sign, Arena arena) {
+    private void updateArenaSignOnline(Sign sign, Arena arena) {
         String count = String.valueOf(arena.getPlayers().size());
         String max = String.valueOf(arena.getMaxPlayers());
         String gameState = MessageUtils.getStringState(arena);
         String vip = arena.isVip() ? Messages.get("general.vip-prefix") : "";
 
+        setArenaSignLines(sign, arena.getName(), count, max, gameState, vip);
+    }
+
+    private void updateArenaSignOffline(Sign sign, String arenaName) {
+        String count = "?";
+        String max = "?";
+        String gameState = MessageUtils.getStringState(null);
+        String vip = "";
+
+        setArenaSignLines(sign, arenaName, count, max, gameState, vip);
+    }
+
+    private void setArenaSignLines(Sign sign, String arena, String count, String max, String gameState, String vip) {
         Map<String, String> replacement = ImmutableMap.of(
-                "%arena%", arena.getName(),
+                "%arena%", arena,
                 "%count%", count,
                 "%max%", max,
                 "%state%", gameState,

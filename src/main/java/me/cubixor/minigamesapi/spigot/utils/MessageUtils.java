@@ -9,6 +9,7 @@ public class MessageUtils {
     }
 
     public static String getStringState(Arena arena) {
+        if (arena == null) return Messages.get("general.state-offline");
         switch (arena.getState()) {
             case INACTIVE:
                 return Messages.get("general.state-inactive");

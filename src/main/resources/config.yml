@@ -55,6 +55,7 @@ particles:
 
 color-signs: true
 sign-colors:
+  offline: LIGHT_GRAY_STAINED_GLASS
   inactive: BLACK_STAINED_GLASS
   waiting: LIME_STAINED_GLASS
   starting: CYAN_STAINED_GLASS
