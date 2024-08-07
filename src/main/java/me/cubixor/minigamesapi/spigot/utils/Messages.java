@@ -16,7 +16,7 @@ public class Messages {
     private static String prefix;
     private static String cmd;
 
-    private Messages(){
+    private Messages() {
     }
 
     public static void init(FileConfiguration messagesConfig, String cmd) {

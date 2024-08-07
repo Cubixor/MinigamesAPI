@@ -29,7 +29,7 @@ public abstract class CommandArgument {
 
     protected abstract void handle(Player player, String[] args);
 
-    public List<String> handleTabComplete(CommandSender sender, String[] args){
+    public List<String> handleTabComplete(CommandSender sender, String[] args) {
         return Collections.emptyList();
     }
 

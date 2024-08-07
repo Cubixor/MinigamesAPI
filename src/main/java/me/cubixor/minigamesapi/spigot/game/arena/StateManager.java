@@ -61,11 +61,11 @@ public class StateManager {
                 setWaiting();
             }
         } else if (localArena.getState() == GameState.GAME && count < 2) {
-                if (count == 1) {
-                    Messages.send(localArena.getBukkitPlayers().stream().findFirst().get(),
-                            "game.stopped-one-player");
-                }
-                reset();
+            if (count == 1) {
+                Messages.send(localArena.getBukkitPlayers().stream().findFirst().get(),
+                        "game.stopped-one-player");
+            }
+            reset();
         }
 
         localArena.getScoreboardManager().updateScoreboard();
@@ -111,7 +111,7 @@ public class StateManager {
 
 
     public void reset() {
-        if(gamePhase != null){
+        if (gamePhase != null) {
             gamePhase.stop();
         }
 

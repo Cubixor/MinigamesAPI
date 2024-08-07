@@ -3,7 +3,7 @@ package me.cubixor.minigamesapi.spigot.game.arena.phases;
 import me.cubixor.minigamesapi.spigot.game.arena.GameState;
 import me.cubixor.minigamesapi.spigot.game.arena.LocalArena;
 
-public class PhaseWaiting extends GamePhase{
+public class PhaseWaiting extends GamePhase {
 
     public PhaseWaiting(LocalArena localArena) {
         super(localArena);

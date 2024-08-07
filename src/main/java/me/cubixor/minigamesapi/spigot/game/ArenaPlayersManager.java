@@ -205,7 +205,7 @@ public class ArenaPlayersManager {
 
         localArena.getPlayers().remove(player.getName());
 
-        if(!reset) {
+        if (!reset) {
             localArena.getStateManager().updateOnLeave();
             arenasManager.updateArena(localArena);
         }

@@ -9,8 +9,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 
-import java.util.Set;
-
 public class ItemHandler implements Listener {
 
     private final ArenasManager arenasManager;

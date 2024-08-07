@@ -57,7 +57,7 @@ public class ArenasManager {
     }
 
     public void addArena(String arena) {
-        LocalArena localArena = new LocalArena(this,statsManager,arena);
+        LocalArena localArena = new LocalArena(this, statsManager, arena);
 
         registry.getLocalArenas().put(arena, localArena);
         configManager.insertArena(arena);

@@ -1,9 +1,9 @@
 package me.cubixor.minigamesapi.spigot.commands.arguments.impl.staff;
 
 import com.google.common.collect.ImmutableMap;
+import me.cubixor.minigamesapi.spigot.commands.arguments.CommandArgument;
 import me.cubixor.minigamesapi.spigot.game.ArenasManager;
 import me.cubixor.minigamesapi.spigot.game.arena.Arena;
-import me.cubixor.minigamesapi.spigot.commands.arguments.CommandArgument;
 import me.cubixor.minigamesapi.spigot.utils.Messages;
 import me.cubixor.minigamesapi.spigot.utils.Permissions;
 import org.bukkit.command.CommandSender;
@@ -41,7 +41,7 @@ public class ArgKick extends CommandArgument {
 
     @Override
     public List<String> handleTabComplete(CommandSender sender, String[] args) {
-        List<String> result =  new ArrayList<>();
+        List<String> result = new ArrayList<>();
 
         if (args.length == 2 &&
                 args[0].equalsIgnoreCase(getName()) &&

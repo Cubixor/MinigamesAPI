@@ -5,8 +5,8 @@ import me.cubixor.minigamesapi.common.packets.ForceStartStopPacket;
 import me.cubixor.minigamesapi.common.packets.JoinPacket;
 import me.cubixor.minigamesapi.common.packets.LeavePacket;
 import me.cubixor.minigamesapi.spigot.MinigamesAPI;
-import me.cubixor.minigamesapi.spigot.game.arena.Arena;
 import me.cubixor.minigamesapi.spigot.config.CustomConfig;
+import me.cubixor.minigamesapi.spigot.game.arena.Arena;
 import me.cubixor.socketsmc.spigot.SocketClient;
 import me.cubixor.socketsmc.spigot.SocketClientSender;
 import org.bukkit.Bukkit;
@@ -69,6 +69,10 @@ public class PacketSenderSpigot {
         sendStartStopPacket(arena, player, false);
     }
 
+    public String getServerName() {
+        return serverName;
+    }
+
     private enum LeaveStrategy {
         JOIN_SERVER {
             @Override
@@ -90,9 +94,5 @@ public class PacketSenderSpigot {
         };
 
         public abstract void invoke(PacketSenderSpigot sender, String player);
-    }
-
-    public String getServerName() {
-        return serverName;
     }
 }

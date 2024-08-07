@@ -64,8 +64,8 @@ public class MockMain extends JavaPlugin implements Listener {
     }
 
     @EventHandler
-    public void onGameTime(TimerTickEvent evt){
-        if(evt.getGameState().equals(GameState.GAME) && evt.getTimer() == 20){
+    public void onGameTime(TimerTickEvent evt) {
+        if (evt.getGameState().equals(GameState.GAME) && evt.getTimer() == 20) {
             evt.getLocalArena().getStateManager().setEnd(Collections.emptyList());
         }
     }

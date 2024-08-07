@@ -1,7 +1,7 @@
 package me.cubixor.minigamesapi.spigot.commands.arguments.impl.play;
 
-import me.cubixor.minigamesapi.spigot.game.ArenasManager;
 import me.cubixor.minigamesapi.spigot.commands.arguments.CommandArgument;
+import me.cubixor.minigamesapi.spigot.game.ArenasManager;
 import org.bukkit.entity.Player;
 
 public class ArgQuickJoin extends CommandArgument {

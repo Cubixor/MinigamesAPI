@@ -16,10 +16,10 @@ import java.util.Set;
 
 public class PhaseEnding extends GamePhase {
 
-    private BukkitTask endingTask;
     private final ArenasManager arenasManager;
     private final StatsManager statsManager;
     private final List<Player> winners;
+    private BukkitTask endingTask;
 
     public PhaseEnding(LocalArena localArena, ArenasManager arenasManager, StatsManager statsManager, List<Player> winners) {
         super(localArena);

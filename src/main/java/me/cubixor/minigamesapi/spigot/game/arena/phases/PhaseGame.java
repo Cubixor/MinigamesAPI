@@ -42,12 +42,12 @@ public class PhaseGame extends GamePhase {
     private void start() {
         localArena.setTimer(0);
 
-        for(Player p : localArena.getBukkitPlayers()){
+        for (Player p : localArena.getBukkitPlayers()) {
             p.getInventory().clear();
         }
     }
 
-    public void finish(List<Player> winners){
+    public void finish(List<Player> winners) {
         localArena.getStateManager().setEnd(winners);
     }
 

@@ -44,7 +44,7 @@ public class ArenasRegistry {
         return arena.orElse(null);
     }
 
-    public List<String> getPlayerNames(){
+    public List<String> getPlayerNames() {
         return getAllArenas()
                 .flatMap(obj -> obj.getPlayers().stream())
                 .collect(Collectors.toList());

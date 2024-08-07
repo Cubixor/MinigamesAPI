@@ -76,7 +76,7 @@ public class MainCommand implements CommandExecutor {
 
         String arg = args.length == 0 ? "help" : args[0].toLowerCase();
 
-        if(!arguments.containsKey(arg)){
+        if (!arguments.containsKey(arg)) {
             Messages.send(sender, "general.unknown-command");
             return true;
         }
