@@ -19,13 +19,16 @@ public class PacketSenderSpigot {
     private final SocketClientSender socketSender;
     private final LeaveStrategy leaveStrategy;
     private final String lobbyServer;
+    private final String serverName;
 
     public PacketSenderSpigot(CustomConfig connectionConfig) {
+        serverName = connectionConfig.get().getString("bungee-socket.server-name");
+
         SocketClient socketClient = new SocketClient(
                 MinigamesAPI.getPlugin(),
                 connectionConfig.get().getString("bungee-socket.host"),
                 connectionConfig.get().getInt("bungee-socket.port"),
-                connectionConfig.get().getString("bungee-socket.server-name"),
+                serverName,
                 connectionConfig.get().getBoolean("bungee-socket.debug")
         );
 
@@ -87,5 +90,9 @@ public class PacketSenderSpigot {
         };
 
         public abstract void invoke(PacketSenderSpigot sender, String player);
+    }
+
+    public String getServerName() {
+        return serverName;
     }
 }

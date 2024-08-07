@@ -9,6 +9,7 @@ import me.cubixor.minigamesapi.spigot.utils.Permissions;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ArgKick extends CommandArgument {
@@ -40,9 +41,9 @@ public class ArgKick extends CommandArgument {
 
     @Override
     public List<String> handleTabComplete(CommandSender sender, String[] args) {
-        List<String> result =  super.handleTabComplete(sender, args);
+        List<String> result =  new ArrayList<>();
 
-        if (args.length == 3 &&
+        if (args.length == 2 &&
                 args[0].equalsIgnoreCase(getName()) &&
                 Permissions.has(sender, getPermission())) {
 

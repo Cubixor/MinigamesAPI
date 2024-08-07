@@ -40,12 +40,11 @@ public class ArenasManager {
 
     private void loadArenas() {
         for (String name : configManager.getArenas()) {
-            //TODO Proper server name
             LocalArena localArena = new LocalArena(
                     this,
                     statsManager,
                     name,
-                    MinigamesAPI.getPlugin().getName(),
+                    packetSender.getServerName(),
                     configManager.getBoolean(name, BasicConfigField.ACTIVE),
                     configManager.getBoolean(name, BasicConfigField.VIP),
                     configManager.getInt(name, BasicConfigField.MIN_PLAYERS),
