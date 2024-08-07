@@ -20,6 +20,7 @@ import org.bukkit.block.Sign;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -47,7 +48,6 @@ public class SignManager implements Listener {
         this.colorItems = loadStateColors();
 
         signs = arenasConfigManager.getAllSigns();
-        signs.put("quickjoin", new ArrayList<>());
         Bukkit.getServer().getPluginManager().registerEvents(this, MinigamesAPI.getPlugin());
     }
 
@@ -134,11 +134,8 @@ public class SignManager implements Listener {
         if (arena == null) {
             return;
         }
-        if (!evt.getPlayer().isSneaking()) {
-            evt.setCancelled(true);
-            return;
-        }
-        if (!Permissions.has(evt.getPlayer(), "setup.signs")) {
+
+        if (!(evt.getPlayer().isSneaking() && Permissions.has(evt.getPlayer(), "setup.signs"))) {
             evt.getPlayer().sendMessage(Messages.get("general.no-permission"));
             evt.setCancelled(true);
             return;
@@ -167,9 +164,9 @@ public class SignManager implements Listener {
             return;
         }
 
-        if (evt.getPlayer().isSneaking()) {
+        if (evt.getPlayer().isSneaking() && evt.getAction().equals(Action.LEFT_CLICK_BLOCK)) {
             return;
-        }//todo
+        }
 
         evt.setCancelled(true);
 
@@ -191,7 +188,7 @@ public class SignManager implements Listener {
 
     public void updateSigns(String arena) {
         List<Location> signList = signs.getOrDefault(arena, Collections.emptyList());
-        for (Location location : signList) {
+        for (Location location : new ArrayList<>(signList)) {
             checkUpdateSign(location, arena);
         }
     }
