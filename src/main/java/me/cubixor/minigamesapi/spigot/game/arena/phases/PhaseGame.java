@@ -19,7 +19,6 @@ public class PhaseGame extends GamePhase {
 
     @Override
     public void run() {
-        //localArena.setTimer(MinigamesAPI.getPlugin().getConfig().getInt("game-time"));
         start();
 
         gameTask = new BukkitRunnable() {
@@ -41,6 +40,8 @@ public class PhaseGame extends GamePhase {
     }
 
     private void start() {
+        localArena.setTimer(0);
+
         for(Player p : localArena.getBukkitPlayers()){
             p.getInventory().clear();
         }

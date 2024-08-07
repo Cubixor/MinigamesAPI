@@ -162,7 +162,7 @@ game:
     - " "
     - "&7Players: &e%players%&7/&e%max%"
     - "  "
-    - "&e&lTime left:"
+    - "&e&lGame time:"
     - "&f%time-long%"
     - "   "
     - "&7%date%"

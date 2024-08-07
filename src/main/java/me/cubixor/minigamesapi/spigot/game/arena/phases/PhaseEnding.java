@@ -30,8 +30,8 @@ public class PhaseEnding extends GamePhase {
 
     @Override
     public void run() {
-        endGame();
         localArena.setTimer(MinigamesAPI.getPlugin().getConfig().getInt("ending-time"));
+        endGame();
 
         endingTask = new BukkitRunnable() {
             @Override
@@ -52,7 +52,6 @@ public class PhaseEnding extends GamePhase {
     @Override
     public void stop() {
         endingTask.cancel();
-        localArena.getStateManager().reset();
     }
 
     private void endGame() {
@@ -69,13 +68,13 @@ public class PhaseEnding extends GamePhase {
 
     private void finish() {
         Set<Player> players = new HashSet<>(localArena.getBukkitPlayers());
-        stop();
+        localArena.getStateManager().reset();
         autoJoin(players);
     }
 
     @Override
     public GameState getGameState() {
-        return GameState.GAME;
+        return GameState.ENDING;
     }
 
     private void autoJoin(Set<Player> players) {

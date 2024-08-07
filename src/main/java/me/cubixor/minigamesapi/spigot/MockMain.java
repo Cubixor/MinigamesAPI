@@ -6,19 +6,24 @@ import me.cubixor.minigamesapi.spigot.commands.arguments.CommandArgument;
 import me.cubixor.minigamesapi.spigot.config.ConfigManager;
 import me.cubixor.minigamesapi.spigot.config.arenas.ArenaSetupChecker;
 import me.cubixor.minigamesapi.spigot.config.stats.BasicStatsField;
+import me.cubixor.minigamesapi.spigot.events.TimerTickEvent;
 import me.cubixor.minigamesapi.spigot.game.*;
+import me.cubixor.minigamesapi.spigot.game.arena.GameState;
 import me.cubixor.minigamesapi.spigot.integrations.PlaceholderExpansion;
 import me.cubixor.minigamesapi.spigot.sockets.PacketManagerSpigot;
 import me.cubixor.minigamesapi.spigot.sockets.PacketSenderSpigot;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.java.JavaPluginLoader;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
-public class MockMain extends JavaPlugin {
+public class MockMain extends JavaPlugin implements Listener {
 
     public MockMain() {
         super();
@@ -31,6 +36,7 @@ public class MockMain extends JavaPlugin {
     @Override
     public void onEnable() {
         load();
+        getServer().getPluginManager().registerEvents(this, this);
     }
 
     private void load() {
@@ -55,5 +61,12 @@ public class MockMain extends JavaPlugin {
         getServer().getPluginCommand(getName()).setTabCompleter(mainCommandCompleter);
 
         new PlaceholderExpansion(arenasRegistry, configManager.getStatsManager());
+    }
+
+    @EventHandler
+    public void onGameTime(TimerTickEvent evt){
+        if(evt.getGameState().equals(GameState.GAME) && evt.getTimer() == 20){
+            evt.getLocalArena().getStateManager().setEnd(Collections.emptyList());
+        }
     }
 }

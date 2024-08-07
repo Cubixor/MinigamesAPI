@@ -8,7 +8,6 @@ import me.cubixor.minigamesapi.spigot.config.stats.StatsManager;
 import me.cubixor.minigamesapi.spigot.utils.MessageUtils;
 import me.cubixor.minigamesapi.spigot.utils.Messages;
 import me.cubixor.minigamesapi.spigot.utils.Permissions;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -51,6 +50,7 @@ public class ArgStats extends CommandArgument {
                 }
 
                 List<String> statsPage = new ArrayList<>(Messages.getList("other.stats"));
+                statsPage.replaceAll(s -> s.replace("%player%", target));
 
                 for (StatsField field : statsManager.getFields()) {
                     String toReplace = "%" + field.getCode() + "%";
