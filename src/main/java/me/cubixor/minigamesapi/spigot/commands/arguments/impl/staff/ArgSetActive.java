@@ -1,5 +1,6 @@
 package me.cubixor.minigamesapi.spigot.commands.arguments.impl.staff;
 
+import me.cubixor.minigamesapi.spigot.commands.arguments.ArenaBooleanArgument;
 import me.cubixor.minigamesapi.spigot.game.ArenasManager;
 import me.cubixor.minigamesapi.spigot.game.arena.LocalArena;
 import me.cubixor.minigamesapi.spigot.commands.arguments.ArenaCommandArgument;
@@ -7,7 +8,7 @@ import me.cubixor.minigamesapi.spigot.config.arenas.ArenaSetupChecker;
 import me.cubixor.minigamesapi.spigot.utils.Messages;
 import org.bukkit.entity.Player;
 
-public class ArgSetActive extends ArenaCommandArgument {
+public class ArgSetActive extends ArenaBooleanArgument {
 
     private final ArenaSetupChecker arenaSetupChecker;
 

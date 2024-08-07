@@ -4,7 +4,14 @@ import me.cubixor.minigamesapi.spigot.game.ArenasManager;
 import me.cubixor.minigamesapi.spigot.game.ArenasRegistry;
 import me.cubixor.minigamesapi.spigot.game.arena.Arena;
 import me.cubixor.minigamesapi.spigot.utils.Messages;
+import me.cubixor.minigamesapi.spigot.utils.Permissions;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public abstract class ArenaCommandArgument extends CommandArgument {
 
@@ -60,5 +67,20 @@ public abstract class ArenaCommandArgument extends CommandArgument {
         }
 
         return true;
+    }
+
+    @Override
+    public List<String> handleTabComplete(CommandSender sender, String[] args) {
+        if (args.length == 2 &&
+                args[0].equalsIgnoreCase(getName()) &&
+                Permissions.has(sender, getPermission())) {
+
+            return arenasRegistry.getAllArenaNames()
+                    .stream()
+                    .filter(arena -> arena.startsWith(args[1]))
+                    .collect(Collectors.toList());
+        }
+
+        return new ArrayList<>();
     }
 }

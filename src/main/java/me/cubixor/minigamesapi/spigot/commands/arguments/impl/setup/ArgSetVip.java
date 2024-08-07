@@ -1,12 +1,13 @@
 package me.cubixor.minigamesapi.spigot.commands.arguments.impl.setup;
 
+import me.cubixor.minigamesapi.spigot.commands.arguments.ArenaBooleanArgument;
 import me.cubixor.minigamesapi.spigot.game.ArenasManager;
 import me.cubixor.minigamesapi.spigot.game.arena.LocalArena;
 import me.cubixor.minigamesapi.spigot.commands.arguments.ArenaCommandArgument;
 import me.cubixor.minigamesapi.spigot.utils.Messages;
 import org.bukkit.entity.Player;
 
-public class ArgSetVip extends ArenaCommandArgument {
+public class ArgSetVip extends ArenaBooleanArgument {
 
     public ArgSetVip(ArenasManager arenasManager) {
         super(arenasManager, "setvip", "setup.setvip", 3, "arena-setup.set-vip", true, false);

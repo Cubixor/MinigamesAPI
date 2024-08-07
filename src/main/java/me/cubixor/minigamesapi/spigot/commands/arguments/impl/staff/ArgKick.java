@@ -5,7 +5,11 @@ import me.cubixor.minigamesapi.spigot.game.ArenasManager;
 import me.cubixor.minigamesapi.spigot.game.arena.Arena;
 import me.cubixor.minigamesapi.spigot.commands.arguments.CommandArgument;
 import me.cubixor.minigamesapi.spigot.utils.Messages;
+import me.cubixor.minigamesapi.spigot.utils.Permissions;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import java.util.List;
 
 public class ArgKick extends CommandArgument {
 
@@ -32,5 +36,23 @@ public class ArgKick extends CommandArgument {
                 "%arena%", arena.getName(),
                 "%player%", targetName)
         );
+    }
+
+    @Override
+    public List<String> handleTabComplete(CommandSender sender, String[] args) {
+        List<String> result =  super.handleTabComplete(sender, args);
+
+        if (args.length == 3 &&
+                args[0].equalsIgnoreCase(getName()) &&
+                Permissions.has(sender, getPermission())) {
+
+            for (String p : arenasManager.getRegistry().getPlayerNames()) {
+                if (p.toLowerCase().startsWith(args[1])) {
+                    result.add(p);
+                }
+            }
+        }
+
+        return result;
     }
 }

@@ -2,7 +2,11 @@ package me.cubixor.minigamesapi.spigot.commands.arguments;
 
 import me.cubixor.minigamesapi.spigot.utils.Messages;
 import me.cubixor.minigamesapi.spigot.utils.Permissions;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import java.util.Collections;
+import java.util.List;
 
 public abstract class CommandArgument {
 
@@ -24,6 +28,10 @@ public abstract class CommandArgument {
     }
 
     protected abstract void handle(Player player, String[] args);
+
+    public List<String> handleTabComplete(CommandSender sender, String[] args){
+        return Collections.emptyList();
+    }
 
     public String getName() {
         return name;

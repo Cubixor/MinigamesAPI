@@ -5,10 +5,7 @@ import me.cubixor.minigamesapi.spigot.game.arena.LocalArena;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -47,6 +44,12 @@ public class ArenasRegistry {
         return arena.orElse(null);
     }
 
+    public List<String> getPlayerNames(){
+        return getAllArenas()
+                .flatMap(obj -> obj.getPlayers().stream())
+                .collect(Collectors.toList());
+    }
+
     public boolean isValidArena(String arena) {
         return isLocalArena(arena) || isRemoteArena(arena);
     }
@@ -71,7 +74,11 @@ public class ArenasRegistry {
         return localArenas.keySet();
     }
 
+    public Stream<Arena> getAllArenas() {
+        return Stream.concat(localArenas.values().stream(), remoteArenas.values().stream());
+    }
+
     public Set<String> getAllArenaNames() {
-        return Stream.concat(localArenas.keySet().stream(), remoteArenas.keySet().stream()).collect(Collectors.toSet());
+        return getAllArenas().map(Arena::getName).collect(Collectors.toSet());
     }
 }

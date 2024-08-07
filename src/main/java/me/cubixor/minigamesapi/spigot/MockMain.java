@@ -49,7 +49,7 @@ public class MockMain extends JavaPlugin {
 
         List<CommandArgument> args = MainCommand.getCommonArguments(arenasManager, arenaSetupChecker, configManager.getStatsManager());
         MainCommand mainCommand = new MainCommand(args);
-        MainCommandCompleter mainCommandCompleter = new MainCommandCompleter(args, arenasRegistry);
+        MainCommandCompleter mainCommandCompleter = new MainCommandCompleter(args);
 
         getServer().getPluginCommand(getName()).setExecutor(mainCommand);
         getServer().getPluginCommand(getName()).setTabCompleter(mainCommandCompleter);

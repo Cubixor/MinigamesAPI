@@ -31,7 +31,7 @@ class DBManagerTest {
     @Test
     void connectionTest() {
         DataSource source = dbManager.getDataSource();
-        try (Connection conn = source.getConnection();) {
+        try (Connection conn = source.getConnection()) {
             Assertions.assertTrue(conn.isValid(1));
         } catch (SQLException e) {
             e.printStackTrace();
