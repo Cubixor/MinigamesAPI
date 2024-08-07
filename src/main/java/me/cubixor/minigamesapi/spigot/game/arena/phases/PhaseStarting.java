@@ -32,7 +32,6 @@ public class PhaseStarting extends GamePhase {
                 int time = localArena.getTimer();
 
                 if (time <= 0) {
-                    stop();
                     localArena.getStateManager().setGame();
                     return;
                 }

@@ -53,6 +53,8 @@ public class ArenasManager {
             );
             registry.getLocalArenas().put(name, localArena);
         }
+
+        signManager.updateAllSigns();
     }
 
     public void addArena(String arena) {
@@ -102,7 +104,7 @@ public class ArenasManager {
 
     public void updateArenaActive(String arena, boolean active) {
         LocalArena localArena = registry.getLocalArenas().get(arena);
-        if (active) {
+        if (!active) {
             forceLocalStop(localArena);
         }
 

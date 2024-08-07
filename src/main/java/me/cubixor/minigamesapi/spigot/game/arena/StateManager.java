@@ -28,9 +28,12 @@ public class StateManager {
         this.arenasManager = arenasManager;
         this.statsManager = statsManager;
         this.plugin = MinigamesAPI.getPlugin();
+
+        this.gamePhase = new PhaseWaiting(localArena);
     }
 
     private void updatePhase(GamePhase phase) {
+        gamePhase.stop();
         localArena.setState(phase.getGameState());
         gamePhase = phase;
         gamePhase.run();
@@ -69,7 +72,6 @@ public class StateManager {
     }
 
     private void setWaiting() {
-        gamePhase.stop();
         updatePhase(new PhaseWaiting(localArena));
 
         for (Player p : localArena.getBukkitPlayers()) {
@@ -122,5 +124,7 @@ public class StateManager {
 
         localArena.setState(GameState.WAITING);
         localArena.setTimer(-1);
+
+        arenasManager.updateArena(localArena);
     }
 }

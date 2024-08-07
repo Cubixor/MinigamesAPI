@@ -22,4 +22,7 @@ public class LeavePacket implements Packet {
         return lobby;
     }
 
+    public boolean shouldUsePrevServer() {
+        return usePrevServer;
+    }
 }

@@ -30,7 +30,7 @@ public class ItemHandler implements Listener {
         if (localArena == null) return;
 
         if (evt.getItem().equals(Items.getLeaveItem().getItem())) {
-            arenasManager.getArenaPlayersManager().kickFromLocalArena(evt.getPlayer(), localArena, false);
+            arenasManager.getArenaPlayersManager().leaveArena(evt.getPlayer(), localArena);
         }
     }
 }

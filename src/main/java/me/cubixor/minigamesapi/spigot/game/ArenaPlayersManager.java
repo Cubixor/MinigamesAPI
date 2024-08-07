@@ -17,6 +17,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Optional;
 import java.util.Set;
@@ -152,7 +153,7 @@ public class ArenaPlayersManager {
                 "%max%", maxString)
         );
 
-        //TODO Update state, scoreboard
+
         localArena.getStateManager().updateOnJoin();
 
         arenasManager.updateArena(localArena);
@@ -160,11 +161,12 @@ public class ArenaPlayersManager {
     }
 
     public void leaveArena(Player player, LocalArena localArena) {
+        Set<Player> players = new HashSet<>(localArena.getBukkitPlayers());
+        String count = String.valueOf(players.size() - 1);
+        String max = String.valueOf(localArena.getMaxPlayers());
+
         kickFromLocalArena(player, localArena, false);
 
-        Set<Player> players = localArena.getBukkitPlayers();
-        String count = String.valueOf(players.size());
-        String max = String.valueOf(localArena.getMaxPlayers());
         Messages.sendAll(players, "game.arena-leave-success", ImmutableMap.of(
                 "%player%", player.getName(),
                 "%count%", count,
@@ -200,8 +202,6 @@ public class ArenaPlayersManager {
         Sounds.playSound("leave", playerLocation, localArena.getBukkitPlayers());
         Particles.spawnParticle(playerLocation.add(0, 1.5, 0), "leave");
         Titles.clearTitle(player);
-
-        //TODO Update state, scoreboard
 
         localArena.getPlayers().remove(player.getName());
 

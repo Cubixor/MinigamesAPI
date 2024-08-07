@@ -101,8 +101,7 @@ public class ClientManager implements Listener {
         String firstChoiceServer;
         String secondChoiceServer;
 
-        //TODO Lobby and prev
-        if (leavePacket.getLobby() == null) {
+        if (leavePacket.shouldUsePrevServer()) {
             firstChoiceServer = playerServers.get(proxiedPlayer.getName());
             secondChoiceServer = leavePacket.getLobby();
         } else {

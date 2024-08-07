@@ -4,6 +4,7 @@ package me.cubixor.minigamesapi.spigot.game.arena;
 import me.cubixor.minigamesapi.spigot.MinigamesAPI;
 import me.cubixor.minigamesapi.spigot.config.stats.StatsManager;
 import me.cubixor.minigamesapi.spigot.events.GameStateChangeEvent;
+import me.cubixor.minigamesapi.spigot.events.TimerTickEvent;
 import me.cubixor.minigamesapi.spigot.game.ArenasManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -57,6 +58,7 @@ public class LocalArena extends Arena {
 
     public void setTimer(int timer) {
         this.timer = timer;
+        Bukkit.getServer().getPluginManager().callEvent(new TimerTickEvent(this));
     }
 
     public Set<Player> getBukkitPlayers() {

@@ -185,6 +185,10 @@ public class SignManager implements Listener {
         }
     }
 
+    public void updateAllSigns(){
+        signs.keySet().forEach(this::updateSigns);
+    }
+
     public void updateSigns(String arena) {
         List<Location> signList = signs.getOrDefault(arena, Collections.emptyList());
         for (Location location : signList) {

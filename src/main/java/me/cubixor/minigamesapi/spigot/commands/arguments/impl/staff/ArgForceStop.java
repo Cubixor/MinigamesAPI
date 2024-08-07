@@ -23,10 +23,10 @@ public class ArgForceStop extends ArenaCommandArgument {
             return;
         }
 
-        arenasManager.forceStop(arena, player);
-
         if (!arena.getPlayers().contains(player.getName())) {
-            Messages.send(player, "arena-moderate.force-stop-success", "%player%", player.getName());
+            Messages.send(player, "arena-moderate.force-stop-success");
         }
+
+        arenasManager.forceStop(arena, player);
     }
 }
