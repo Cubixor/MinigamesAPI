@@ -4,6 +4,7 @@ import me.cubixor.minigamesapi.spigot.MinigamesAPI;
 import me.cubixor.minigamesapi.spigot.config.arenas.ArenasConfigManager;
 import me.cubixor.minigamesapi.spigot.config.arenas.BasicConfigField;
 import me.cubixor.minigamesapi.spigot.config.arenas.ConfigField;
+import me.cubixor.minigamesapi.spigot.config.stats.StatsManager;
 import me.cubixor.minigamesapi.spigot.game.arena.Arena;
 import me.cubixor.minigamesapi.spigot.game.arena.GameState;
 import me.cubixor.minigamesapi.spigot.game.arena.LocalArena;
@@ -21,13 +22,15 @@ public class ArenasManager {
     private final ArenasConfigManager configManager;
     private final SignManager signManager;
     private final PacketSenderSpigot packetSender;
+    private final StatsManager statsManager;
     private final boolean bungee;
 
-    public ArenasManager(ArenasRegistry registry, ArenasConfigManager configManager, SignManager signManager, PacketSenderSpigot packetSender) {
+    public ArenasManager(ArenasRegistry registry, ArenasConfigManager configManager, SignManager signManager, PacketSenderSpigot packetSender, StatsManager statsManager) {
         this.registry = registry;
         this.configManager = configManager;
         this.signManager = signManager;
         this.packetSender = packetSender;
+        this.statsManager = statsManager;
 
         arenaPlayersManager = new ArenaPlayersManager(this);
 
@@ -40,6 +43,7 @@ public class ArenasManager {
             //TODO Proper server name
             LocalArena localArena = new LocalArena(
                     this,
+                    statsManager,
                     name,
                     MinigamesAPI.getPlugin().getName(),
                     configManager.getBoolean(name, BasicConfigField.ACTIVE),
@@ -52,7 +56,7 @@ public class ArenasManager {
     }
 
     public void addArena(String arena) {
-        LocalArena localArena = new LocalArena(this, arena);
+        LocalArena localArena = new LocalArena(this,statsManager,arena);
 
         registry.getLocalArenas().put(arena, localArena);
         configManager.insertArena(arena);
@@ -181,5 +185,9 @@ public class ArenasManager {
 
     public ArenasRegistry getRegistry() {
         return registry;
+    }
+
+    public StatsManager getStatsManager() {
+        return statsManager;
     }
 }

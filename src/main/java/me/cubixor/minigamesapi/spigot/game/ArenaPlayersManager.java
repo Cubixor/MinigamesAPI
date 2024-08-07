@@ -4,12 +4,14 @@ import com.cryptomorin.xseries.messages.Titles;
 import com.google.common.collect.ImmutableMap;
 import me.cubixor.minigamesapi.spigot.MinigamesAPI;
 import me.cubixor.minigamesapi.spigot.Utils;
-import me.cubixor.minigamesapi.spigot.game.arena.Arena;
-import me.cubixor.minigamesapi.spigot.game.arena.LocalArena;
-import me.cubixor.minigamesapi.spigot.game.arena.PlayerData;
 import me.cubixor.minigamesapi.spigot.config.arenas.BasicConfigField;
+import me.cubixor.minigamesapi.spigot.config.stats.BasicStatsField;
 import me.cubixor.minigamesapi.spigot.events.GameJoinEvent;
 import me.cubixor.minigamesapi.spigot.events.GameLeaveEvent;
+import me.cubixor.minigamesapi.spigot.game.arena.Arena;
+import me.cubixor.minigamesapi.spigot.game.arena.GameState;
+import me.cubixor.minigamesapi.spigot.game.arena.LocalArena;
+import me.cubixor.minigamesapi.spigot.game.arena.PlayerData;
 import me.cubixor.minigamesapi.spigot.utils.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -184,7 +186,9 @@ public class ArenaPlayersManager {
         PlayerData playerData = localArena.getPlayerData().remove(player);
         playerData.restorePlayerData();
 
-        //TODO Add playtime stats
+        if (localArena.getState().equals(GameState.GAME)) {
+            arenasManager.getStatsManager().addStats(player.getName(), BasicStatsField.PLAYTIME, localArena.getTimer());
+        }
 
         if (MinigamesAPI.getPlugin().getConfig().getBoolean("use-main-lobby")) {
             player.teleport(arenasManager.getConfigManager().getLocation(localArena.getName(), BasicConfigField.MAIN_LOBBY));

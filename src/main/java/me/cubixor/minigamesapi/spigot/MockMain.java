@@ -40,7 +40,7 @@ public class MockMain extends JavaPlugin {
         ArenasRegistry arenasRegistry = new ArenasRegistry();
         PacketSenderSpigot packetSender = new PacketSenderSpigot(configManager.getConnectionConfig());
         SignManager signManager = new SignManager(configManager.getArenasConfigManager(), arenasRegistry);
-        ArenasManager arenasManager = new ArenasManager(arenasRegistry, configManager.getArenasConfigManager(), signManager, packetSender);
+        ArenasManager arenasManager = new ArenasManager(arenasRegistry, configManager.getArenasConfigManager(), signManager, packetSender, configManager.getStatsManager());
         PacketManagerSpigot packetManager = new PacketManagerSpigot(arenasManager, packetSender);
         ArenaProtection arenaProtection = new ArenaProtection(arenasManager);
         ItemHandler itemHandler = new ItemHandler(arenasManager);

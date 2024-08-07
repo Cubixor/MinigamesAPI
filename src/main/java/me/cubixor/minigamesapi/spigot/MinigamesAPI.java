@@ -1,6 +1,6 @@
 package me.cubixor.minigamesapi.spigot;
 
-import com.cryptomorin.xseries.XMaterial;
+import me.cubixor.minigamesapi.spigot.utils.VersionUtils;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class MinigamesAPI {
@@ -16,7 +16,7 @@ public class MinigamesAPI {
 
     public static void INIT(JavaPlugin javaPlugin) {
         //Initialize legacy material support
-        XMaterial.matchXMaterial("BLACK_STAINED_GLASS").get().parseItem().getData();
+        VersionUtils.initialize();
 
         plugin = javaPlugin;
     }

@@ -30,7 +30,7 @@ class ArenasManagerTest {
         ArenasConfigManager arenasConfigManager = new ArenasConfigManager(config);
         ArenasRegistry arenasRegistry = new ArenasRegistry();
         SignManager signManager = new SignManager(arenasConfigManager, arenasRegistry);
-        arenasManager = new ArenasManager(arenasRegistry, arenasConfigManager, signManager, null);
+        arenasManager = new ArenasManager(arenasRegistry, arenasConfigManager, signManager, null, null);
     }
 
     @AfterEach

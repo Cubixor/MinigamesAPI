@@ -2,8 +2,8 @@ package me.cubixor.minigamesapi.spigot.game.arena;
 
 
 import me.cubixor.minigamesapi.spigot.MinigamesAPI;
+import me.cubixor.minigamesapi.spigot.config.stats.StatsManager;
 import me.cubixor.minigamesapi.spigot.events.GameStateChangeEvent;
-import me.cubixor.minigamesapi.spigot.game.ArenaPlayersManager;
 import me.cubixor.minigamesapi.spigot.game.ArenasManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -15,16 +15,18 @@ import java.util.Set;
 public class LocalArena extends Arena {
 
     private final StateManager stateManager;
+    private final ScoreboardManager scoreboardManager;
     private final Map<Player, PlayerData> playerData = new HashMap<>();
     private int timer = -1;
 
-    public LocalArena(ArenasManager arenasManager, String name) {
-        this(arenasManager, name, MinigamesAPI.getPlugin().getName(), false, false, 0, 0);
+    public LocalArena(ArenasManager arenasManager, StatsManager statsManager, String name) {
+        this(arenasManager, statsManager, name, MinigamesAPI.getPlugin().getName(), false, false, 0, 0);
     }
 
-    public LocalArena(ArenasManager arenasManager, String name, String server, boolean active, boolean vip, int minPlayers, int maxPlayers) {
+    public LocalArena(ArenasManager arenasManager, StatsManager statsManager, String name, String server, boolean active, boolean vip, int minPlayers, int maxPlayers) {
         super(name, server, active, vip, minPlayers, maxPlayers);
-        this.stateManager = new StateManager(this, arenasManager);
+        this.stateManager = new StateManager(this, arenasManager, statsManager);
+        this.scoreboardManager = new ScoreboardManager(this);
     }
 
     public Arena toArena() {
@@ -67,5 +69,9 @@ public class LocalArena extends Arena {
 
     public Map<Player, PlayerData> getPlayerData() {
         return playerData;
+    }
+
+    public ScoreboardManager getScoreboardManager() {
+        return scoreboardManager;
     }
 }

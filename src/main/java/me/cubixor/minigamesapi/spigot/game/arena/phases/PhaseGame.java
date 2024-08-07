@@ -7,6 +7,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
+import java.util.List;
+
 public class PhaseGame extends GamePhase {
 
     private BukkitTask gameTask;
@@ -24,6 +26,9 @@ public class PhaseGame extends GamePhase {
             @Override
             public void run() {
                 int time = localArena.getTimer();
+
+                localArena.getScoreboardManager().updateScoreboard();
+
                 localArena.setTimer(time + 1);
             }
 
@@ -41,8 +46,8 @@ public class PhaseGame extends GamePhase {
         }
     }
 
-    public void finish(){
-        localArena.getStateManager().setEnd();
+    public void finish(List<Player> winners){
+        localArena.getStateManager().setEnd(winners);
     }
 
 

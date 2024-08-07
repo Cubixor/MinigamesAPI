@@ -81,8 +81,7 @@ public class PacketManagerSpigot implements Listener {
             LocalArena localArena = arenasRegistry.getLocalArenas().get(((KickPacket) packet).getArenaName());
             if (!localArena.getPlayers().contains(kickPacket.getTarget())) return;
 
-            //TODO Kick messages
-            arenasManager.getArenaPlayersManager().kickFromLocalArena(Bukkit.getPlayerExact(kickPacket.getTarget()), localArena,false);
+            arenasManager.getArenaPlayersManager().leaveArena(Bukkit.getPlayerExact(kickPacket.getTarget()), localArena);
         }
     }
 

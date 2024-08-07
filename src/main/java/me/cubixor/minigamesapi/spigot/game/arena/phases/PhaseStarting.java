@@ -38,6 +38,7 @@ public class PhaseStarting extends GamePhase {
                 }
 
                 updateCosmetics(time);
+                localArena.getScoreboardManager().updateScoreboard();
 
                 localArena.setTimer(localArena.getTimer() - 1);
             }

@@ -1,7 +1,14 @@
 package me.cubixor.minigamesapi.spigot.utils;
 
 
+import me.cubixor.minigamesapi.spigot.MinigamesAPI;
 import me.cubixor.minigamesapi.spigot.game.arena.Arena;
+import org.bukkit.configuration.file.FileConfiguration;
+
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 
 public class MessageUtils {
 
@@ -48,5 +55,23 @@ public class MessageUtils {
         }
 
         return timeString;
+    }
+
+    public static String formatTime(int time, String formatPath) {
+        FileConfiguration config = MinigamesAPI.getPlugin().getConfig();
+        String pattern = config.getString(formatPath);
+
+        Instant instant = Instant.ofEpochSecond(time);
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(pattern).withZone(ZoneId.of("UTC"));
+
+        return dateTimeFormatter.format(instant);
+    }
+
+    public static String formatDate(LocalDateTime localDateTime, String formatPath) {
+        FileConfiguration config = MinigamesAPI.getPlugin().getConfig();
+        String pattern = config.getString(formatPath);
+
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(pattern);
+        return localDateTime.format(dateTimeFormatter);
     }
 }
