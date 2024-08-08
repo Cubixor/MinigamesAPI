@@ -1,7 +1,7 @@
 package me.cubixor.minigamesapi.spigot.utils;
 
-import com.cryptomorin.xseries.XSound;
 import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
@@ -19,14 +19,26 @@ public class Sounds {
     }
 
     public static void playSound(String path, Location loc, Set<Player> players) {
-        XSound.Record soundRecord = XSound.parse(config.getString("sounds." + path));
-        soundRecord.soundPlayer().atLocation(loc).forPlayers(players).play();
+        if (!config.getBoolean("sounds." + path + ".enabled")) {
+            return;
+        }
+
+        Sound sound = Sound.valueOf(config.getString("sounds." + path + ".sound"));
+        float volume = (float) config.getDouble("sounds." + path + ".volume");
+        float pitch = (float) config.getDouble("sounds." + path + ".pitch");
+
+        players.forEach(p -> p.playSound(loc, sound, volume, pitch));
     }
 
-    public static void playSoundWithPitch(String path, Player player, float pitch) {
-        XSound.Record soundRecord = XSound
-                .parse(config.getString("sounds." + path))
-                .withPitch(pitch);
-        soundRecord.soundPlayer().forPlayers(player).play();
+    public static void playSoundWithPitch(String path, Player p, float pitch) {
+        if (!config.getBoolean("sounds." + path + ".enabled")) {
+            return;
+        }
+
+        Sound sound = Sound.valueOf(config.getString("sounds." + path + ".sound"));
+        float volume = (float) config.getDouble("sounds." + path + ".volume");
+
+        p.playSound(p.getLocation(), sound, volume, pitch);
     }
+
 }

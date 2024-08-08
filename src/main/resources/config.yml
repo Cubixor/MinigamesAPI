@@ -25,13 +25,40 @@ items:
     slot: 8
 
 sounds:
-  join: ENTITY_ENDERMAN_TELEPORT
-  leave: ENTITY_ENDERMAN_TELEPORT
-  click: UI_BUTTON_CLICK
-  countdown: BLOCK_NOTE_BLOCK_PLING, 100
-  start: ENTITY_ENDER_DRAGON_GROWL, 100
-  win: ENTITY_ENDER_DRAGON_DEATH, 100
-  defeat: ENTITY_WITHER_SPAWN, 100
+  join:
+    enabled: true
+    sound: ENTITY_ENDERMAN_TELEPORT
+    volume: 1
+    pitch: 1
+  leave:
+    enabled: true
+    sound: ENTITY_ENDERMAN_TELEPORT
+    volume: 1
+    pitch: 1
+  click:
+    enabled: true
+    sound: UI_BUTTON_CLICK
+    volume: 1
+    pitch: 1
+  countdown:
+    enabled: true
+    sound: BLOCK_NOTE_BLOCK_PLING
+    volume: 100
+  start:
+    enabled: true
+    sound: ENTITY_ENDER_DRAGON_GROWL
+    volume: 100
+    pitch: 1
+  win:
+    enabled: true
+    sound: ENTITY_ENDER_DRAGON_DEATH
+    volume: 100
+    pitch: 1
+  defeat:
+    enabled: true
+    sound: ENTITY_WITHER_SPAWN
+    volume: 100
+    pitch: 1
 
 particles:
   join:
