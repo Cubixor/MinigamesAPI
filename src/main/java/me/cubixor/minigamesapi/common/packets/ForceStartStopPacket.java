@@ -25,4 +25,13 @@ public class ForceStartStopPacket implements Packet {
     public boolean isActionStart() {
         return start;
     }
+
+    @Override
+    public String toString() {
+        return "ForceStartStopPacket{" +
+                "arenaName='" + arenaName + '\'' +
+                ", player='" + player + '\'' +
+                ", start=" + start +
+                '}';
+    }
 }

@@ -148,7 +148,7 @@ public class ClientManager implements Listener {
 
     private void sendAllArenas(String server) {
         ArenaUpdatePacket packet = new ArenaUpdatePacket(arenas);
-        socketSender.sendPacketToAllExcept(packet, server);
+        socketSender.sendPacketToServer(packet, server);
     }
 
     private void sendJoinPacket(JoinPacket joinPacket, String server) {

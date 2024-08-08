@@ -16,4 +16,11 @@ public class ArenaUpdatePacket implements Packet {
     public Map<String, Arena> getArenas() {
         return arenas;
     }
+
+    @Override
+    public String toString() {
+        return "ArenaUpdatePacket{" +
+                "arenas=" + arenas +
+                '}';
+    }
 }

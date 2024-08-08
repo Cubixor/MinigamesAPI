@@ -25,4 +25,13 @@ public class KickPacket implements Packet {
     public String getTarget() {
         return target;
     }
+
+    @Override
+    public String toString() {
+        return "KickPacket{" +
+                "arenaName='" + arenaName + '\'' +
+                ", player='" + player + '\'' +
+                ", target='" + target + '\'' +
+                '}';
+    }
 }

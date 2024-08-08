@@ -25,4 +25,13 @@ public class LeavePacket implements Packet {
     public boolean shouldUsePrevServer() {
         return usePrevServer;
     }
+
+    @Override
+    public String toString() {
+        return "LeavePacket{" +
+                "player='" + player + '\'' +
+                ", lobby='" + lobby + '\'' +
+                ", usePrevServer=" + usePrevServer +
+                '}';
+    }
 }

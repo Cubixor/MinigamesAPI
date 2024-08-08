@@ -16,25 +16,30 @@ import java.util.Map;
 
 public class PacketSenderSpigot {
 
-    private final SocketClientSender socketSender;
-    private final LeaveStrategy leaveStrategy;
-    private final String lobbyServer;
+    private final boolean isBungee;
+    private SocketClientSender socketSender;
+    private LeaveStrategy leaveStrategy;
     private final String serverName;
+    private String lobbyServer;
 
     public PacketSenderSpigot(CustomConfig connectionConfig) {
+        isBungee = MinigamesAPI.getPlugin().getConfig().getBoolean("bungee.bungee-mode");
         serverName = connectionConfig.get().getString("bungee-socket.server-name");
 
-        SocketClient socketClient = new SocketClient(
-                MinigamesAPI.getPlugin(),
-                connectionConfig.get().getString("bungee-socket.host"),
-                connectionConfig.get().getInt("bungee-socket.port"),
-                serverName,
-                connectionConfig.get().getBoolean("bungee-socket.debug")
-        );
+        if (isBungee) {
+            SocketClient socketClient = new SocketClient(
+                    MinigamesAPI.getPlugin(),
+                    connectionConfig.get().getString("bungee-socket.host"),
+                    connectionConfig.get().getInt("bungee-socket.port"),
+                    serverName,
+                    connectionConfig.get().getBoolean("bungee-socket.debug")
+            );
+            socketClient.clientSetup();
 
-        this.socketSender = socketClient.getSender();
-        this.leaveStrategy = LeaveStrategy.valueOf(MinigamesAPI.getPlugin().getConfig().getString("bungee.on-leave"));
-        this.lobbyServer = MinigamesAPI.getPlugin().getConfig().getString("bungee.lobby-server");
+            this.socketSender = socketClient.getSender();
+            this.leaveStrategy = LeaveStrategy.valueOf(MinigamesAPI.getPlugin().getConfig().getString("bungee.on-leave"));
+            this.lobbyServer = MinigamesAPI.getPlugin().getConfig().getString("bungee.lobby-server");
+        }
     }
 
     public void sendUpdateArenasPacket(Map<String, Arena> arenas) {

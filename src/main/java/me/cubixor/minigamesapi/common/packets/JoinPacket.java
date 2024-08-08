@@ -25,5 +25,14 @@ public class JoinPacket implements Packet {
     public boolean isLocalJoin() {
         return localJoin;
     }
+
+    @Override
+    public String toString() {
+        return "JoinPacket{" +
+                "arenaName='" + arenaName + '\'' +
+                ", playerName='" + playerName + '\'' +
+                ", localJoin=" + localJoin +
+                '}';
+    }
 }
 
