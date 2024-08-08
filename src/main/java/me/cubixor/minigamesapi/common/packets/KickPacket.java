@@ -5,21 +5,15 @@ import me.cubixor.socketsmc.common.packets.Packet;
 public class KickPacket implements Packet {
 
     private final String arenaName;
-    private final String player;
     private final String target;
 
-    public KickPacket(String player, String target, String arenaName) {
+    public KickPacket(String arenaName, String target) {
         this.arenaName = arenaName;
-        this.player = player;
         this.target = target;
     }
 
     public String getArenaName() {
         return arenaName;
-    }
-
-    public String getPlayer() {
-        return player;
     }
 
     public String getTarget() {
@@ -30,7 +24,6 @@ public class KickPacket implements Packet {
     public String toString() {
         return "KickPacket{" +
                 "arenaName='" + arenaName + '\'' +
-                ", player='" + player + '\'' +
                 ", target='" + target + '\'' +
                 '}';
     }

@@ -61,7 +61,7 @@ public class ClientManager implements Listener {
         } else if (packet instanceof JoinPacket) {
             JoinPacket joinPacket = (JoinPacket) packet;
             if (joinArena(joinPacket)) {
-                sendJoinPacket(joinPacket, server);
+                sendJoinPacket(joinPacket, getArenaServer(joinPacket.getArenaName()));
             }
         } else if (packet instanceof LeavePacket) {
             LeavePacket leavePacket = (LeavePacket) packet;
@@ -82,19 +82,17 @@ public class ClientManager implements Listener {
         }
 
         playerServers.put(joinPacket.getPlayerName(), proxiedPlayer.getServer().getInfo().getName());
+        proxiedPlayer.connect(ProxyServer.getInstance().getServerInfo(getArenaServer(joinPacket.getArenaName())));
 
-        if (!joinPacket.isLocalJoin()) {
-            proxiedPlayer.connect(ProxyServer.getInstance().getServerInfo(getArenaServer(joinPacket.getArenaName())));
-
-            return true;
-        }
-
-        return false;
+        return true;
     }
 
     private void sendBackToServer(LeavePacket leavePacket) {
         ProxiedPlayer proxiedPlayer = ProxyServer.getInstance().getPlayer(leavePacket.getPlayer());
         if (proxiedPlayer == null) {
+            return;
+        }
+        if (!playerServers.containsKey(proxiedPlayer.getName())) {
             return;
         }
 

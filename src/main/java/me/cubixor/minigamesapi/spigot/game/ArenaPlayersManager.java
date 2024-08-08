@@ -114,11 +114,8 @@ public class ArenaPlayersManager {
         if (arena.isLocal()) {
             LocalArena localArena = (LocalArena) arena;
             putInLocalArena(player, localArena);
-            if (arenasManager.isBungee()) {
-                arenasManager.getPacketSender().sendJoinPacket(localArena.toArena(), player, true);
-            }
         } else {
-            arenasManager.getPacketSender().sendJoinPacket(arena, player, false);
+            arenasManager.getPacketSender().sendJoinPacket(arena, player);
         }
     }
 
@@ -179,7 +176,7 @@ public class ArenaPlayersManager {
             LocalArena localArena = (LocalArena) arena;
             kickFromLocalArena(Bukkit.getPlayerExact(playerName), localArena, false);
         } else {
-            arenasManager.getPacketSender().sendLeavePacket(playerName);
+            arenasManager.getPacketSender().sendKickPacket(arena, playerName);
         }
     }
 
@@ -204,6 +201,10 @@ public class ArenaPlayersManager {
         Titles.clearTitle(player);
 
         localArena.getPlayers().remove(player.getName());
+
+        if (arenasManager.isBungee()) {
+            arenasManager.getPacketSender().sendLeavePacket(player.getName());
+        }
 
         if (!reset) {
             localArena.getStateManager().updateOnLeave();

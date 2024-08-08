@@ -1,9 +1,6 @@
 package me.cubixor.minigamesapi.spigot.sockets;
 
-import me.cubixor.minigamesapi.common.packets.ArenaUpdatePacket;
-import me.cubixor.minigamesapi.common.packets.ForceStartStopPacket;
-import me.cubixor.minigamesapi.common.packets.JoinPacket;
-import me.cubixor.minigamesapi.common.packets.LeavePacket;
+import me.cubixor.minigamesapi.common.packets.*;
 import me.cubixor.minigamesapi.spigot.MinigamesAPI;
 import me.cubixor.minigamesapi.spigot.config.CustomConfig;
 import me.cubixor.minigamesapi.spigot.game.arena.Arena;
@@ -47,9 +44,14 @@ public class PacketSenderSpigot {
         socketSender.sendPacket(packet);
     }
 
-    public void sendJoinPacket(Arena arena, Player player, boolean localJoin) {
-        JoinPacket joinPacket = new JoinPacket(arena.getName(), player.getName(), localJoin);
+    public void sendJoinPacket(Arena arena, Player player) {
+        JoinPacket joinPacket = new JoinPacket(arena.getName(), player.getName());
         socketSender.sendPacket(joinPacket);
+    }
+
+    public void sendKickPacket(Arena arena, String playerName){
+        KickPacket kickPacket  = new KickPacket(arena.getName(), playerName);
+        socketSender.sendPacket(kickPacket);
     }
 
     public void sendLeavePacket(String playerName) {
