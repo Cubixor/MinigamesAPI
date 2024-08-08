@@ -1,5 +1,6 @@
 package me.cubixor.minigamesapi.spigot.utils;
 
+import com.cryptomorin.xseries.XSound;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -23,11 +24,12 @@ public class Sounds {
             return;
         }
 
-        Sound sound = Sound.valueOf(config.getString("sounds." + path + ".sound"));
+        Sound sound = XSound.matchXSound(config.getString("sounds." + path + ".sound")).get().parseSound();
         float volume = (float) config.getDouble("sounds." + path + ".volume");
         float pitch = (float) config.getDouble("sounds." + path + ".pitch");
 
         players.forEach(p -> p.playSound(loc, sound, volume, pitch));
+
     }
 
     public static void playSoundWithPitch(String path, Player p, float pitch) {
@@ -35,7 +37,7 @@ public class Sounds {
             return;
         }
 
-        Sound sound = Sound.valueOf(config.getString("sounds." + path + ".sound"));
+        Sound sound = XSound.matchXSound(config.getString("sounds." + path + ".sound")).get().parseSound();
         float volume = (float) config.getDouble("sounds." + path + ".volume");
 
         p.playSound(p.getLocation(), sound, volume, pitch);

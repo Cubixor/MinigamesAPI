@@ -50,7 +50,7 @@
                                     </excludes>
                                 </filter>
                             </filters>
-                            <outputFile>D:\Kuba\MINECRAFT\Serwer latest\plugins\MinigamesAPI-${project.version}.jar</outputFile>
+                            <!--<outputFile>D:\Kuba\MINECRAFT\Serwer latest\plugins\MinigamesAPI-${project.version}.jar</outputFile>-->
                         </configuration>
                     </execution>
                 </executions>
@@ -160,6 +160,7 @@
             <groupId>me.cubixor</groupId>
             <artifactId>SocketsMC</artifactId>
             <version>1.0</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 </project>

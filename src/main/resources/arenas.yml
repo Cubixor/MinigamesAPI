@@ -1,3 +1,4 @@
 arenas: {}
 
-signs: {}
+signs:
+  quickjoin: {}

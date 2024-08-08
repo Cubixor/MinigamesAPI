@@ -7,7 +7,6 @@ import me.cubixor.minigamesapi.spigot.config.stats.StatsManager;
 import me.cubixor.minigamesapi.spigot.game.ArenasRegistry;
 import me.cubixor.minigamesapi.spigot.game.arena.Arena;
 import me.cubixor.minigamesapi.spigot.utils.MessageUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;
 
@@ -19,10 +18,6 @@ public class PlaceholderExpansion extends me.clip.placeholderapi.expansion.Place
     public PlaceholderExpansion(ArenasRegistry arenasRegistry, StatsManager statsManager) {
         this.arenasRegistry = arenasRegistry;
         this.statsManager = statsManager;
-
-        if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
-            this.register();
-        }
     }
 
     @Override

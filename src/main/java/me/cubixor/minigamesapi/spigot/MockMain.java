@@ -12,6 +12,7 @@ import me.cubixor.minigamesapi.spigot.game.arena.GameState;
 import me.cubixor.minigamesapi.spigot.integrations.PlaceholderExpansion;
 import me.cubixor.minigamesapi.spigot.sockets.PacketManagerSpigot;
 import me.cubixor.minigamesapi.spigot.sockets.PacketSenderSpigot;
+import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginDescriptionFile;
@@ -60,7 +61,9 @@ public class MockMain extends JavaPlugin implements Listener {
         getServer().getPluginCommand(getName()).setExecutor(mainCommand);
         getServer().getPluginCommand(getName()).setTabCompleter(mainCommandCompleter);
 
-        new PlaceholderExpansion(arenasRegistry, configManager.getStatsManager());
+        if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+            new PlaceholderExpansion(arenasRegistry, configManager.getStatsManager());
+        }
     }
 
     @EventHandler
