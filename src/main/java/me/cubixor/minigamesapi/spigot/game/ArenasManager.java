@@ -61,7 +61,7 @@ public class ArenasManager {
 
         registry.getLocalArenas().put(arena, localArena);
         configManager.insertArena(arena);
-        signManager.addArena(arena);
+        signManager.updateSigns("quickjoin");
 
         updateArena(localArena);
     }
@@ -138,6 +138,7 @@ public class ArenasManager {
             registry.getRemoteArenas().put(entry.getKey(), entry.getValue());
             signManager.updateSigns(entry.getKey());
         }
+        signManager.updateSigns("quickjoin");
     }
 
     public void forceStart(Arena arena, Player player) {

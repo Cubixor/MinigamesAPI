@@ -52,6 +52,10 @@ public class SignManager implements Listener {
     }
 
     private void addSign(String arena, Location loc) {
+        if(!signs.containsKey(arena)){
+            signs.put(arena, new ArrayList<>());
+        }
+
         signs.get(arena).add(loc);
         arenasConfigManager.addSign(arena, loc);
     }
@@ -85,12 +89,6 @@ public class SignManager implements Listener {
         return attachedBlock;
     }
 
-    public void addArena(String arena) {
-        signs.put(arena, new ArrayList<>());
-
-        updateSigns("quickjoin");
-    }
-
     public void removeArena(String arena) {
         for (Location location : signs.get(arena)) {
             removeSignBlock(location.getBlock());
@@ -113,7 +111,7 @@ public class SignManager implements Listener {
 
         String arena = evt.getLine(1);
 
-        if (!signs.containsKey(arena) && !evt.getLine(1).equalsIgnoreCase("quickjoin")) {
+        if (!arenasRegistry.isValidArena(arena) && !evt.getLine(1).equalsIgnoreCase("quickjoin")) {
             return;
         }
         evt.setCancelled(true);
