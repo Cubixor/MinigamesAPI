@@ -22,7 +22,7 @@ public class GameResetEvent extends Event {
         return HANDLERS;
     }
 
-    public Arena getLocalArena() {
+    public LocalArena getLocalArena() {
         return localArena;
     }
 }

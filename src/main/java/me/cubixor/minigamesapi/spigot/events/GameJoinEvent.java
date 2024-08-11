@@ -26,7 +26,7 @@ public class GameJoinEvent extends Event {
         return HANDLERS;
     }
 
-    public Arena getLocalArena() {
+    public LocalArena getLocalArena() {
         return localArena;
     }
 
