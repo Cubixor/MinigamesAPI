@@ -8,6 +8,7 @@ import me.cubixor.minigamesapi.spigot.game.arena.Arena;
 import me.cubixor.minigamesapi.spigot.game.arena.GameState;
 import me.cubixor.minigamesapi.spigot.config.CustomConfig;
 import me.cubixor.minigamesapi.spigot.config.arenas.ArenasConfigManager;
+import me.cubixor.minigamesapi.spigot.game.items.ItemsRegistry;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -29,8 +30,9 @@ class ArenasManagerTest {
         CustomConfig config = new CustomConfig("arenas.yml");
         ArenasConfigManager arenasConfigManager = new ArenasConfigManager(config);
         ArenasRegistry arenasRegistry = new ArenasRegistry();
+        ItemsRegistry itemsRegistry = new ItemsRegistry();
         SignManager signManager = new SignManager(arenasConfigManager, arenasRegistry);
-        arenasManager = new ArenasManager(arenasRegistry, arenasConfigManager, signManager, null, null);
+        arenasManager = new ArenasManager(arenasRegistry, arenasConfigManager, signManager, null, null, itemsRegistry);
     }
 
     @AfterEach

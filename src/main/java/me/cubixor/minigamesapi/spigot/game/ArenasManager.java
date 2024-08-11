@@ -8,6 +8,7 @@ import me.cubixor.minigamesapi.spigot.config.stats.StatsManager;
 import me.cubixor.minigamesapi.spigot.game.arena.Arena;
 import me.cubixor.minigamesapi.spigot.game.arena.GameState;
 import me.cubixor.minigamesapi.spigot.game.arena.LocalArena;
+import me.cubixor.minigamesapi.spigot.game.items.ItemsRegistry;
 import me.cubixor.minigamesapi.spigot.sockets.PacketSenderSpigot;
 import me.cubixor.minigamesapi.spigot.utils.Messages;
 import org.bukkit.entity.Player;
@@ -23,14 +24,16 @@ public class ArenasManager {
     private final SignManager signManager;
     private final PacketSenderSpigot packetSender;
     private final StatsManager statsManager;
+    private final ItemsRegistry itemsRegistry;
     private final boolean bungee;
 
-    public ArenasManager(ArenasRegistry registry, ArenasConfigManager configManager, SignManager signManager, PacketSenderSpigot packetSender, StatsManager statsManager) {
+    public ArenasManager(ArenasRegistry registry, ArenasConfigManager configManager, SignManager signManager, PacketSenderSpigot packetSender, StatsManager statsManager, ItemsRegistry itemsRegistry) {
         this.registry = registry;
         this.configManager = configManager;
         this.signManager = signManager;
         this.packetSender = packetSender;
         this.statsManager = statsManager;
+        this.itemsRegistry = itemsRegistry;
 
         arenaPlayersManager = new ArenaPlayersManager(this);
 
@@ -191,5 +194,9 @@ public class ArenasManager {
 
     public StatsManager getStatsManager() {
         return statsManager;
+    }
+
+    public ItemsRegistry getItemsRegistry() {
+        return itemsRegistry;
     }
 }

@@ -6,6 +6,7 @@ import be.seeseemelk.mockbukkit.entity.PlayerMock;
 import me.cubixor.minigamesapi.spigot.MockMain;
 import me.cubixor.minigamesapi.spigot.config.CustomConfig;
 import me.cubixor.minigamesapi.spigot.config.arenas.ArenasConfigManager;
+import me.cubixor.minigamesapi.spigot.game.items.ItemsRegistry;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,7 +26,8 @@ class ChatBlockerTest {
         CustomConfig config = new CustomConfig("arenas.yml");
         ArenasConfigManager arenasConfigManager = new ArenasConfigManager(config);
         ArenasRegistry arenasRegistry = new ArenasRegistry();
-        arenasManager = new ArenasManager(arenasRegistry, arenasConfigManager, null,null,null);
+        ItemsRegistry itemsRegistry = new ItemsRegistry();
+        arenasManager = new ArenasManager(arenasRegistry, arenasConfigManager, null,null,null, itemsRegistry);
     }
 
     @AfterEach

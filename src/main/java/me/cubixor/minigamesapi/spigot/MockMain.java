@@ -9,6 +9,8 @@ import me.cubixor.minigamesapi.spigot.config.stats.BasicStatsField;
 import me.cubixor.minigamesapi.spigot.events.TimerTickEvent;
 import me.cubixor.minigamesapi.spigot.game.*;
 import me.cubixor.minigamesapi.spigot.game.arena.GameState;
+import me.cubixor.minigamesapi.spigot.game.items.ItemHandler;
+import me.cubixor.minigamesapi.spigot.game.items.ItemsRegistry;
 import me.cubixor.minigamesapi.spigot.integrations.PlaceholderExpansion;
 import me.cubixor.minigamesapi.spigot.sockets.PacketManagerSpigot;
 import me.cubixor.minigamesapi.spigot.sockets.PacketSenderSpigot;
@@ -45,12 +47,13 @@ public class MockMain extends JavaPlugin implements Listener {
         ConfigManager configManager = new ConfigManager(Arrays.asList(BasicStatsField.values()));
 
         ArenasRegistry arenasRegistry = new ArenasRegistry();
+        ItemsRegistry itemsRegistry = new ItemsRegistry();
         PacketSenderSpigot packetSender = new PacketSenderSpigot(configManager.getConnectionConfig());
         SignManager signManager = new SignManager(configManager.getArenasConfigManager(), arenasRegistry);
-        ArenasManager arenasManager = new ArenasManager(arenasRegistry, configManager.getArenasConfigManager(), signManager, packetSender, configManager.getStatsManager());
+        ArenasManager arenasManager = new ArenasManager(arenasRegistry, configManager.getArenasConfigManager(), signManager, packetSender, configManager.getStatsManager(), itemsRegistry);
         PacketManagerSpigot packetManager = new PacketManagerSpigot(arenasManager, packetSender);
         ArenaProtection arenaProtection = new ArenaProtection(arenasManager);
-        ItemHandler itemHandler = new ItemHandler(arenasManager);
+        ItemHandler itemHandler = new ItemHandler(arenasManager, itemsRegistry);
         ChatBlocker chatBlocker = new ChatBlocker(arenasRegistry);
         ArenaSetupChecker arenaSetupChecker = new ArenaSetupChecker(configManager.getArenasConfigManager());
 

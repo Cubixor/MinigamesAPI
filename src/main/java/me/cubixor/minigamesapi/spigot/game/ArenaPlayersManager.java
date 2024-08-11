@@ -12,7 +12,10 @@ import me.cubixor.minigamesapi.spigot.game.arena.Arena;
 import me.cubixor.minigamesapi.spigot.game.arena.GameState;
 import me.cubixor.minigamesapi.spigot.game.arena.LocalArena;
 import me.cubixor.minigamesapi.spigot.game.arena.PlayerData;
-import me.cubixor.minigamesapi.spigot.utils.*;
+import me.cubixor.minigamesapi.spigot.utils.Messages;
+import me.cubixor.minigamesapi.spigot.utils.Particles;
+import me.cubixor.minigamesapi.spigot.utils.Permissions;
+import me.cubixor.minigamesapi.spigot.utils.Sounds;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -131,7 +134,7 @@ public class ArenaPlayersManager {
         Location waitingLobby = arenasManager.getConfigManager().getLocation(arenaString, BasicConfigField.WAITING_LOBBY);
         player.teleport(waitingLobby);
 
-        Items.getLeaveItem().give(player);
+        arenasManager.getItemsRegistry().getLeaveItem().give(player);
         player.getInventory().setHeldItemSlot(4);
 
         //TODO Action bar

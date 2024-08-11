@@ -6,7 +6,6 @@ import me.cubixor.minigamesapi.spigot.config.stats.DBStatsManager;
 import me.cubixor.minigamesapi.spigot.config.stats.FileStatsManager;
 import me.cubixor.minigamesapi.spigot.config.stats.StatsField;
 import me.cubixor.minigamesapi.spigot.config.stats.StatsManager;
-import me.cubixor.minigamesapi.spigot.utils.Items;
 import me.cubixor.minigamesapi.spigot.utils.Messages;
 import me.cubixor.minigamesapi.spigot.utils.Particles;
 import me.cubixor.minigamesapi.spigot.utils.Sounds;
@@ -44,7 +43,6 @@ public class ConfigManager {
         }
 
         Messages.init(messagesConfig.get(), plugin.getCommand(plugin.getName()).getAliases().get(0));
-        Items.init(getConfig());
         Particles.init(getConfig());
         Sounds.init(getConfig());
     }
