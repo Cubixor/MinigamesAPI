@@ -44,9 +44,19 @@ public class StateManager {
     public void updateOnJoin() {
         int count = localArena.getPlayers().size();
         int min = localArena.getMinPlayers();
+        int max = localArena.getMaxPlayers();
 
         if (count >= min) {
-            setStarting();
+            if (gamePhase instanceof PhaseWaiting) {
+                setStarting();
+            }
+
+            if (count >= max) {
+                localArena.setTimer(plugin.getConfig().getInt("full-tp-waiting-time"));
+                for (Player p : localArena.getBukkitPlayers()) {
+                    Messages.send(p, "game.full-countdown", "%time%", String.valueOf(localArena.getTimer()));
+                }
+            }
         }
 
         localArena.getScoreboardManager().updateScoreboard();
@@ -84,16 +94,6 @@ public class StateManager {
     private void setStarting() {
         if (localArena.getTimer() == -1) {
             updatePhase(new PhaseStarting(localArena));
-        }
-
-        int count = localArena.getPlayers().size();
-        int max = localArena.getMaxPlayers();
-
-        if (count >= max) {
-            localArena.setTimer(plugin.getConfig().getInt("full-tp-waiting-time"));
-            for (Player p : localArena.getBukkitPlayers()) {
-                Messages.send(p, "game.full-countdown", "%time%", String.valueOf(localArena.getTimer()));
-            }
         }
     }
 
