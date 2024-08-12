@@ -1,8 +1,11 @@
 package me.cubixor.minigamesapi.spigot.game;
 
 import me.cubixor.minigamesapi.spigot.MinigamesAPI;
+import me.cubixor.minigamesapi.spigot.config.arenas.BasicConfigField;
+import me.cubixor.minigamesapi.spigot.game.arena.GameState;
 import me.cubixor.minigamesapi.spigot.game.arena.LocalArena;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
@@ -39,22 +42,22 @@ public class ArenaProtection implements Listener {
 
     @EventHandler
     public void onBreak(BlockBreakEvent evt) {
-        cancelWaitingStarting(evt.getPlayer(), evt);
+        cancelNotGame(evt.getPlayer(), evt);
     }
 
     @EventHandler
     public void onPlace(BlockPlaceEvent evt) {
-        cancelWaitingStarting(evt.getPlayer(), evt);
+        cancelNotGame(evt.getPlayer(), evt);
     }
 
     @EventHandler
     public void onDrop(PlayerDropItemEvent evt) {
-        cancelWaitingStarting(evt.getPlayer(), evt);
+        cancelNotGame(evt.getPlayer(), evt);
     }
 
     @EventHandler
     public void onPickup(PlayerPickupItemEvent evt) {
-        cancelWaitingStarting(evt.getPlayer(), evt);
+        cancelNotGame(evt.getPlayer(), evt);
     }
 
     @EventHandler
@@ -63,7 +66,18 @@ public class ArenaProtection implements Listener {
             return;
         }
 
-        cancelWaitingStarting((Player) evt.getEntity(), evt);
+        Player player = (Player) evt.getEntity();
+        LocalArena localArena = arenasManager.getRegistry().getPlayerLocalArena(player);
+
+        if (localArena == null) return;
+        if (localArena.getState().equals(GameState.GAME)) return;
+
+        evt.setCancelled(true);
+
+        if (localArena.getState().isWaitingStarting() && evt.getCause().equals(EntityDamageEvent.DamageCause.VOID)) {
+            Location loc = arenasManager.getConfigManager().getLocation(localArena.getName(), BasicConfigField.WAITING_LOBBY);
+            player.teleport(loc);
+        }
     }
 
     @EventHandler
@@ -71,30 +85,31 @@ public class ArenaProtection implements Listener {
         if (!evt.getEntity().getType().equals(EntityType.PLAYER)) {
             return;
         }
-        cancelWaitingStarting((Player) evt.getEntity(), evt);
+        cancelNotGame((Player) evt.getEntity(), evt);
     }
 
     @EventHandler
     public void onClick(InventoryClickEvent evt) {
-        cancelWaitingStarting((Player) evt.getWhoClicked(), evt);
+        cancelNotGame((Player) evt.getWhoClicked(), evt);
     }
 
     @EventHandler
     public void onInteract(PlayerInteractEvent evt) {
-        cancelWaitingStarting(evt.getPlayer(), evt);
+        cancelNotGame(evt.getPlayer(), evt);
     }
 
-    private void cancelWaitingStarting(Player player, Cancellable evt) {
-        if (isInWaitingStartingArena(player)) {
+
+    private void cancelNotGame(Player player, Cancellable evt) {
+        if (isInNotGameArena(player)) {
             evt.setCancelled(true);
         }
     }
 
-    private boolean isInWaitingStartingArena(Player player) {
+    private boolean isInNotGameArena(Player player) {
         LocalArena localArena = arenasManager.getRegistry().getPlayerLocalArena(player);
 
         if (localArena == null) return false;
 
-        return localArena.getState().isWaitingStarting();
+        return !localArena.getState().equals(GameState.GAME);
     }
 }
