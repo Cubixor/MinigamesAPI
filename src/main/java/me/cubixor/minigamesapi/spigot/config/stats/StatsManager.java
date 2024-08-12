@@ -66,9 +66,9 @@ public abstract class StatsManager implements Listener {
         }.runTaskAsynchronously(MinigamesAPI.getPlugin());
     }
 
-    public abstract int fetchSavedStats(String player, StatsField field);
+    protected abstract int fetchSavedStats(String player, StatsField field);
 
-    public abstract void addSavedStats(String player, StatsField field, int count);
+    protected abstract void addSavedStats(String player, StatsField field, int count);
 
     public abstract Set<String> getAllPlayers();
 
