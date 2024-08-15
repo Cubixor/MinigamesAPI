@@ -20,8 +20,8 @@ public class LocalArena extends Arena {
     private final Map<Player, PlayerData> playerData = new HashMap<>();
     private int timer = -1;
 
-    public LocalArena(ArenasManager arenasManager, StatsManager statsManager, String name) {
-        this(arenasManager, statsManager, name, MinigamesAPI.getPlugin().getName(), false, false, 0, 0);
+    public LocalArena(ArenasManager arenasManager, StatsManager statsManager, String name, String server) {
+        this(arenasManager, statsManager, name, server, false, false, 0, 0);
     }
 
     public LocalArena(ArenasManager arenasManager, StatsManager statsManager, String name, String server, boolean active, boolean vip, int minPlayers, int maxPlayers) {
