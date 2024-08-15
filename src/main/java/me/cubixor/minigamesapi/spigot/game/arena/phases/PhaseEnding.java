@@ -1,11 +1,13 @@
 package me.cubixor.minigamesapi.spigot.game.arena.phases;
 
+import com.cryptomorin.xseries.messages.ActionBar;
 import me.cubixor.minigamesapi.spigot.MinigamesAPI;
 import me.cubixor.minigamesapi.spigot.config.stats.BasicStatsField;
 import me.cubixor.minigamesapi.spigot.config.stats.StatsManager;
 import me.cubixor.minigamesapi.spigot.game.ArenasManager;
 import me.cubixor.minigamesapi.spigot.game.arena.GameState;
 import me.cubixor.minigamesapi.spigot.game.arena.LocalArena;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
@@ -56,6 +58,11 @@ public class PhaseEnding extends GamePhase {
 
     private void endGame() {
         for (Player p : localArena.getBukkitPlayers()) {
+            ActionBar.clearActionBar(p);
+            p.setGameMode(GameMode.ADVENTURE);
+            p.getInventory().clear();
+            p.setInvulnerable(true);
+
             statsManager.addStats(p.getName(), BasicStatsField.PLAYTIME, 1);
             statsManager.addStats(p.getName(), BasicStatsField.GAMES, 1);
             if (winners.contains(p)) {
