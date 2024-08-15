@@ -6,6 +6,7 @@ import me.cubixor.minigamesapi.spigot.config.arenas.BasicConfigField;
 import me.cubixor.minigamesapi.spigot.config.arenas.ConfigField;
 import me.cubixor.minigamesapi.spigot.config.stats.StatsManager;
 import me.cubixor.minigamesapi.spigot.game.arena.Arena;
+import me.cubixor.minigamesapi.spigot.game.arena.ArenaFactory;
 import me.cubixor.minigamesapi.spigot.game.arena.GameState;
 import me.cubixor.minigamesapi.spigot.game.arena.LocalArena;
 import me.cubixor.minigamesapi.spigot.game.items.ItemsRegistry;
@@ -25,15 +26,23 @@ public class ArenasManager {
     private final PacketSenderSpigot packetSender;
     private final StatsManager statsManager;
     private final ItemsRegistry itemsRegistry;
+    private final ArenaFactory arenaFactory;
     private final boolean bungee;
 
-    public ArenasManager(ArenasRegistry registry, ArenasConfigManager configManager, SignManager signManager, PacketSenderSpigot packetSender, StatsManager statsManager, ItemsRegistry itemsRegistry) {
+    public ArenasManager(ArenasRegistry registry,
+                         ArenasConfigManager configManager,
+                         SignManager signManager,
+                         PacketSenderSpigot packetSender,
+                         StatsManager statsManager,
+                         ItemsRegistry itemsRegistry,
+                         ArenaFactory arenaFactory) {
         this.registry = registry;
         this.configManager = configManager;
         this.signManager = signManager;
         this.packetSender = packetSender;
         this.statsManager = statsManager;
         this.itemsRegistry = itemsRegistry;
+        this.arenaFactory = arenaFactory;
 
         arenaPlayersManager = new ArenaPlayersManager(this);
 
@@ -43,16 +52,7 @@ public class ArenasManager {
 
     private void loadArenas() {
         for (String name : configManager.getArenas()) {
-            LocalArena localArena = new LocalArena(
-                    this,
-                    statsManager,
-                    name,
-                    packetSender.getServerName(),
-                    configManager.getBoolean(name, BasicConfigField.ACTIVE),
-                    configManager.getBoolean(name, BasicConfigField.VIP),
-                    configManager.getInt(name, BasicConfigField.MIN_PLAYERS),
-                    configManager.getInt(name, BasicConfigField.MAX_PLAYERS)
-            );
+            LocalArena localArena = arenaFactory.loadArenaFromConfig(name);
             registry.getLocalArenas().put(name, localArena);
         }
 
@@ -60,7 +60,7 @@ public class ArenasManager {
     }
 
     public void addArena(String arena) {
-        LocalArena localArena = new LocalArena(this, statsManager, arena, packetSender.getServerName());
+        LocalArena localArena = arenaFactory.createBlankArena(arena);
 
         registry.getLocalArenas().put(arena, localArena);
         configManager.insertArena(arena);
