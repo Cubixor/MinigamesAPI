@@ -9,6 +9,6 @@ public class FileStatsMangerManagerTest extends StatsManagerTest {
     @Override
     public StatsManager createInstance() {
         CustomConfig playersConfig = new CustomConfig("players.yml");
-        return new FileStatsManager(Arrays.asList(BasicStatsField.values()),playersConfig);
+        return new FileStatsManager(Arrays.asList(BasicStatsField.values()), playersConfig);
     }
 }

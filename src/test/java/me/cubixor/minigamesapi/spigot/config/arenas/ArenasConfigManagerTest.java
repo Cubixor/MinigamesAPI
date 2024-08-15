@@ -2,7 +2,6 @@ package me.cubixor.minigamesapi.spigot.config.arenas;
 
 import be.seeseemelk.mockbukkit.MockBukkit;
 import be.seeseemelk.mockbukkit.ServerMock;
-import me.cubixor.minigamesapi.spigot.MinigamesAPI;
 import me.cubixor.minigamesapi.spigot.MockMain;
 import me.cubixor.minigamesapi.spigot.config.CustomConfig;
 import org.bukkit.Location;

@@ -52,7 +52,7 @@ public class SignManager implements Listener {
     }
 
     private void addSign(String arena, Location loc) {
-        if(!signs.containsKey(arena)){
+        if (!signs.containsKey(arena)) {
             signs.put(arena, new ArrayList<>());
         }
 

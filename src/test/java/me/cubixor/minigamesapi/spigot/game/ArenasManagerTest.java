@@ -4,10 +4,10 @@ import be.seeseemelk.mockbukkit.MockBukkit;
 import be.seeseemelk.mockbukkit.ServerMock;
 import me.cubixor.minigamesapi.spigot.MinigamesAPI;
 import me.cubixor.minigamesapi.spigot.MockMain;
-import me.cubixor.minigamesapi.spigot.game.arena.Arena;
-import me.cubixor.minigamesapi.spigot.game.arena.GameState;
 import me.cubixor.minigamesapi.spigot.config.CustomConfig;
 import me.cubixor.minigamesapi.spigot.config.arenas.ArenasConfigManager;
+import me.cubixor.minigamesapi.spigot.game.arena.Arena;
+import me.cubixor.minigamesapi.spigot.game.arena.GameState;
 import me.cubixor.minigamesapi.spigot.game.items.ItemsRegistry;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.junit.jupiter.api.AfterEach;
@@ -59,7 +59,7 @@ class ArenasManagerTest {
     }
 
     @Test
-    void testArenaRemove(){
+    void testArenaRemove() {
         final String name = "test";
         ArenasRegistry arenasRegistry = arenasManager.getRegistry();
         arenasManager.addArena(name);

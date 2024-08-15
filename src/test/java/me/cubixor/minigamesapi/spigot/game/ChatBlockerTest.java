@@ -27,7 +27,7 @@ class ChatBlockerTest {
         ArenasConfigManager arenasConfigManager = new ArenasConfigManager(config);
         ArenasRegistry arenasRegistry = new ArenasRegistry();
         ItemsRegistry itemsRegistry = new ItemsRegistry();
-        arenasManager = new ArenasManager(arenasRegistry, arenasConfigManager, null,null,null, itemsRegistry);
+        arenasManager = new ArenasManager(arenasRegistry, arenasConfigManager, null, null, null, itemsRegistry);
     }
 
     @AfterEach

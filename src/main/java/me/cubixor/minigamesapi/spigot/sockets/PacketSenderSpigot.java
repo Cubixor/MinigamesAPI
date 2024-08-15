@@ -14,9 +14,9 @@ import java.util.Map;
 public class PacketSenderSpigot {
 
     private final boolean isBungee;
+    private final String serverName;
     private SocketClientSender socketSender;
     private LeaveStrategy leaveStrategy;
-    private final String serverName;
     private String lobbyServer;
 
     public PacketSenderSpigot(CustomConfig connectionConfig) {
@@ -49,8 +49,8 @@ public class PacketSenderSpigot {
         socketSender.sendPacket(joinPacket);
     }
 
-    public void sendKickPacket(Arena arena, String playerName){
-        KickPacket kickPacket  = new KickPacket(arena.getName(), playerName);
+    public void sendKickPacket(Arena arena, String playerName) {
+        KickPacket kickPacket = new KickPacket(arena.getName(), playerName);
         socketSender.sendPacket(kickPacket);
     }
 
