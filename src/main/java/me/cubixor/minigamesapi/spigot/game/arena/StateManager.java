@@ -3,6 +3,7 @@ package me.cubixor.minigamesapi.spigot.game.arena;
 import me.cubixor.minigamesapi.spigot.MinigamesAPI;
 import me.cubixor.minigamesapi.spigot.config.stats.StatsManager;
 import me.cubixor.minigamesapi.spigot.events.GameEndEvent;
+import me.cubixor.minigamesapi.spigot.events.GameResetEvent;
 import me.cubixor.minigamesapi.spigot.events.GameStartEvent;
 import me.cubixor.minigamesapi.spigot.game.ArenasManager;
 import me.cubixor.minigamesapi.spigot.game.arena.phases.*;
@@ -121,6 +122,8 @@ public class StateManager {
         for (Player p : players) {
             arenasManager.getArenaPlayersManager().kickFromLocalArena(p, localArena, true);
         }
+
+        Bukkit.getPluginManager().callEvent(new GameResetEvent(localArena));
 
         localArena.setState(GameState.WAITING);
         localArena.setTimer(-1);

@@ -47,6 +47,7 @@ public class LocalArena extends Arena {
 
     public void setState(GameState state) {
         GameState prevState = getState();
+        if (prevState.equals(state)) return;
         this.state = state;
         Bukkit.getPluginManager().callEvent(new GameStateChangeEvent(this, prevState, getState()));
     }
