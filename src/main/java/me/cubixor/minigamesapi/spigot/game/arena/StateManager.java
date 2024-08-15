@@ -69,6 +69,11 @@ public class StateManager {
             int min = localArena.getMinPlayers();
 
             if (count < min) {
+                for (Player p : localArena.getBukkitPlayers()) {
+                    Messages.send(p, "game.start-cancelled");
+                    //TODO Send action bar
+                }
+
                 setWaiting();
             }
         } else if (localArena.getState() == GameState.GAME && count < 2) {
@@ -84,18 +89,10 @@ public class StateManager {
 
     private void setWaiting() {
         updatePhase(new PhaseWaiting(localArena));
-
-        for (Player p : localArena.getBukkitPlayers()) {
-            Messages.send(p, "game.start-cancelled");
-            //TODO Send action bar
-        }
-        localArena.setTimer(-1);
     }
 
     private void setStarting() {
-        if (localArena.getTimer() == -1) {
-            updatePhase(new PhaseStarting(localArena));
-        }
+        updatePhase(new PhaseStarting(localArena));
     }
 
     public void setGame() {
@@ -125,9 +122,6 @@ public class StateManager {
 
         Bukkit.getPluginManager().callEvent(new GameResetEvent(localArena));
 
-        localArena.setState(GameState.WAITING);
-        localArena.setTimer(-1);
-
-        arenasManager.updateArena(localArena);
+        setWaiting();
     }
 }

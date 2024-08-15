@@ -11,7 +11,7 @@ public class PhaseWaiting extends GamePhase {
 
     @Override
     public void run() {
-
+        localArena.setTimer(-1);
     }
 
     @Override
