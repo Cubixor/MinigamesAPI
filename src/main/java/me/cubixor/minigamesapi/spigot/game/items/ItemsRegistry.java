@@ -7,17 +7,17 @@ import java.util.Set;
 
 public class ItemsRegistry {
 
-    private final GameItem leaveItem;
+    private final ClickableItem leaveItem;
 
     public ItemsRegistry() {
         this.leaveItem = new LeaveItem();
     }
 
-    public GameItem getLeaveItem() {
+    public ClickableItem getLeaveItem() {
         return leaveItem;
     }
 
-    public Set<GameItem> getAllItems() {
+    public Set<ClickableItem> getClickableItems() {
         return ImmutableSet.of(getLeaveItem());
     }
 }

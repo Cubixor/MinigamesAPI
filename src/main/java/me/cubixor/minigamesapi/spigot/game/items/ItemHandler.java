@@ -29,9 +29,9 @@ public class ItemHandler implements Listener {
         LocalArena localArena = arenasManager.getRegistry().getPlayerLocalArena(evt.getPlayer());
         if (localArena == null) return;
 
-        for (GameItem item : itemsRegistry.getAllItems()) {
+        for (ClickableItem item : itemsRegistry.getClickableItems()) {
             if (item.getItem().equals(evt.getItem())) {
-                item.handleClick(arenasManager, localArena, evt.getPlayer());
+                (item).handleClick(arenasManager, localArena, evt.getPlayer());
             }
         }
     }
