@@ -33,10 +33,20 @@ public class Messages {
     }
 
     public static List<String> getList(String path) {
+        return getList(path, Collections.emptyMap());
+    }
+
+    public static List<String> getList(String path, Map<String, String> replacement) {
         List<String> message = messagesConfig.getStringList(path);
         return message.stream()
                 .map(msg -> ChatColor.translateAlternateColorCodes('&', msg))
                 .map(msg -> msg.replace("%cmd%", cmd))
+                .map(msg -> {
+                    for (Map.Entry<String, String> entry : replacement.entrySet()) {
+                        msg = msg.replace(entry.getKey(), entry.getValue());
+                    }
+                    return msg;
+                })
                 .collect(Collectors.toList());
     }
 
@@ -59,6 +69,10 @@ public class Messages {
 
     public static void sendList(CommandSender player, String path) {
         player.sendMessage(getList(path).toArray(new String[]{}));
+    }
+
+    public static void sendList(CommandSender player, String path, Map<String, String> replacement) {
+        player.sendMessage(getList(path, replacement).toArray(new String[]{}));
     }
 
     public static void send(CommandSender player, String path, String toReplace, String replacement) {
