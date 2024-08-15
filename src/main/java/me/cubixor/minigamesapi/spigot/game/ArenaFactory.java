@@ -1,27 +1,20 @@
-package me.cubixor.minigamesapi.spigot.game.arena;
+package me.cubixor.minigamesapi.spigot.game;
 
 import me.cubixor.minigamesapi.spigot.config.arenas.ArenasConfigManager;
 import me.cubixor.minigamesapi.spigot.config.arenas.BasicConfigField;
 import me.cubixor.minigamesapi.spigot.config.stats.StatsManager;
-import me.cubixor.minigamesapi.spigot.game.ArenasManager;
+import me.cubixor.minigamesapi.spigot.game.arena.LocalArena;
 
 public class ArenaFactory {
 
-    private final ArenasManager arenasManager;
-    private final StatsManager statsManager;
-    private final String serverName;
 
-    public ArenaFactory(ArenasManager arenasManager, StatsManager statsManager, String serverName) {
-        this.arenasManager = arenasManager;
-        this.statsManager = statsManager;
-        this.serverName = serverName;
-    }
 
-    public LocalArena createBlankArena(String name) {
+
+    public LocalArena createBlankArena(String name, String serverName, ArenasManager arenasManager, StatsManager statsManager) {
         return new LocalArena(arenasManager, statsManager, name, serverName);
     }
 
-    public LocalArena loadArenaFromConfig(String name) {
+    public LocalArena loadArenaFromConfig(String name, String serverName, ArenasManager arenasManager, StatsManager statsManager) {
         ArenasConfigManager configManager = arenasManager.getConfigManager();
 
         return new LocalArena(
