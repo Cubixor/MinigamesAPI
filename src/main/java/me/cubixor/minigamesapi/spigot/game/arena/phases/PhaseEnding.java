@@ -32,8 +32,8 @@ public class PhaseEnding extends GamePhase {
 
     @Override
     public void run() {
-        localArena.setTimer(MinigamesAPI.getPlugin().getConfig().getInt("ending-time"));
         endGame();
+        localArena.setTimer(MinigamesAPI.getPlugin().getConfig().getInt("ending-time"));
 
         endingTask = new BukkitRunnable() {
             @Override
@@ -63,7 +63,7 @@ public class PhaseEnding extends GamePhase {
             p.getInventory().clear();
             p.setInvulnerable(true);
 
-            statsManager.addStats(p.getName(), BasicStatsField.PLAYTIME, 1);
+            statsManager.addStats(p.getName(), BasicStatsField.PLAYTIME, localArena.getTimer());
             statsManager.addStats(p.getName(), BasicStatsField.GAMES, 1);
             if (winners.contains(p)) {
                 statsManager.addStats(p.getName(), BasicStatsField.WINS, 1);
