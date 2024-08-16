@@ -1,8 +1,13 @@
 package me.cubixor.minigamesapi.spigot.utils;
 
 import com.cryptomorin.xseries.particles.XParticle;
+import org.bukkit.Color;
+import org.bukkit.FireworkEffect;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Firework;
+import org.bukkit.inventory.meta.FireworkMeta;
 
 public class Particles {
 
@@ -26,5 +31,18 @@ public class Particles {
         float speed = (float) config.getDouble("particles." + path + ".speed");
 
         loc.getWorld().spawnParticle(XParticle.of(particleString).get().get(), loc, count, offset, offset, offset, speed);
+    }
+
+    public static void spawnFirework(Location loc) {
+        Firework fw = (Firework) loc.getWorld().spawnEntity(loc.add(0, 1, 0), EntityType.FIREWORK);
+        FireworkMeta fwm = fw.getFireworkMeta();
+        fwm.addEffect(FireworkEffect
+                .builder()
+                .withColor(Color.YELLOW)
+                .with(FireworkEffect.Type.BALL)
+                .flicker(true)
+                .build());
+        fwm.setPower(2);
+        fw.setFireworkMeta(fwm);
     }
 }

@@ -7,6 +7,7 @@ import me.cubixor.minigamesapi.spigot.config.stats.StatsManager;
 import me.cubixor.minigamesapi.spigot.game.ArenasManager;
 import me.cubixor.minigamesapi.spigot.game.arena.GameState;
 import me.cubixor.minigamesapi.spigot.game.arena.LocalArena;
+import me.cubixor.minigamesapi.spigot.utils.Particles;
 import me.cubixor.minigamesapi.spigot.utils.Sounds;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
@@ -43,6 +44,11 @@ public class PhaseEnding extends GamePhase {
                 if (time <= 0) {
                     finish();
                     return;
+                }
+
+                for(Player player : winners) {
+                    Particles.spawnParticle(player.getLocation().add(0, 3, 0), "win");
+                    Particles.spawnFirework(player.getLocation());
                 }
 
                 localArena.getScoreboardManager().updateScoreboard();
