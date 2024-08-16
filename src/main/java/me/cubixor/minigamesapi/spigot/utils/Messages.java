@@ -26,7 +26,12 @@ public class Messages {
     }
 
     public static String get(String path) {
-        String message = messagesConfig.getString(path)
+        String message = messagesConfig.getString(path);
+        if(message == null) {
+            return "�";
+        }
+
+        message = message
                 .replace("%prefix%", prefix)
                 .replace("%cmd%", cmd);
         return ChatColor.translateAlternateColorCodes('&', message);
