@@ -152,7 +152,17 @@ public class ArenasManager {
     }
 
     public void forceLocalStart(LocalArena localArena) {
-        localArena.getStateManager().setGame();
+        if(!localArena.getState().isWaitingStarting()) return;
+
+        int tpTime = MinigamesAPI.getPlugin().getConfig().getInt("full-waiting-time");
+        if (localArena.getState().equals(GameState.STARTING)) {
+            if (localArena.getTimer() > tpTime) {
+                localArena.getStateManager().setFullStarting();
+            }
+        } else if (localArena.getState().equals(GameState.WAITING)) {
+            localArena.getStateManager().setStarting();
+            localArena.getStateManager().setFullStarting();
+        }
 
         Messages.sendAll(localArena.getBukkitPlayers(), "arena-moderate.force-start-success");
     }

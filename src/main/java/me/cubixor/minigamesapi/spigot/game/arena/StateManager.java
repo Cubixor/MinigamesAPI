@@ -53,7 +53,7 @@ public class StateManager {
             }
 
             if (count >= max) {
-                localArena.setTimer(plugin.getConfig().getInt("full-tp-waiting-time"));
+                setFullStarting();
                 for (Player p : localArena.getBukkitPlayers()) {
                     Messages.send(p, "game.full-countdown", "%time%", String.valueOf(localArena.getTimer()));
                 }
@@ -91,20 +91,24 @@ public class StateManager {
         updatePhase(new PhaseWaiting(localArena));
     }
 
-    private void setStarting() {
+    public void setStarting() {
         updatePhase(new PhaseStarting(localArena));
     }
 
-    public void setGame() {
-        Bukkit.getPluginManager().callEvent(new GameStartEvent(localArena));
+    public void setFullStarting(){
+        localArena.setTimer(plugin.getConfig().getInt("full-waiting-time"));
+    }
 
+    public void setGame() {
         updatePhase(new PhaseGame(localArena));
+
+        Bukkit.getPluginManager().callEvent(new GameStartEvent(localArena));
     }
 
     public void setEnd(List<Player> winners) {
-        Bukkit.getPluginManager().callEvent(new GameEndEvent(localArena, winners));
-
         updatePhase(new PhaseEnding(localArena, arenasManager, statsManager, winners));
+
+        Bukkit.getPluginManager().callEvent(new GameEndEvent(localArena, winners));
     }
 
 
