@@ -25,7 +25,7 @@ time-format: "mm:ss"
 
 items:
   leave-item:
-    type: CLOCK
+    material: CLOCK
     slot: 8
 
 sounds:
