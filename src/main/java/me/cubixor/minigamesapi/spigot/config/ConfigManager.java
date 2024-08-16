@@ -9,6 +9,7 @@ import me.cubixor.minigamesapi.spigot.config.stats.StatsManager;
 import me.cubixor.minigamesapi.spigot.utils.Messages;
 import me.cubixor.minigamesapi.spigot.utils.Particles;
 import me.cubixor.minigamesapi.spigot.utils.Sounds;
+import org.bukkit.command.PluginCommand;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -42,7 +43,9 @@ public class ConfigManager {
             statsManager = new FileStatsManager(statsFields, playersConfig);
         }
 
-        Messages.init(messagesConfig.get(), plugin.getCommand(plugin.getName()).getAliases().get(0));
+        PluginCommand cmd = plugin.getCommand(plugin.getName());
+        String alias = cmd.getAliases().isEmpty() ? cmd.getName() : cmd.getAliases().get(0);
+        Messages.init(messagesConfig.get(), alias);
         Particles.init(getConfig());
         Sounds.init(getConfig());
     }

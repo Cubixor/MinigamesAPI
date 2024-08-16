@@ -38,9 +38,9 @@ public class ChatBlocker implements Listener {
         JavaPlugin plugin = MinigamesAPI.getPlugin();
         PluginCommand pluginCmd = plugin.getCommand(MinigamesAPI.getPlugin().getName());
 
-
-        if (evt.getMessage().toLowerCase().startsWith("/" + pluginCmd.getName()) ||
-                evt.getMessage().toLowerCase().startsWith("/" + pluginCmd.getAliases().get(0))) {
+        String msgLowercase = evt.getMessage().toLowerCase();
+        if (msgLowercase.startsWith("/" + pluginCmd.getName()) ||
+                (!pluginCmd.getAliases().isEmpty() && msgLowercase.startsWith("/" + pluginCmd.getAliases().get(0)))) {
             return;
         }
 
