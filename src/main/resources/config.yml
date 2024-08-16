@@ -1,5 +1,9 @@
 database:
   enabled-stats: false
+  address: "jdbc:mysql://localhost:3306/minigame?useSSL=false&autoReConnect=true"
+  username: "root"
+  password: ""
+  table: "stats"
 
 bungee:
   bungee-mode: false

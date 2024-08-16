@@ -49,10 +49,10 @@ public class ConfigManager {
 
     public DBManager setupDB() {
         return new DBManager(
-                connectionConfig.get().getString("database.address"),
-                connectionConfig.get().getString("database.username"),
-                connectionConfig.get().getString("database.password"),
-                connectionConfig.get().getString("database.table")
+                getConfig().getString("database.address"),
+                getConfig().getString("database.username"),
+                getConfig().getString("database.password"),
+                getConfig().getString("database.table")
         );
     }
 
