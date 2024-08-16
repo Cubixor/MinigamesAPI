@@ -6,6 +6,7 @@ import org.bukkit.Sound;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
+import java.util.Collections;
 import java.util.Set;
 
 public class Sounds {
@@ -29,7 +30,10 @@ public class Sounds {
         float pitch = (float) config.getDouble("sounds." + path + ".pitch");
 
         players.forEach(p -> p.playSound(loc, sound, volume, pitch));
+    }
 
+    public static void playSound(String path, Player player){
+        playSound(path, player.getLocation(), Collections.singleton(player));
     }
 
     public static void playSoundWithPitch(String path, Player p, float pitch) {

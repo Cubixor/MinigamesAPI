@@ -7,6 +7,7 @@ import me.cubixor.minigamesapi.spigot.config.stats.StatsManager;
 import me.cubixor.minigamesapi.spigot.game.ArenasManager;
 import me.cubixor.minigamesapi.spigot.game.arena.GameState;
 import me.cubixor.minigamesapi.spigot.game.arena.LocalArena;
+import me.cubixor.minigamesapi.spigot.utils.Sounds;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -67,8 +68,10 @@ public class PhaseEnding extends GamePhase {
             statsManager.addStats(p.getName(), BasicStatsField.GAMES, 1);
             if (winners.contains(p)) {
                 statsManager.addStats(p.getName(), BasicStatsField.WINS, 1);
+                Sounds.playSound("win", p);
             } else {
                 statsManager.addStats(p.getName(), BasicStatsField.LOOSES, 1);
+                Sounds.playSound("defeat", p);
             }
         }
     }
