@@ -17,6 +17,26 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+
+    <profiles>
+        <profile>
+            <id>export-to-test-server</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-jar-plugin</artifactId>
+                        <version>3.4.2</version>
+                        <configuration>
+                            <outputDirectory>D:\Kuba\MINECRAFT\Serwer latest\plugins\</outputDirectory>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+
     <build>
         <plugins>
             <plugin>
@@ -50,7 +70,6 @@
                                     </excludes>
                                 </filter>
                             </filters>
-                            <!--<outputFile>D:\Kuba\MINECRAFT\Serwer latest\plugins\MinigamesAPI-${project.version}.jar</outputFile>-->
                         </configuration>
                     </execution>
                 </executions>
