@@ -7,7 +7,12 @@ public class VersionUtils {
     private static boolean before13;
 
     public static void initialize() {
-        XMaterial.matchXMaterial("BLACK_STAINED_GLASS").get().parseItem().getData();
+        try {
+            Class.forName("com.cryptomorin.xseries.XMaterial");
+            Class.forName("com.cryptomorin.xseries.XSound");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
         before13 = !XMaterial.matchXMaterial("KELP").get().isSupported();
     }
 
