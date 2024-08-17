@@ -236,12 +236,9 @@ public class SignManager implements Listener {
     }
 
     private void updateArenaSignOnline(Sign sign, Arena arena) {
-        String count = String.valueOf(arena.getPlayers().size());
-        String max = String.valueOf(arena.getMaxPlayers());
-        String gameState = MessageUtils.getStringState(arena);
-        String vip = arena.isVip() ? Messages.get("general.vip-prefix") : "";
+        Map<String, String> replacement = MessageUtils.getArenaStatusReplacement(arena);
 
-        setArenaSignLines(sign, arena.getName(), count, max, gameState, vip);
+        setArenaSignLines(sign, replacement);
     }
 
     private void updateArenaSignOffline(Sign sign, String arenaName) {
@@ -250,16 +247,17 @@ public class SignManager implements Listener {
         String gameState = MessageUtils.getStringState(null);
         String vip = "";
 
-        setArenaSignLines(sign, arenaName, count, max, gameState, vip);
-    }
-
-    private void setArenaSignLines(Sign sign, String arena, String count, String max, String gameState, String vip) {
         Map<String, String> replacement = ImmutableMap.of(
-                "%arena%", arena,
+                "%arena%", arenaName,
                 "%count%", count,
                 "%max%", max,
                 "%state%", gameState,
                 "%?vip?%", vip);
+
+        setArenaSignLines(sign, replacement);
+    }
+
+    private void setArenaSignLines(Sign sign, Map<String, String> replacement) {
         sign.setLine(0, Messages.get("other.sign-first-line", replacement));
         sign.setLine(1, Messages.get("other.sign-second-line", replacement));
         sign.setLine(2, Messages.get("other.sign-third-line", replacement));

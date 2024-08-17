@@ -54,6 +54,7 @@ public class MockMain extends JavaPlugin implements Listener {
         ArenaProtection arenaProtection = new ArenaProtection(arenasManager);
         ItemHandler itemHandler = new ItemHandler(arenasManager, itemsRegistry);
         ChatBlocker chatBlocker = new ChatBlocker(arenasRegistry);
+        SimpleBungeeMode simpleBungeeMode = new SimpleBungeeMode(arenasManager);
         ArenaSetupChecker arenaSetupChecker = new ArenaSetupChecker(configManager.getArenasConfigManager());
 
         List<CommandArgument> args = MainCommand.getCommonArguments(arenasManager, arenaSetupChecker, configManager.getStatsManager());

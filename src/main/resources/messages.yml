@@ -103,6 +103,9 @@ help:
 bungee:
   not-on-server: "%prefix% &cYou have to be on the same server as arena to do this!"
   arena-offline: "%prefix% &cArena &e%arena% &cis offline!"
+  kick-message: "%prefix% &cYou cannot join this arena right now"
+  leave-message: "%prefix% &7Left the minigame"
+  motd: "&9&lMGAPI &7&l» %?vip?%&d&l%arena% \n&7&l│ %state% &7&l│ &7&l» &e&l%count%&7/&e&l%max% "
 game:
   arena-join-vip: "%prefix% &cThis arena is available only for VIPs!"
   arena-join-usage: "%prefix% &cWrong use! &7Type: &e/%cmd% join &d<arena>"

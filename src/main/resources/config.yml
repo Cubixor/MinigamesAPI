@@ -6,6 +6,7 @@ database:
   table: "stats"
 
 bungee:
+  simple-bungee-mode: false
   bungee-mode: false
   on-leave: JOIN_SERVER
   lobby-server: hub

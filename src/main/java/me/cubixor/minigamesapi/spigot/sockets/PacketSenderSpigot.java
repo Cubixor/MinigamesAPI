@@ -13,14 +13,13 @@ import java.util.Map;
 
 public class PacketSenderSpigot {
 
-    private final boolean isBungee;
     private final String serverName;
     private SocketClientSender socketSender;
     private LeaveStrategy leaveStrategy;
     private String lobbyServer;
 
     public PacketSenderSpigot(CustomConfig connectionConfig) {
-        isBungee = MinigamesAPI.getPlugin().getConfig().getBoolean("bungee.bungee-mode");
+        boolean isBungee = MinigamesAPI.getPlugin().getConfig().getBoolean("bungee.bungee-mode");
         serverName = connectionConfig.get().getString("bungee-socket.server-name");
 
         if (isBungee) {
