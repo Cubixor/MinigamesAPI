@@ -17,6 +17,7 @@ import me.cubixor.minigamesapi.spigot.utils.Particles;
 import me.cubixor.minigamesapi.spigot.utils.Permissions;
 import me.cubixor.minigamesapi.spigot.utils.Sounds;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -136,6 +137,7 @@ public class ArenaPlayersManager {
 
         arenasManager.getItemsRegistry().getLeaveItem().give(player);
         player.getInventory().setHeldItemSlot(4);
+        player.setGameMode(GameMode.ADVENTURE);
 
         //TODO Action bar
         //sendWaitingActionBar(player, localArena, min);
