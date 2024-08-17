@@ -107,9 +107,11 @@ public class ArenasManager {
         LocalArena localArena = registry.getLocalArenas().get(arena);
         if (!active) {
             forceLocalStop(localArena);
+            localArena.setState(GameState.INACTIVE);
+        } else {
+            localArena.getStateManager().reset();
         }
 
-        localArena.setState(active ? GameState.WAITING : GameState.INACTIVE);
         configManager.updateField(arena, BasicConfigField.ACTIVE, active);
 
         updateArena(localArena);
