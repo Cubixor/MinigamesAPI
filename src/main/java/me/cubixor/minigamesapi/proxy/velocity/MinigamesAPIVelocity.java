@@ -20,9 +20,9 @@ import java.nio.file.Path;
 @Plugin(id = "mg_api", name = "MinigamesAPI", version = "1.0", authors = {"Cubixor"})
 public class MinigamesAPIVelocity {
 
-    private ProxyServer server;
-    private Logger logger;
-    private Path dataDirectory;
+    private final ProxyServer server;
+    private final Logger logger;
+    private final Path dataDirectory;
     private CommentedConfigurationNode config;
     private SocketServer socketServer;
 

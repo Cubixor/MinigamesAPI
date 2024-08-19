@@ -95,7 +95,7 @@ public class StateManager {
         updatePhase(new PhaseStarting(localArena));
     }
 
-    public void setFullStarting(){
+    public void setFullStarting() {
         localArena.setTimer(plugin.getConfig().getInt("full-waiting-time"));
     }
 

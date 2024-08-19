@@ -27,7 +27,7 @@ public class Messages {
 
     public static String get(String path) {
         String message = messagesConfig.getString(path);
-        if(message == null) {
+        if (message == null) {
             return "�";
         }
 

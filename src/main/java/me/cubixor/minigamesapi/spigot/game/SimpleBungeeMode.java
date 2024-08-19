@@ -1,6 +1,5 @@
 package me.cubixor.minigamesapi.spigot.game;
 
-import com.google.common.collect.ImmutableMap;
 import me.cubixor.minigamesapi.spigot.MinigamesAPI;
 import me.cubixor.minigamesapi.spigot.events.GameLeaveEvent;
 import me.cubixor.minigamesapi.spigot.game.arena.LocalArena;
@@ -12,8 +11,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.server.ServerListPingEvent;
 
-import java.util.Arrays;
-import java.util.Map;
 import java.util.Optional;
 
 public class SimpleBungeeMode implements Listener {
@@ -24,7 +21,7 @@ public class SimpleBungeeMode implements Listener {
         this.arenasManager = arenasManager;
 
         boolean simpleBungee = MinigamesAPI.getPlugin().getConfig().getBoolean("bungee.simple-bungee-mode");
-        if(simpleBungee){
+        if (simpleBungee) {
             Bukkit.getServer().getPluginManager().registerEvents(this, MinigamesAPI.getPlugin());
         }
     }
@@ -43,7 +40,7 @@ public class SimpleBungeeMode implements Listener {
     }
 
     @EventHandler
-    public void onGameQuit(GameLeaveEvent evt){
+    public void onGameQuit(GameLeaveEvent evt) {
         evt.getPlayer().kickPlayer(Messages.get("bungee.leave-message"));
     }
 

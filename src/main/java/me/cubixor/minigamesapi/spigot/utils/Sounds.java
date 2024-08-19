@@ -32,7 +32,7 @@ public class Sounds {
         players.forEach(p -> p.playSound(loc, sound, volume, pitch));
     }
 
-    public static void playSound(String path, Player player){
+    public static void playSound(String path, Player player) {
         playSound(path, player.getLocation(), Collections.singleton(player));
     }
 

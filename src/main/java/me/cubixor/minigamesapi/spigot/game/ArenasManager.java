@@ -154,7 +154,7 @@ public class ArenasManager {
     }
 
     public void forceLocalStart(LocalArena localArena) {
-        if(!localArena.getState().isWaitingStarting()) return;
+        if (!localArena.getState().isWaitingStarting()) return;
 
         int tpTime = MinigamesAPI.getPlugin().getConfig().getInt("full-waiting-time");
         if (localArena.getState().equals(GameState.STARTING)) {

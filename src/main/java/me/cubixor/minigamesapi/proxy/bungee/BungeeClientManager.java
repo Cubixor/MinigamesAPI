@@ -1,6 +1,5 @@
 package me.cubixor.minigamesapi.proxy.bungee;
 
-import me.cubixor.minigamesapi.common.packets.JoinPacket;
 import me.cubixor.minigamesapi.proxy.AbstractClientManager;
 import me.cubixor.socketsmc.bungee.events.PacketReceivedEventBungee;
 import me.cubixor.socketsmc.bungee.events.SocketConnectedEventBungee;

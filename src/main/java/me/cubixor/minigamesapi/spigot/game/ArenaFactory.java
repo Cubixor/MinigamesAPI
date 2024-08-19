@@ -8,8 +8,6 @@ import me.cubixor.minigamesapi.spigot.game.arena.LocalArena;
 public class ArenaFactory {
 
 
-
-
     public LocalArena createBlankArena(String name, String serverName, ArenasManager arenasManager, StatsManager statsManager) {
         return new LocalArena(arenasManager, statsManager, name, serverName);
     }

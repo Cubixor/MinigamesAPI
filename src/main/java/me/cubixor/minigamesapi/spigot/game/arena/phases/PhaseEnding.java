@@ -46,7 +46,7 @@ public class PhaseEnding extends GamePhase {
                     return;
                 }
 
-                for(Player player : winners) {
+                for (Player player : winners) {
                     Particles.spawnParticle(player.getLocation().add(0, 3, 0), "win");
                     Particles.spawnFirework(player.getLocation());
                 }
