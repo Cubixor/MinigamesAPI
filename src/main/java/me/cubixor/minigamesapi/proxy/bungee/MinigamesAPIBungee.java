@@ -1,7 +1,7 @@
-package me.cubixor.minigamesapi.bungee;
+package me.cubixor.minigamesapi.proxy.bungee;
 
-import me.cubixor.minigamesapi.bungee.socket.ClientManager;
-import me.cubixor.socketsmc.bungee.SocketServer;
+import me.cubixor.socketsmc.bungee.BungeeProxy;
+import me.cubixor.socketsmc.proxy.SocketServer;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
@@ -22,8 +22,8 @@ public class MinigamesAPIBungee extends Plugin {
         loadConfigs();
         setupSocketServer();
 
-        ClientManager clientManager = new ClientManager(socketServer);
-        getProxy().getPluginManager().registerListener(this, clientManager);
+        BungeeClientManager bungeeClientManager = new BungeeClientManager(socketServer);
+        getProxy().getPluginManager().registerListener(this, bungeeClientManager);
     }
 
     @Override
@@ -36,7 +36,7 @@ public class MinigamesAPIBungee extends Plugin {
 
     private void setupSocketServer() {
         socketServer = new SocketServer(
-                this,
+                new BungeeProxy(this),
                 config.getInt("socket-port"),
                 config.getBoolean("debug")
         );
@@ -48,7 +48,7 @@ public class MinigamesAPIBungee extends Plugin {
         }
 
         try {
-            String fileName = "bungee-config.yml";
+            String fileName = "connection-proxy.yml";
             File file = new File(getDataFolder(), fileName);
             if (!file.exists()) {
                 InputStream in = getResourceAsStream(fileName);
