@@ -16,10 +16,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerPickupItemEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.*;
 
 public class ArenaProtection implements Listener {
 
@@ -98,6 +95,10 @@ public class ArenaProtection implements Listener {
         cancelNotGame(evt.getPlayer(), evt);
     }
 
+    @EventHandler
+    public void onHandChange(PlayerSwapHandItemsEvent evt) {
+        cancelNotGame(evt.getPlayer(), evt);
+    }
 
     private void cancelNotGame(Player player, Cancellable evt) {
         if (isInNotGameArena(player)) {
@@ -111,5 +112,11 @@ public class ArenaProtection implements Listener {
         if (localArena == null) return false;
 
         return !localArena.getState().equals(GameState.GAME);
+    }
+
+    protected void cancelInArena(Player player, Cancellable evt) {
+        if (arenasManager.getRegistry().isInArena(player)) {
+            evt.setCancelled(true);
+        }
     }
 }
