@@ -66,25 +66,24 @@ public class ChatBlocker implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onChat(AsyncPlayerChatEvent evt) {
+        LocalArena localArena = arenasRegistry.getPlayerLocalArena(evt.getPlayer());
+
+        if (localArena == null) {
+            return;
+        }
+        if (!MinigamesAPI.getPlugin().getConfig().getBoolean("game-chat")) {
+            return;
+        }
+        evt.setCancelled(true);
+
         new BukkitRunnable() {
             @Override
             public void run() {
-                LocalArena localArena = arenasRegistry.getPlayerLocalArena(evt.getPlayer());
-
-                if (localArena == null) {
-                    return;
-                }
-                if (!MinigamesAPI.getPlugin().getConfig().getBoolean("game-chat")) {
-                    return;
-                }
-                evt.setCancelled(true);
-
-
                 GameChatEvent gameChatEvent = new GameChatEvent(localArena, evt.getPlayer(), localArena.getBukkitPlayers(), evt.getMessage());
                 Bukkit.getPluginManager().callEvent(gameChatEvent);
 
                 if (!gameChatEvent.isCancelled()) {
-                    gameChatEvent.getReceivers().forEach(p -> p.sendMessage(evt.getMessage()));
+                    gameChatEvent.getReceivers().forEach(p -> p.sendMessage(gameChatEvent.getMessage()));
                 }
 
             }
