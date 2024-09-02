@@ -7,6 +7,7 @@ import me.cubixor.minigamesapi.spigot.utils.Messages;
 import me.cubixor.minigamesapi.spigot.utils.Permissions;
 import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
@@ -14,7 +15,9 @@ import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ChatBlocker implements Listener {
 
@@ -79,7 +82,8 @@ public class ChatBlocker implements Listener {
         new BukkitRunnable() {
             @Override
             public void run() {
-                GameChatEvent gameChatEvent = new GameChatEvent(localArena, evt.getPlayer(), localArena.getBukkitPlayers(), evt.getMessage());
+                Set<Player> receivers = new HashSet<>(localArena.getBukkitPlayers());
+                GameChatEvent gameChatEvent = new GameChatEvent(localArena, evt.getPlayer(), receivers, evt.getMessage());
                 Bukkit.getPluginManager().callEvent(gameChatEvent);
 
                 if (!gameChatEvent.isCancelled()) {
