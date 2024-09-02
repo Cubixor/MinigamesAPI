@@ -8,6 +8,6 @@ public class ArgSetWaitingLobby extends LocationArgument {
 
 
     public ArgSetWaitingLobby(ArenasManager arenasManager) {
-        super(arenasManager, "setwaitinglobby", "setup.setwaitinglobby", "arena-setup.set-main-lobby", BasicConfigField.WAITING_LOBBY);
+        super(arenasManager, "setwaitinglobby", "setup.setwaitinglobby", "arena-setup.set-waiting-lobby", BasicConfigField.WAITING_LOBBY);
     }
 }
