@@ -71,6 +71,12 @@ public class ArenasConfigManager {
         return getLocationList(arena, String.join(".", field.toString(), arg));
     }
 
+    public void addLocation(String arena, ConfigField field, Location loc) {
+        List<Location> locations = getLocationList(arena, field);
+        locations.add(loc);
+        updateField(arena, field, locations);
+    }
+
     public Location[] getArea(String arena, ConfigField configField) {
         String locString = arenasSection.getConfigurationSection(arena).getString(configField.toString());
         if (locString == null) return null;
