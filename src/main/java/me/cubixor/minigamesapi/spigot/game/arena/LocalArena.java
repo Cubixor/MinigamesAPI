@@ -7,8 +7,10 @@ import me.cubixor.minigamesapi.spigot.events.TimerTickEvent;
 import me.cubixor.minigamesapi.spigot.game.ArenasManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -17,6 +19,7 @@ public class LocalArena extends Arena {
     private final StateManager stateManager;
     private final ScoreboardManager scoreboardManager;
     private final Map<Player, PlayerData> playerData = new HashMap<>();
+    private final Set<BukkitTask> tasks = new HashSet<>();
     private int timer = -1;
 
     public LocalArena(ArenasManager arenasManager, StatsManager statsManager, String name, String server) {
@@ -75,5 +78,14 @@ public class LocalArena extends Arena {
 
     public ScoreboardManager getScoreboardManager() {
         return scoreboardManager;
+    }
+
+    public void addTask(BukkitTask task) {
+        tasks.add(task);
+    }
+
+    public void cancelTasks() {
+        tasks.forEach(BukkitTask::cancel);
+        tasks.clear();
     }
 }

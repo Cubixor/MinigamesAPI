@@ -123,6 +123,7 @@ public class StateManager {
         for (Player p : players) {
             arenasManager.getArenaPlayersManager().kickFromLocalArena(p, localArena, true);
         }
+        localArena.cancelTasks();
 
         Bukkit.getPluginManager().callEvent(new GameResetEvent(localArena));
 
