@@ -5,6 +5,7 @@ import com.cryptomorin.xseries.messages.Titles;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
@@ -26,7 +27,6 @@ public class PlayerData {
     private final int level;
     private final boolean fly;
     private final boolean flying;
-    private final boolean invulnerable;
 
     public PlayerData(Player player) {
         this.player = player;
@@ -41,14 +41,13 @@ public class PlayerData {
         this.level = player.getLevel();
         this.fly = player.getAllowFlight();
         this.flying = player.isFlying();
-        this.invulnerable = player.isInvulnerable();
     }
 
     public void clearPlayerData() {
         player.getInventory().clear();
         player.getInventory().setArmorContents(new ItemStack[4]);
         player.setGameMode(GameMode.ADVENTURE);
-        player.setHealth(20);
+        player.setHealth(player.getMaxHealth());
         player.setFoodLevel(20);
         player.setExp(0);
         player.setLevel(0);
@@ -66,13 +65,14 @@ public class PlayerData {
         player.updateInventory();
         potionEffects.forEach(player::addPotionEffect);
         player.setGameMode(gameMode);
+        player.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(20);
         player.setHealth(health);
         player.setFoodLevel(food);
         player.setExp(exp);
         player.setLevel(level);
         player.setAllowFlight(fly);
         player.setFlying(flying);
-        player.setInvulnerable(invulnerable);
+        player.setInvulnerable(false);
     }
 
     private void clearGameData() {
