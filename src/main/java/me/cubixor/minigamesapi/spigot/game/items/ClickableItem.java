@@ -9,7 +9,7 @@ public abstract class ClickableItem extends GameItem {
 
     private final int slot;
 
-    public ClickableItem(String configPath, String namePath, String lorePath) {
+    protected ClickableItem(String configPath, String namePath, String lorePath) {
         super(configPath, namePath, lorePath);
         slot = MinigamesAPI.getPlugin().getConfig().getConfigurationSection(configPath).getInt("slot");
     }

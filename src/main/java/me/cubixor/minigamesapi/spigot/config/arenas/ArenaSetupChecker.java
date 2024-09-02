@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class ArenaSetupChecker {
 
-    private final ArenasConfigManager arenasConfigManager;
+    protected final ArenasConfigManager arenasConfigManager;
 
     public ArenaSetupChecker(ArenasConfigManager arenasConfigManager) {
         this.arenasConfigManager = arenasConfigManager;
