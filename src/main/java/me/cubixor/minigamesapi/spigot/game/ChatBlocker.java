@@ -1,14 +1,18 @@
 package me.cubixor.minigamesapi.spigot.game;
 
 import me.cubixor.minigamesapi.spigot.MinigamesAPI;
+import me.cubixor.minigamesapi.spigot.events.GameChatEvent;
+import me.cubixor.minigamesapi.spigot.game.arena.LocalArena;
 import me.cubixor.minigamesapi.spigot.utils.Messages;
 import me.cubixor.minigamesapi.spigot.utils.Permissions;
 import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.List;
 
@@ -58,5 +62,32 @@ public class ChatBlocker implements Listener {
             }
         }
         return false;
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    public void onChat(AsyncPlayerChatEvent evt) {
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                LocalArena localArena = arenasRegistry.getPlayerLocalArena(evt.getPlayer());
+
+                if (localArena == null) {
+                    return;
+                }
+                if (!MinigamesAPI.getPlugin().getConfig().getBoolean("game-chat")) {
+                    return;
+                }
+                evt.setCancelled(true);
+
+
+                GameChatEvent gameChatEvent = new GameChatEvent(localArena, evt.getPlayer(), localArena.getBukkitPlayers(), evt.getMessage());
+                Bukkit.getPluginManager().callEvent(gameChatEvent);
+
+                if (!gameChatEvent.isCancelled()) {
+                    gameChatEvent.getReceivers().forEach(p -> p.sendMessage(evt.getMessage()));
+                }
+
+            }
+        }.runTask(MinigamesAPI.getPlugin());
     }
 }
