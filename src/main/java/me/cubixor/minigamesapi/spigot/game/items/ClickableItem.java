@@ -4,6 +4,7 @@ import me.cubixor.minigamesapi.spigot.MinigamesAPI;
 import me.cubixor.minigamesapi.spigot.game.ArenasManager;
 import me.cubixor.minigamesapi.spigot.game.arena.LocalArena;
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerInteractEvent;
 
 public abstract class ClickableItem extends GameItem {
 
@@ -18,5 +19,5 @@ public abstract class ClickableItem extends GameItem {
         player.getInventory().setItem(slot, item);
     }
 
-    public abstract void handleClick(ArenasManager arenasManager, LocalArena localArena, Player player);
+    public abstract void handleClick(ArenasManager arenasManager, LocalArena localArena, Player player, PlayerInteractEvent evt);
 }
