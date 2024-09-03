@@ -53,6 +53,14 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
                 <version>3.6.0</version>
+                <configuration>
+                    <relocations>
+                        <relocation>
+                            <pattern>com.cryptomorin.xseries</pattern>
+                            <shadedPattern>libs.xseries</shadedPattern>
+                        </relocation>
+                    </relocations>
+                </configuration>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -108,6 +116,12 @@
     </repositories>
 
     <dependencies>
+        <dependency>
+            <groupId>me.cubixor</groupId>
+            <artifactId>SocketsMC</artifactId>
+            <version>1.0</version>
+            <scope>compile</scope>
+        </dependency>
         <dependency>
             <groupId>io.papermc.paper</groupId>
             <artifactId>paper-api</artifactId>
@@ -180,12 +194,6 @@
             <artifactId>MockBukkit-v1.20</artifactId>
             <version>3.89.0</version>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>me.cubixor</groupId>
-            <artifactId>SocketsMC</artifactId>
-            <version>1.0</version>
-            <scope>compile</scope>
         </dependency>
     </dependencies>
 </project>
