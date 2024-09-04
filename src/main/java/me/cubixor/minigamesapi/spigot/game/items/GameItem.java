@@ -3,7 +3,6 @@ package me.cubixor.minigamesapi.spigot.game.items;
 import com.cryptomorin.xseries.XItemStack;
 import me.cubixor.minigamesapi.spigot.MinigamesAPI;
 import me.cubixor.minigamesapi.spigot.utils.Messages;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -18,9 +17,15 @@ public class GameItem {
     }
 
     public GameItem(String configPath, String namePath, String lorePath, String toReplace, String replacement) {
-        FileConfiguration config = MinigamesAPI.getPlugin().getConfig();
+        this(XItemStack.deserialize(MinigamesAPI.getPlugin().getConfig().getConfigurationSection(configPath)), namePath, lorePath, toReplace, replacement);
+    }
 
-        item = XItemStack.deserialize(config.getConfigurationSection(configPath));
+    public GameItem(ItemStack item, String namePath, String lorePath) {
+        this(item, namePath, lorePath, null, null);
+    }
+
+    public GameItem(ItemStack item, String namePath, String lorePath, String toReplace, String replacement) {
+        this.item = item;
         ItemMeta itemMeta = item.getItemMeta();
 
         String displayName = Messages.get(namePath);
