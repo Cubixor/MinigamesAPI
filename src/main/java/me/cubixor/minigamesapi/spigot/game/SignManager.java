@@ -134,7 +134,7 @@ public class SignManager implements Listener {
         }
 
         if (!(evt.getPlayer().isSneaking() && Permissions.has(evt.getPlayer(), "setup.signs"))) {
-            evt.getPlayer().sendMessage(Messages.get("general.no-permission"));
+            Messages.send(evt.getPlayer(), "general.no-permission");
             evt.setCancelled(true);
             return;
         }
