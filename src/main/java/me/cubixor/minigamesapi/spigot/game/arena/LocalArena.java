@@ -1,10 +1,9 @@
 package me.cubixor.minigamesapi.spigot.game.arena;
 
 
-import me.cubixor.minigamesapi.spigot.config.stats.StatsManager;
 import me.cubixor.minigamesapi.spigot.events.GameStateChangeEvent;
 import me.cubixor.minigamesapi.spigot.events.TimerTickEvent;
-import me.cubixor.minigamesapi.spigot.game.ArenasManager;
+import me.cubixor.minigamesapi.spigot.game.inventories.MenuRegistry;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
@@ -16,20 +15,25 @@ import java.util.Set;
 
 public class LocalArena extends Arena {
 
-    private final StateManager stateManager;
-    private final ScoreboardManager scoreboardManager;
     private final Map<Player, PlayerData> playerData = new HashMap<>();
     private final Set<BukkitTask> tasks = new HashSet<>();
+    private final ScoreboardManager scoreboardManager;
+    private StateManager stateManager;
+    private MenuRegistry menuRegistry;
     private int timer = -1;
 
-    public LocalArena(ArenasManager arenasManager, StatsManager statsManager, String name, String server) {
-        this(arenasManager, statsManager, name, server, false, false, 0, 0);
+    public LocalArena(String name, String server) {
+        this(name, server, false, false, 0, 0);
     }
 
-    public LocalArena(ArenasManager arenasManager, StatsManager statsManager, String name, String server, boolean active, boolean vip, int minPlayers, int maxPlayers) {
+    public LocalArena(String name, String server, boolean active, boolean vip, int minPlayers, int maxPlayers) {
         super(name, server, active, vip, minPlayers, maxPlayers);
-        this.stateManager = new StateManager(this, arenasManager, statsManager);
         this.scoreboardManager = new ScoreboardManager(this);
+    }
+
+    public void initialize(StateManager stateManager, MenuRegistry menuRegistry) {
+        this.stateManager = stateManager;
+        this.menuRegistry = menuRegistry;
     }
 
     public Arena toArena() {
@@ -78,6 +82,10 @@ public class LocalArena extends Arena {
 
     public ScoreboardManager getScoreboardManager() {
         return scoreboardManager;
+    }
+
+    public MenuRegistry getMenuRegistry() {
+        return menuRegistry;
     }
 
     public void addTask(BukkitTask task) {

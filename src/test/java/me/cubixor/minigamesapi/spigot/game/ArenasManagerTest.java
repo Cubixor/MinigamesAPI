@@ -32,7 +32,7 @@ class ArenasManagerTest {
         ArenasRegistry arenasRegistry = new ArenasRegistry();
         ItemsRegistry itemsRegistry = new ItemsRegistry();
         SignManager signManager = new SignManager(arenasConfigManager, arenasRegistry);
-        ArenaFactory arenaFactory = new ArenaFactory();
+        DefaultArenaFactory arenaFactory = new DefaultArenaFactory();
         arenasManager = new ArenasManager(arenasRegistry, arenasConfigManager, signManager, null, null, itemsRegistry, arenaFactory);
     }
 
