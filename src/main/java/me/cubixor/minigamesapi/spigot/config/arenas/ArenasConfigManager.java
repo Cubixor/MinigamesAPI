@@ -77,8 +77,16 @@ public class ArenasConfigManager {
         updateField(arena, field, locations);
     }
 
-    public Location[] getArea(String arena, ConfigField configField) {
-        String locString = arenasSection.getConfigurationSection(arena).getString(configField.toString());
+    public Location[] getArea(String arena, ConfigField field) {
+        return getArea(arena, field.toString());
+    }
+
+    public Location[] getArea(String arena, ConfigField field, String arg) {
+        return getArea(arena, String.join(".", field.toString(), arg));
+    }
+
+    public Location[] getArea(String arena, String path) {
+        String locString = arenasSection.getConfigurationSection(arena).getString(path);
         if (locString == null) return null;
 
         String[] splitLoc = splitLocations(locString);
