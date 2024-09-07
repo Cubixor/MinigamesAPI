@@ -20,7 +20,7 @@ import org.bukkit.event.player.*;
 
 public class ArenaProtection implements Listener {
 
-    private final ArenasManager arenasManager;
+    protected final ArenasManager arenasManager;
 
     public ArenaProtection(ArenasManager arenasManager) {
         this.arenasManager = arenasManager;

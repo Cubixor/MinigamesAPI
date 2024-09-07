@@ -26,12 +26,20 @@ public class ItemHandler implements Listener {
         if (evt.getItem() == null) return;
         if (!evt.getHand().equals(EquipmentSlot.HAND)) return;
 
+        if(evt.getItem().equals(itemsRegistry.getSetupWandItem().getItem())){
+            itemsRegistry.getSetupWandItem().handleClick(arenasManager, null, evt.getPlayer(), evt);
+            evt.setCancelled(true);
+            return;
+        }
+
         LocalArena localArena = arenasManager.getRegistry().getPlayerLocalArena(evt.getPlayer());
         if (localArena == null) return;
 
         for (ClickableItem item : itemsRegistry.getClickableItems()) {
             if (item.getItem().equals(evt.getItem())) {
                 (item).handleClick(arenasManager, localArena, evt.getPlayer(), evt);
+                evt.setCancelled(true);
+                break;
             }
         }
     }

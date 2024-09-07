@@ -26,16 +26,20 @@ public class WandItem extends ClickableItem {
 
         switch (evt.getAction()) {
             case LEFT_CLICK_BLOCK: {
-                player.setMetadata("MGAPI-selMin", new FixedMetadataValue(MinigamesAPI.getPlugin(), evt.getClickedBlock()));
+                player.setMetadata("MGAPI-selMin", new FixedMetadataValue(MinigamesAPI.getPlugin(), evt.getClickedBlock().getLocation()));
                 Messages.send(player, "arena-setup.wand-select-min");
                 break;
             }
             case RIGHT_CLICK_BLOCK: {
-                player.setMetadata("MGAPI-selMax", new FixedMetadataValue(MinigamesAPI.getPlugin(), evt.getClickedBlock()));
+                player.setMetadata("MGAPI-selMax", new FixedMetadataValue(MinigamesAPI.getPlugin(), evt.getClickedBlock().getLocation()));
                 Messages.send(player, "arena-setup.wand-select-max");
                 break;
             }
         }
     }
 
+    @Override
+    public void give(Player player) {
+        player.getInventory().addItem(getItem());
+    }
 }
