@@ -18,18 +18,23 @@ import java.util.List;
 public class ConfigManager {
 
     private final JavaPlugin plugin = MinigamesAPI.getPlugin();
-    private final CustomConfig messagesConfig;
     private final CustomConfig arenasConfig;
     private final CustomConfig connectionConfig;
+    private CustomConfig messagesConfig;
 
     private final StatsManager statsManager;
     private final ArenasConfigManager arenasConfigManager;
 
-    public ConfigManager(List<StatsField> statsFields) {
+    public ConfigManager(List<StatsField> statsFields, String[] languages) {
         plugin.saveDefaultConfig();
-        messagesConfig = new CustomConfig("messages.yml");
         arenasConfig = new CustomConfig("arenas.yml");
         connectionConfig = new CustomConfig("connection.yml");
+        for (String lang : languages) {
+            CustomConfig messagesLangConfig = new CustomConfig("messages-" + lang + ".yml");
+            if (getConfig().getString("language").equalsIgnoreCase(lang)) {
+                messagesConfig = messagesLangConfig;
+            }
+        }
 
         arenasConfigManager = new ArenasConfigManager(arenasConfig);
 

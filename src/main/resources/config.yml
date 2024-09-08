@@ -14,6 +14,8 @@ bungee:
     - "custom command %player%"
     - "custom command2"
 
+language: en
+
 cooldown: 1
 waiting-time: 40
 full-waiting-time: 10

@@ -43,7 +43,7 @@ public class MockMain extends JavaPlugin implements Listener {
 
     private void load() {
         MinigamesAPI.INIT(this);
-        ConfigManager configManager = new ConfigManager(Arrays.asList(BasicStatsField.values()));
+        ConfigManager configManager = new ConfigManager(Arrays.asList(BasicStatsField.values()), new String[]{"en"});
 
         ArenasRegistry arenasRegistry = new ArenasRegistry();
         ItemsRegistry itemsRegistry = new ItemsRegistry();
