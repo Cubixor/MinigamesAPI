@@ -219,7 +219,9 @@ public class SignManager implements Listener {
             updateSignColors(sign, arena.getState());
         }
 
-        Bukkit.getScheduler().runTask(plugin, () -> sign.update(true));
+        if (plugin.isEnabled()) {
+            Bukkit.getScheduler().runTask(plugin, () -> sign.update(true));
+        }
     }
 
     private void updateSignColors(Sign sign, GameState gameState) {
