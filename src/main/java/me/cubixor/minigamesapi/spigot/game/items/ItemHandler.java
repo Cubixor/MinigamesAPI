@@ -38,7 +38,6 @@ public class ItemHandler implements Listener {
         for (ClickableItem item : itemsRegistry.getClickableItems()) {
             if (item.getItem().equals(evt.getItem())) {
                 (item).handleClick(arenasManager, localArena, evt.getPlayer(), evt);
-                evt.setCancelled(true);
                 break;
             }
         }

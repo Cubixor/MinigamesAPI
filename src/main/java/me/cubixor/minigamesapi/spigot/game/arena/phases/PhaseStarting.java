@@ -89,8 +89,9 @@ public class PhaseStarting extends GamePhase {
             return;
         }
 
-        String title = Messages.get("game.countdown-starting-title", "%time%", String.valueOf(time));
-        String subTitle = Messages.get("game.countdown-starting-subtitle", "%time%", String.valueOf(time));
+        String timeStr = time + "s";
+        String title = Messages.get("game.countdown-" + timeStr + "-title", "%time%", String.valueOf(time));
+        String subTitle = Messages.get("game.countdown-" + timeStr + "-subtitle", "%time%", String.valueOf(time));
 
         for (Player p : localArena.getBukkitPlayers()) {
             p.setLevel(localArena.getTimer());

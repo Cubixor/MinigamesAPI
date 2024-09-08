@@ -1,6 +1,7 @@
 package me.cubixor.minigamesapi.spigot;
 
 import me.cubixor.minigamesapi.spigot.config.stats.StatsManager;
+import me.cubixor.minigamesapi.spigot.game.ArenasManager;
 import me.cubixor.minigamesapi.spigot.game.ArenasRegistry;
 import me.cubixor.minigamesapi.spigot.integrations.PlaceholderExpansion;
 import me.cubixor.minigamesapi.spigot.utils.VersionUtils;
@@ -29,5 +30,9 @@ public class MinigamesAPI {
         if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
             new PlaceholderExpansion(arenasRegistry, statsManager);
         }
+    }
+
+    public static void disable(ArenasManager arenasManager){
+        arenasManager.getRegistry().getLocalArenas().values().forEach(arena -> arena.getStateManager().reset());
     }
 }

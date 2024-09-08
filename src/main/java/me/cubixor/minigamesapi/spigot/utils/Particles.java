@@ -4,10 +4,12 @@ import com.cryptomorin.xseries.particles.XParticle;
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Firework;
 import org.bukkit.inventory.meta.FireworkMeta;
+import org.bukkit.material.MaterialData;
 
 public class Particles {
 
@@ -44,5 +46,11 @@ public class Particles {
                 .build());
         fwm.setPower(2);
         fw.setFireworkMeta(fwm);
+    }
+
+    public static void dropBlood(Location loc) {
+        if (config.getBoolean("particles.enable-blood")) {
+            loc.getWorld().spawnParticle(XParticle.BLOCK.get(), loc, 50, (Object) new MaterialData(Material.REDSTONE_BLOCK));
+        }
     }
 }

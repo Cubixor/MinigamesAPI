@@ -1,19 +1,20 @@
 package me.cubixor.minigamesapi.spigot.utils;
 
 import com.cryptomorin.xseries.XMaterial;
+import com.cryptomorin.xseries.XSound;
+import com.cryptomorin.xseries.reflection.XReflection;
 
 public class VersionUtils {
 
     private static boolean before13;
 
     public static void initialize() {
-        try {
-            Class.forName("com.cryptomorin.xseries.XMaterial");
-            Class.forName("com.cryptomorin.xseries.XSound");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-        before13 = !XMaterial.matchXMaterial("KELP").get().isSupported();
+        XMaterial.matchXMaterial("BLACK_STAINED_GLASS").get().parseItem().getData();
+        XSound.matchXSound("CLICK").get().parseSound();
+        //Class.forName("com.cryptomorin.xseries.XMaterial");
+        //Class.forName("com.cryptomorin.xseries.XSound");
+
+        before13 = !XReflection.supports(13);
     }
 
     public static boolean isBefore13() {

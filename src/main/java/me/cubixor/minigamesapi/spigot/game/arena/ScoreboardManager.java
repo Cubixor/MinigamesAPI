@@ -58,9 +58,11 @@ public class ScoreboardManager {
         replacement.put("%time-long%", timeLongString);
         replacement.put("%date%", date);
 
-        Bukkit.getPluginManager().callEvent(new ScoreboardUpdateEvent(localArena, replacement));
+        Map<String, List<String>> multiLineReplacements = new HashMap<>();
 
-        updateScoreboard(localArena.getState(), replacement);
+        Bukkit.getPluginManager().callEvent(new ScoreboardUpdateEvent(localArena, replacement, multiLineReplacements));
+
+        updateScoreboard(localArena.getState(), replacement, multiLineReplacements);
 
         for (Player p : localArena.getBukkitPlayers()) {
             if (!p.getScoreboard().equals(scoreboard)) {
@@ -69,7 +71,7 @@ public class ScoreboardManager {
         }
     }
 
-    private void updateScoreboard(GameState gameState, Map<String, String> replacement) {
+    private void updateScoreboard(GameState gameState, Map<String, String> replacement, Map<String, List<String>> multiLineReplacements) {
         String stateString = gameState.toString();
         List<String> message = Messages.getList("game.scoreboard-" + stateString);
         message.replaceAll(s -> {
@@ -78,6 +80,17 @@ public class ScoreboardManager {
             }
             return s;
         });
+
+        for (Map.Entry<String, List<String>> entry : multiLineReplacements.entrySet()) {
+            for (int i = 0; i < message.size(); i++) {
+                String line = message.get(i);
+                if (line.contains(entry.getKey())) {
+                    message.remove(line);
+                    message.addAll(i, entry.getValue());
+                    break;
+                }
+            }
+        }
 
         int rowCount = message.size();
 
