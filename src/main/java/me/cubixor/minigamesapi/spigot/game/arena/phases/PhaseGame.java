@@ -27,9 +27,9 @@ public class PhaseGame extends GamePhase {
             public void run() {
                 int time = localArena.getTimer();
 
-                localArena.getScoreboardManager().updateScoreboard();
-
                 localArena.setTimer(time + 1);
+
+                localArena.getScoreboardManager().updateScoreboard();
             }
 
         }.runTaskTimer(MinigamesAPI.getPlugin(), 0, 20);
