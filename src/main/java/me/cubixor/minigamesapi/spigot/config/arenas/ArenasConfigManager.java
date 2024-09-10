@@ -165,8 +165,7 @@ public class ArenasConfigManager {
             value = joinLocations(list[0], list[1]);
         } else if (value instanceof List) {
             List<?> list = (List<?>) value;
-            if (list.isEmpty()) return;
-            if (list.get(0) instanceof Location) {
+            if (!list.isEmpty() && list.get(0) instanceof Location) {
                 List<Location> locList = (List<Location>) list;
                 value = locList.stream().map(this::locationToString).collect(Collectors.toList());
             }
