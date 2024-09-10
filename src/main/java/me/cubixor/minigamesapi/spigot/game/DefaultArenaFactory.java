@@ -32,7 +32,7 @@ public class DefaultArenaFactory implements ArenaFactory {
 
     public void initArena(LocalArena localArena, ArenasManager arenasManager, StatsManager statsManager) {
         StateManager stateManager = new StateManager(localArena, arenasManager, statsManager);
-        MenuRegistry menuRegistry = new MenuRegistry(localArena);
+        MenuRegistry menuRegistry = new MenuRegistry();
         localArena.initialize(stateManager, menuRegistry);
     }
 }

@@ -11,8 +11,6 @@ public class VersionUtils {
     public static void initialize() {
         XMaterial.matchXMaterial("BLACK_STAINED_GLASS").get().parseItem().getData();
         XSound.matchXSound("CLICK").get().parseSound();
-        //Class.forName("com.cryptomorin.xseries.XMaterial");
-        //Class.forName("com.cryptomorin.xseries.XSound");
 
         before13 = !XReflection.supports(13);
     }

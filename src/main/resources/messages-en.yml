@@ -3,8 +3,6 @@
 # This file contains all plugin messages. Edit them as you like!
 #
 # Remember NOT to edit placeholders (marked with "%" character).
-#
-# You can use /%cmd% reload command to reload modified files without restarting server.
 
 prefix: "&8&l| &d&lMGAPI &8&l|&r"
 
