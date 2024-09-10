@@ -7,7 +7,7 @@ import me.cubixor.minigamesapi.spigot.game.arena.LocalArena;
 import me.cubixor.minigamesapi.spigot.game.arena.StateManager;
 import me.cubixor.minigamesapi.spigot.game.inventories.MenuRegistry;
 
-public class DefaultArenaFactory implements ArenaFactory{
+public class DefaultArenaFactory implements ArenaFactory {
 
     public LocalArena createBlankArena(String name, String serverName, ArenasManager arenasManager, StatsManager statsManager) {
         LocalArena localArena = new LocalArena(name, serverName);

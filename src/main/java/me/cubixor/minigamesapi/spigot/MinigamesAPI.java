@@ -32,7 +32,7 @@ public class MinigamesAPI {
         }
     }
 
-    public static void disable(ArenasManager arenasManager){
+    public static void disable(ArenasManager arenasManager) {
         arenasManager.getRegistry().getLocalArenas().values().forEach(arena -> arena.getStateManager().reset());
     }
 }

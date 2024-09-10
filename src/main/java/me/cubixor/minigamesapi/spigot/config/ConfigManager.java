@@ -20,10 +20,9 @@ public class ConfigManager {
     private final JavaPlugin plugin = MinigamesAPI.getPlugin();
     private final CustomConfig arenasConfig;
     private final CustomConfig connectionConfig;
-    private CustomConfig messagesConfig;
-
     private final StatsManager statsManager;
     private final ArenasConfigManager arenasConfigManager;
+    private CustomConfig messagesConfig;
 
     public ConfigManager(List<StatsField> statsFields, String[] languages) {
         updateConfig();

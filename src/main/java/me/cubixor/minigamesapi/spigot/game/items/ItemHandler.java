@@ -26,7 +26,7 @@ public class ItemHandler implements Listener {
         if (evt.getItem() == null) return;
         if (!evt.getHand().equals(EquipmentSlot.HAND)) return;
 
-        if(evt.getItem().equals(itemsRegistry.getSetupWandItem().getItem())){
+        if (evt.getItem().equals(itemsRegistry.getSetupWandItem().getItem())) {
             itemsRegistry.getSetupWandItem().handleClick(arenasManager, null, evt.getPlayer(), evt);
             evt.setCancelled(true);
             return;
