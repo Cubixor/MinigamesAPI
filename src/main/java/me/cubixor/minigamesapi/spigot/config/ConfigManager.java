@@ -26,11 +26,13 @@ public class ConfigManager {
     private final ArenasConfigManager arenasConfigManager;
 
     public ConfigManager(List<StatsField> statsFields, String[] languages) {
-        plugin.saveDefaultConfig();
+        updateConfig();
+
         arenasConfig = new CustomConfig("arenas.yml");
         connectionConfig = new CustomConfig("connection.yml");
         for (String lang : languages) {
             CustomConfig messagesLangConfig = new CustomConfig("messages-" + lang + ".yml");
+            messagesLangConfig.copyDefaults();
             if (getConfig().getString("language").equalsIgnoreCase(lang)) {
                 messagesConfig = messagesLangConfig;
             }
@@ -53,6 +55,19 @@ public class ConfigManager {
         Messages.init(messagesConfig.get(), alias);
         Particles.init(getConfig());
         Sounds.init(getConfig());
+    }
+
+    private void updateConfig() {
+        plugin.saveDefaultConfig();
+
+        boolean versionMismatch = getConfig().getDouble("config-version") != getConfig().getDefaults().getDouble("config-version");
+
+        plugin.getConfig().options().copyDefaults(true);
+
+        if (versionMismatch) {
+            getConfig().set("config-version", getConfig().getDefaults().getDouble("config-version"));
+            plugin.saveConfig();
+        }
     }
 
     public DBManager setupDB() {

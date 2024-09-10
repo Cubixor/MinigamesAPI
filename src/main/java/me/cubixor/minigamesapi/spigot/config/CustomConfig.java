@@ -7,6 +7,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 
 public class CustomConfig {
 
@@ -22,6 +25,21 @@ public class CustomConfig {
         }
 
         fileConfiguration = YamlConfiguration.loadConfiguration(file);
+    }
+
+    public void copyDefaults() {
+        final InputStream defConfigStream = plugin.getResource(file.getName());
+        FileConfiguration defaults = YamlConfiguration.loadConfiguration(new InputStreamReader(defConfigStream, StandardCharsets.UTF_8));
+
+        boolean versionMismatch = fileConfiguration.getDouble("config-version") != defaults.getDouble("config-version");
+
+        fileConfiguration.setDefaults(defaults);
+        fileConfiguration.options().copyDefaults(true);
+
+        if (versionMismatch) {
+            fileConfiguration.set("config-version", defaults.getDouble("config-version"));
+            save();
+        }
     }
 
     public void save() {
