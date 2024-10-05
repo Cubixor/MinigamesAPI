@@ -206,6 +206,7 @@ public class ArenaPlayersManager {
         Titles.clearTitle(player);
 
         localArena.getPlayers().remove(player.getName());
+        localArena.getScoreboardManager().removePlayer(player);
 
         if (arenasManager.isBungee()) {
             arenasManager.getPacketSender().sendLeavePacket(player.getName());
