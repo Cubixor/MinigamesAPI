@@ -26,6 +26,7 @@ public class Pathfinding {
 
     private final MethodHandle entityInsentientGetNavigation;
     private final MethodHandle navigationAbstractNavigateTo;
+    private final MethodHandle navigationAbstractSetTimer;
 
     private MethodHandle followRangeGetter;
     private MethodHandle getAttributeInstance;
@@ -99,6 +100,13 @@ public class Pathfinding {
                 .parameters(double.class, double.class, double.class, double.class)
                 .returns(boolean.class)
                 .reflect();
+        navigationAbstractSetTimer = navigationAbstractClass
+                .field()
+                .named(getNavigationAbstractTimerFieldName())
+                .makeAccessible()
+                .setter()
+                .returns(long.class)
+                .reflect();
 
         // Clearing goals methods
         pathfinderGoalSelectorGoalSetter = pathfinderGoalSelectorClass
@@ -153,6 +161,14 @@ public class Pathfinding {
                     .parameters(double.class)
                     .reflect();
         }
+    }
+
+    private String getNavigationAbstractTimerFieldName() {
+        return XReflection
+                .v(13, "i")
+                .v(12, "m")
+                .v(10, "k")
+                .orElse("l");
     }
 
     public Object getEntityInsentient(Entity entity) {
@@ -210,6 +226,15 @@ public class Pathfinding {
             setAttributeModifiable.invoke(attributeInstance, range);
         } catch (Throwable t) {
             t.printStackTrace();
+        }
+    }
+
+    public void resetTimer(Object entityInsentient) {
+        try {
+            Object navigationAbstract = entityInsentientGetNavigation.invoke(entityInsentient);
+            navigationAbstractSetTimer.invoke(navigationAbstract, 0);
+        } catch (Throwable e) {
+            e.printStackTrace();
         }
     }
 }
