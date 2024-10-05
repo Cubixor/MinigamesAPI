@@ -8,14 +8,13 @@ import org.bukkit.inventory.Inventory;
 public abstract class Menu {
 
     private final LocalArena arena;
-    private final Inventory inventory;
+    private Inventory inventory;
 
     protected Menu(LocalArena arena) {
         this.arena = arena;
-        this.inventory = create();
     }
 
-    public abstract Inventory create();
+    protected abstract Inventory create();
 
     public abstract void update();
 
@@ -23,6 +22,10 @@ public abstract class Menu {
 
     public void open(Player player) {
         player.openInventory(getInventory());
+    }
+
+    public void setup() {
+        inventory = create();
     }
 
     public Inventory getInventory() {
