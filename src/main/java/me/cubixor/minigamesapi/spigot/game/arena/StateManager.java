@@ -129,4 +129,8 @@ public class StateManager {
 
         setWaiting();
     }
+
+    public GamePhase getGamePhase() {
+        return gamePhase;
+    }
 }

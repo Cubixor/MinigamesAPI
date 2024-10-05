@@ -101,5 +101,7 @@ public class PhaseEnding extends GamePhase {
         }
     }
 
-
+    public List<Player> getWinners() {
+        return winners;
+    }
 }
