@@ -71,10 +71,42 @@ public class ArenasConfigManager {
         return getLocationList(arena, String.join(".", field.toString(), arg));
     }
 
-    public void addLocation(String arena, ConfigField field, Location loc) {
-        List<Location> locations = getLocationList(arena, field);
+    public boolean addLocation(String arena, ConfigField field, String arg, Location loc) {
+        return addLocation(arena, String.join(".", field.toString(), arg), loc);
+    }
+
+    public boolean addLocation(String arena, ConfigField field, Location loc) {
+        return addLocation(arena, field.toString(), loc);
+    }
+
+    public boolean addLocation(String arena, String path, Location loc) {
+        List<Location> locations = getLocationList(arena, path);
+        if (locations.contains(loc)) {
+            return false;
+        }
+
         locations.add(loc);
-        updateField(arena, field, locations);
+        updateField(arena, path, locations);
+        return true;
+    }
+
+    public boolean removeLocation(String arena, ConfigField field, String arg, Location loc) {
+        return removeLocation(arena, String.join(".", field.toString(), arg), loc);
+    }
+
+    public boolean removeLocation(String arena, ConfigField field, Location loc) {
+        return removeLocation(arena, field.toString(), loc);
+    }
+
+    public boolean removeLocation(String arena, String path, Location loc) {
+        List<Location> locations = getLocationList(arena, path);
+        if (!locations.contains(loc)) {
+            return false;
+        }
+
+        locations.remove(loc);
+        updateField(arena, path, locations);
+        return true;
     }
 
     public Location[] getArea(String arena, ConfigField field) {
