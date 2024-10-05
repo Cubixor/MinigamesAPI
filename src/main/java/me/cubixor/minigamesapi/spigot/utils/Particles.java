@@ -1,15 +1,14 @@
 package me.cubixor.minigamesapi.spigot.utils;
 
 import com.cryptomorin.xseries.particles.XParticle;
-import org.bukkit.Color;
-import org.bukkit.FireworkEffect;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Firework;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.material.MaterialData;
+
+import java.lang.reflect.Method;
 
 public class Particles {
 
@@ -50,7 +49,12 @@ public class Particles {
 
     public static void dropBlood(Location loc) {
         if (config.getBoolean("particles.enable-blood")) {
-            loc.getWorld().spawnParticle(XParticle.BLOCK.get(), loc, 50, (Object) new MaterialData(Material.REDSTONE_BLOCK));
+            try {
+                Method createBlockData = Bukkit.class.getMethod("createBlockData", Material.class);
+                loc.getWorld().spawnParticle(Particle.BLOCK_CRACK, loc, 50, createBlockData.invoke(null, Material.REDSTONE_BLOCK));
+            } catch (Error | Exception e) {
+                loc.getWorld().spawnParticle(Particle.BLOCK_CRACK, loc, 50, (Object) new MaterialData(Material.REDSTONE_BLOCK));
+            }
         }
     }
 }
