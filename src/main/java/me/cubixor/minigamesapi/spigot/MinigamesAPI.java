@@ -28,7 +28,8 @@ public class MinigamesAPI {
 
     public static void registerPAPI(ArenasRegistry arenasRegistry, StatsManager statsManager) {
         if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
-            new PlaceholderExpansion(arenasRegistry, statsManager);
+            PlaceholderExpansion placeholderExpansion = new PlaceholderExpansion(arenasRegistry, statsManager);
+            placeholderExpansion.register();
         }
     }
 

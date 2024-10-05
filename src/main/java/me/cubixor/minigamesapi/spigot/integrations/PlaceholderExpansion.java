@@ -7,6 +7,7 @@ import me.cubixor.minigamesapi.spigot.config.stats.StatsManager;
 import me.cubixor.minigamesapi.spigot.game.ArenasRegistry;
 import me.cubixor.minigamesapi.spigot.game.arena.Arena;
 import me.cubixor.minigamesapi.spigot.utils.MessageUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;
 
@@ -50,33 +51,53 @@ public class PlaceholderExpansion extends me.clip.placeholderapi.expansion.Place
     public String onRequest(OfflinePlayer player, @NotNull String params) {
         String[] paramsSplit = params.split("_");
 
-        if (paramsSplit.length < 1 || (paramsSplit.length == 1 && player == null)) {
+        if (paramsSplit.length < 1) {
             return null;
         }
-        String param1 = paramsSplit.length > 1 ? paramsSplit[1] : player.getName();
+        String param1 = paramsSplit.length > 1 ? paramsSplit[1] : null;
 
         switch (paramsSplit[0]) {
             case "status": {
+                if (param1 == null) return null;
+
                 Arena arena = arenasRegistry.getArena(param1);
                 return MessageUtils.getStringState(arena);
             }
             case "players": {
+                if (param1 == null) return null;
+
                 Arena arena = arenasRegistry.getArena(param1);
                 if (arena == null) {
                     return "0";
                 }
                 return Integer.toString(arena.getPlayers().size());
             }
+            case "arena":
+                if (player == null) return null;
+
+                Arena arena = arenasRegistry.getPlayerArena(player.getName());
+                if (arena == null) {
+                    return "";
+                }
+
+                return arena.getName();
             case "playtime":
+                if (player == null) return null;
+
                 return MessageUtils.convertPlaytime(statsManager.getCachedStats(player.getName(), BasicStatsField.PLAYTIME));
             default:
+                if (player == null) return null;
+
                 for (StatsField field : statsManager.getFields()) {
-                    if (paramsSplit[0].equals(field.getCode())) {
+                    if (params.equals(field.getCode())) {
                         return String.valueOf(statsManager.getCachedStats(player.getName(), field));
                     }
                 }
         }
 
-        return null;
+        PlaceholderParseEvent placeholderParseEvent = new PlaceholderParseEvent(player, params);
+        Bukkit.getPluginManager().callEvent(placeholderParseEvent);
+
+        return placeholderParseEvent.getParsed();
     }
 }
