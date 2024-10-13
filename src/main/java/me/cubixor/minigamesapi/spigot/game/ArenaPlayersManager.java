@@ -189,6 +189,7 @@ public class ArenaPlayersManager {
         Location playerLocation = player.getLocation();
         PlayerData playerData = localArena.getPlayerData().remove(player);
         playerData.restorePlayerData();
+        player.eject();
 
         if (localArena.getState().equals(GameState.GAME)) {
             arenasManager.getStatsManager().addStats(player.getName(), BasicStatsField.PLAYTIME, localArena.getTimer());
