@@ -13,31 +13,33 @@ import java.util.stream.Collectors;
 public class ArenasConfigManager {
 
     private final CustomConfig arenasConfig;
-    private final ConfigurationSection arenasSection;
 
     public ArenasConfigManager(CustomConfig arenasConfig) {
         this.arenasConfig = arenasConfig;
-        this.arenasSection = arenasConfig.get().getConfigurationSection("arenas");
+    }
+
+    private ConfigurationSection getArenasSection() {
+        return arenasConfig.get().getConfigurationSection("arenas");
     }
 
     public String getString(String arena, ConfigField field) {
-        return arenasSection.getConfigurationSection(arena).getString(field.toString());
+        return getArenasSection().getConfigurationSection(arena).getString(field.toString());
     }
 
     public int getInt(String arena, ConfigField field) {
-        return arenasSection.getConfigurationSection(arena).getInt(field.toString());
+        return getArenasSection().getConfigurationSection(arena).getInt(field.toString());
     }
 
     public boolean getBoolean(String arena, ConfigField field) {
-        return arenasSection.getConfigurationSection(arena).getBoolean(field.toString());
+        return getArenasSection().getConfigurationSection(arena).getBoolean(field.toString());
     }
 
     public List<String> getStringList(String arena, ConfigField field) {
-        return arenasSection.getConfigurationSection(arena).getStringList(field.toString());
+        return getArenasSection().getConfigurationSection(arena).getStringList(field.toString());
     }
 
     private Location getLocation(String arena, String path) {
-        String locString = arenasSection
+        String locString = getArenasSection()
                 .getConfigurationSection(arena)
                 .getString(path);
 
@@ -57,7 +59,7 @@ public class ArenasConfigManager {
     }
 
     private List<Location> getLocationList(String arena, String path) {
-        List<String> locStrs = arenasSection.getConfigurationSection(arena).getStringList(path);
+        List<String> locStrs = getArenasSection().getConfigurationSection(arena).getStringList(path);
         return locStrs.stream()
                 .map(this::stringToLocation)
                 .collect(Collectors.toList());
@@ -118,7 +120,7 @@ public class ArenasConfigManager {
     }
 
     public Location[] getArea(String arena, String path) {
-        String locString = arenasSection.getConfigurationSection(arena).getString(path);
+        String locString = getArenasSection().getConfigurationSection(arena).getString(path);
         if (locString == null) return null;
 
         String[] splitLoc = splitLocations(locString);
@@ -131,7 +133,7 @@ public class ArenasConfigManager {
     }
 
     public Set<String> getArenas() {
-        return arenasSection.getKeys(false);
+        return getArenasSection().getKeys(false);
     }
 
     private List<String> getSignsStr(String arena) {
@@ -174,7 +176,7 @@ public class ArenasConfigManager {
     }
 
     public void insertArena(String name) {
-        ConfigurationSection arenaSection = arenasSection.createSection(name);
+        ConfigurationSection arenaSection = getArenasSection().createSection(name);
         arenaSection.set(BasicConfigField.ACTIVE.toString(), false);
         arenaSection.set(BasicConfigField.VIP.toString(), false);
         arenaSection.set(BasicConfigField.MIN_PLAYERS.toString(), 0);
@@ -184,7 +186,7 @@ public class ArenasConfigManager {
     }
 
     public void removeArena(String name) {
-        arenasSection.set(name, null);
+        getArenasSection().set(name, null);
         arenasConfig.save();
     }
 
@@ -203,7 +205,7 @@ public class ArenasConfigManager {
             }
         }
 
-        arenasSection.getConfigurationSection(arena).set(path, value);
+        getArenasSection().getConfigurationSection(arena).set(path, value);
         arenasConfig.save();
     }
 
@@ -263,5 +265,9 @@ public class ArenasConfigManager {
 
     private String[] splitLocations(String locString) {
         return locString.split(":");
+    }
+
+    public CustomConfig getArenasConfig() {
+        return arenasConfig;
     }
 }
