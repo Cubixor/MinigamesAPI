@@ -80,6 +80,11 @@ public class Messages {
         player.sendMessage(getList(path, replacement).toArray(new String[]{}));
     }
 
+    public static void sendListAll(Set<? extends CommandSender> players, String path, Map<String, String> replacement) {
+        String[] message = getList(path, replacement).toArray(new String[]{});
+        players.forEach(p -> p.sendMessage(message));
+    }
+
     public static void send(CommandSender player, String path, String toReplace, String replacement) {
         player.sendMessage(get(path, toReplace, replacement));
     }
