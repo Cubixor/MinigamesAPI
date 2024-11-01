@@ -61,7 +61,7 @@ public class ScoreboardManager {
             replacement.put("%date%", date);
 
             Map<String, List<String>> multiLineReplacements = new HashMap<>();
-            Bukkit.getPluginManager().callEvent(new ScoreboardUpdateEvent(p,localArena, replacement, multiLineReplacements));
+            Bukkit.getPluginManager().callEvent(new ScoreboardUpdateEvent(p, localArena, replacement, multiLineReplacements));
             updatePlayerScoreboard(p, localArena.getState(), replacement, multiLineReplacements);
 
             Scoreboard scoreboard = playerScoreboards.get(p);
@@ -134,7 +134,7 @@ public class ScoreboardManager {
         team.setSuffix((atColor ? "" : ChatColor.getLastColors(str1)) + str2);
     }
 
-    public void removePlayer(Player player){
+    public void removePlayer(Player player) {
         playerScoreboards.remove(player);
     }
 }

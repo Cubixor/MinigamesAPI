@@ -5,7 +5,6 @@ import me.cubixor.minigamesapi.spigot.MinigamesAPI;
 import me.cubixor.minigamesapi.spigot.events.ArenaStatusParseEvent;
 import me.cubixor.minigamesapi.spigot.game.arena.Arena;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.time.Instant;
