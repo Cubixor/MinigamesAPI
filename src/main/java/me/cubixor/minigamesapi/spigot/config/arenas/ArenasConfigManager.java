@@ -22,8 +22,16 @@ public class ArenasConfigManager {
         return arenasConfig.get().getConfigurationSection("arenas");
     }
 
+    public String getString(String arena, ConfigField field, String arg) {
+        return getString(arena, String.join(".", field.toString(), arg));
+    }
+
     public String getString(String arena, ConfigField field) {
-        return getArenasSection().getConfigurationSection(arena).getString(field.toString());
+        return getString(arena, field.toString());
+    }
+
+    private String getString(String arena, String path) {
+        return getArenasSection().getConfigurationSection(arena).getString(path);
     }
 
     public int getInt(String arena, ConfigField field) {
