@@ -5,13 +5,13 @@ import java.util.Set;
 
 public class MenuRegistry {
 
-    private final Set<Menu> menus;
+    private final Set<GlobalMenu> menus;
 
     public MenuRegistry() {
         this.menus = new HashSet<>();
     }
 
-    public Set<Menu> getMenus() {
+    public Set<GlobalMenu> getMenus() {
         return menus;
     }
 }

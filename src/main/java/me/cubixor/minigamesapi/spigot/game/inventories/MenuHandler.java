@@ -35,11 +35,11 @@ public class MenuHandler implements Listener {
 
         if (arena == null) return;
 
-        Menu menu = getMenuByInventory(arena, evt.getClickedInventory());
+        GlobalMenu menu = getMenuByInventory(arena, evt.getClickedInventory());
         if (menu == null) return;
 
         evt.setCancelled(true);
-        menu.handleClick(evt, player);
+        menu.handleClick(evt, player, arena);
 
         Sounds.playSound("click", player.getLocation(), Collections.singleton(player));
         player.getOpenInventory().close();
@@ -53,14 +53,14 @@ public class MenuHandler implements Listener {
         LocalArena arena = arenasRegistry.getPlayerLocalArena(player);
         if (arena == null) return;
 
-        Menu menu = getMenuByInventory(arena, evt.getInventory());
+        GlobalMenu menu = getMenuByInventory(arena, evt.getInventory());
         if (menu == null) return;
 
         menu.update();
     }
 
-    private Menu getMenuByInventory(LocalArena arena, Inventory inventory) {
-        for (Menu menu : arena.getMenuRegistry().getMenus()) {
+    private GlobalMenu getMenuByInventory(LocalArena arena, Inventory inventory) {
+        for (GlobalMenu menu : arena.getMenuRegistry().getMenus()) {
             if (inventory.equals(menu.getInventory())) {
                 return menu;
             }
