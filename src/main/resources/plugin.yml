@@ -7,3 +7,5 @@ author: Cubixor
 commands:
   minigamesapi:
     aliases: mg
+  leave:
+    description: Alias for /mg leave

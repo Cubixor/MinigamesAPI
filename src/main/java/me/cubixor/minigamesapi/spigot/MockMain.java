@@ -1,5 +1,6 @@
 package me.cubixor.minigamesapi.spigot;
 
+import me.cubixor.minigamesapi.spigot.commands.LeaveCommand;
 import me.cubixor.minigamesapi.spigot.commands.MainCommand;
 import me.cubixor.minigamesapi.spigot.commands.MainCommandCompleter;
 import me.cubixor.minigamesapi.spigot.commands.arguments.CommandArgument;
@@ -62,6 +63,7 @@ public class MockMain extends JavaPlugin implements Listener {
         List<CommandArgument> args = MainCommand.getCommonArguments(arenasManager, arenaSetupChecker, configManager.getStatsManager());
         MainCommand mainCommand = new MainCommand(args);
         MainCommandCompleter mainCommandCompleter = new MainCommandCompleter(args);
+        LeaveCommand leaveCommand = new LeaveCommand();
 
         getServer().getPluginCommand(getName()).setExecutor(mainCommand);
         getServer().getPluginCommand(getName()).setTabCompleter(mainCommandCompleter);
