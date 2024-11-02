@@ -84,7 +84,7 @@ public class ArenaPlayersManager {
             return;
         }
 
-        LinkedHashMap<Arena, Integer> playersCount = getAvailableArenas(player);
+        LinkedHashMap<Arena, Integer> playersCount = Utils.shuffleLinkedHashMap(getAvailableArenas(player));
 
         Utils.sortByValueInPlace(playersCount);
         Optional<Arena> toJoin = playersCount.keySet().stream().findFirst();

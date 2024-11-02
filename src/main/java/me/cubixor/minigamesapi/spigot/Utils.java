@@ -27,4 +27,22 @@ public class Utils {
         }
     }
 
+    public static <K, V> LinkedHashMap<K, V> shuffleLinkedHashMap(LinkedHashMap<K, V> map) {
+        // Convert the entries of the map into a list
+        List<Map.Entry<K, V>> entries = new ArrayList<>(map.entrySet());
+
+        // Shuffle the list
+        Collections.shuffle(entries);
+
+        // Create a new LinkedHashMap to preserve the shuffled order
+        LinkedHashMap<K, V> shuffledMap = new LinkedHashMap<>();
+
+        // Add the shuffled entries back into the LinkedHashMap
+        for (Map.Entry<K, V> entry : entries) {
+            shuffledMap.put(entry.getKey(), entry.getValue());
+        }
+
+        return shuffledMap;
+    }
+
 }
