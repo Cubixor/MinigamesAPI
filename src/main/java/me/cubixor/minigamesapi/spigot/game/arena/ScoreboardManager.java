@@ -10,33 +10,17 @@ import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.*;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class ScoreboardManager {
 
-    private static final String[] lineNames = new String[]{
-            ChatColor.BLACK.toString(),
-            ChatColor.DARK_BLUE.toString(),
-            ChatColor.DARK_GREEN.toString(),
-            ChatColor.DARK_AQUA.toString(),
-            ChatColor.DARK_RED.toString(),
-            ChatColor.DARK_PURPLE.toString(),
-            ChatColor.GOLD.toString(),
-            ChatColor.GRAY.toString(),
-            ChatColor.DARK_GRAY.toString(),
-            ChatColor.BLUE.toString(),
-            ChatColor.GREEN.toString(),
-            ChatColor.AQUA.toString(),
-            ChatColor.RED.toString(),
-            ChatColor.LIGHT_PURPLE.toString(),
-            ChatColor.YELLOW.toString(),
-            ChatColor.WHITE.toString()
-    };
+    private static final String[] lineNames = Arrays.stream(ChatColor.values()).map(ChatColor::toString).toArray(String[]::new);
 
     private final LocalArena localArena;
-    private Map<Player, Scoreboard> playerScoreboards = new HashMap<>();
+    private final Map<Player, Scoreboard> playerScoreboards = new HashMap<>();
 
     public ScoreboardManager(LocalArena localArena) {
         this.localArena = localArena;
