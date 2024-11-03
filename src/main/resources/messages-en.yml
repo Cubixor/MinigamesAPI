@@ -269,7 +269,24 @@ arena-setup:
     - "%active%"
     - "%ready%"
     - "&m---------------------------------------------------"
-
-
+arenas-menu:
+  command-usage: "%prefix% &cWrong use! &7Type: &e/%cmd% arenasmenu"
+  name: "&d&lMGAPI &7&l| &8Games"
+  arena-item-name: "%?vip?%&e%arena%"
+  arena-item-lore:
+    - "&7Players: &e%count%/&e%max%"
+    - "&7Game state: %state%"
+    - ""
+    - "&aClick to join arena."
+  quickjoin-item-name: "&eQuick join"
+  quickjoin-item-lore:
+    - "&7Click to join random arena"
+    - ""
+    - "&7You will be put in arena"
+    - "&7with most players, to start"
+    - "&7the game as soon as possible!"
+  close-item-name: "&eClose"
+  close-item-lore:
+    - "&7Close this menu."
 
 config-version: 2.0

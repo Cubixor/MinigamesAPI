@@ -139,8 +139,6 @@ public class ArenaPlayersManager {
         player.getInventory().setHeldItemSlot(4);
         player.setGameMode(GameMode.ADVENTURE);
 
-        //TODO Action bar
-        //sendWaitingActionBar(player, localArena, min);
 
         Sounds.playSound("join", player.getLocation(), localArena.getBukkitPlayers());
         Particles.spawnParticle(waitingLobby.add(0, 1.5, 0), "join");

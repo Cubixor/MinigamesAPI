@@ -13,6 +13,7 @@ import me.cubixor.minigamesapi.spigot.commands.arguments.impl.staff.ArgSetActive
 import me.cubixor.minigamesapi.spigot.config.arenas.ArenaSetupChecker;
 import me.cubixor.minigamesapi.spigot.config.stats.StatsManager;
 import me.cubixor.minigamesapi.spigot.game.ArenasManager;
+import me.cubixor.minigamesapi.spigot.game.inventories.GlobalMenuRegistry;
 import me.cubixor.minigamesapi.spigot.utils.Messages;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -35,7 +36,7 @@ public class MainCommand implements CommandExecutor {
         cooldownManager = new CooldownManager();
     }
 
-    public static List<CommandArgument> getCommonArguments(ArenasManager arenasManager, ArenaSetupChecker arenaSetupChecker, StatsManager statsManager) {
+    public static List<CommandArgument> getCommonArguments(ArenasManager arenasManager, ArenaSetupChecker arenaSetupChecker, StatsManager statsManager, GlobalMenuRegistry globalMenuRegistry) {
         //TODO Implement reload
         return Arrays.asList(
                 new ArgHelpGeneral(),
@@ -57,7 +58,8 @@ public class MainCommand implements CommandExecutor {
                 new ArgLeave(arenasManager),
                 new ArgQuickJoin(arenasManager),
                 new ArgList(arenasManager.getRegistry()),
-                new ArgStats(statsManager)
+                new ArgStats(statsManager),
+                new ArgArenasMenu(globalMenuRegistry)
         );
     }
 

@@ -71,7 +71,6 @@ public class StateManager {
             if (count < min) {
                 for (Player p : localArena.getBukkitPlayers()) {
                     Messages.send(p, "game.start-cancelled");
-                    //TODO Send action bar
                 }
 
                 setWaiting();

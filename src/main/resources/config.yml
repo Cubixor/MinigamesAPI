@@ -30,6 +30,10 @@ items:
   leave-item:
     material: CLOCK
     slot: 8
+  menu-arenas-quickjoin:
+    material: SLIME_BALL
+  menu-arenas-close:
+    material: ARROW
 
 sounds:
   join:

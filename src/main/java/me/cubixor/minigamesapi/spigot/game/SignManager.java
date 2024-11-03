@@ -1,12 +1,12 @@
 package me.cubixor.minigamesapi.spigot.game;
 
 import com.cryptomorin.xseries.XBlock;
-import com.cryptomorin.xseries.XMaterial;
 import com.google.common.collect.ImmutableMap;
 import me.cubixor.minigamesapi.spigot.MinigamesAPI;
 import me.cubixor.minigamesapi.spigot.config.arenas.ArenasConfigManager;
 import me.cubixor.minigamesapi.spigot.game.arena.Arena;
 import me.cubixor.minigamesapi.spigot.game.arena.GameState;
+import me.cubixor.minigamesapi.spigot.game.items.ItemsRegistry;
 import me.cubixor.minigamesapi.spigot.utils.MessageUtils;
 import me.cubixor.minigamesapi.spigot.utils.Messages;
 import me.cubixor.minigamesapi.spigot.utils.Permissions;
@@ -17,7 +17,6 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Sign;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
@@ -28,7 +27,10 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 public class SignManager implements Listener {
 
@@ -36,25 +38,23 @@ public class SignManager implements Listener {
     private final Map<String, List<Location>> signs;
     private final ArenasConfigManager arenasConfigManager;
     private final ArenasRegistry arenasRegistry;
+    private final ItemsRegistry itemsRegistry;
     private final boolean colorSigns;
-    private final Map<GameState, ItemStack> colorItems;
 
-    public SignManager(ArenasConfigManager arenasConfigManager, ArenasRegistry arenasRegistry) {
+    public SignManager(ArenasConfigManager arenasConfigManager, ArenasRegistry arenasRegistry, ItemsRegistry itemsRegistry) {
+        this.itemsRegistry = itemsRegistry;
         this.plugin = MinigamesAPI.getPlugin();
         this.arenasConfigManager = arenasConfigManager;
         this.arenasRegistry = arenasRegistry;
 
         this.colorSigns = plugin.getConfig().getBoolean("color-signs");
-        this.colorItems = loadStateColors();
 
         signs = arenasConfigManager.getAllSigns();
         Bukkit.getServer().getPluginManager().registerEvents(this, MinigamesAPI.getPlugin());
     }
 
     private void addSign(String arena, Location loc) {
-        if (!signs.containsKey(arena)) {
-            signs.put(arena, new ArrayList<>());
-        }
+        signs.computeIfAbsent(arena, k -> new ArrayList<>());
 
         signs.get(arena).add(loc);
         arenasConfigManager.addSign(arena, loc);
@@ -226,7 +226,7 @@ public class SignManager implements Listener {
 
     private void updateSignColors(Sign sign, GameState gameState) {
         if (plugin.getConfig().getBoolean("color-signs")) {
-            ItemStack blockType = colorItems.get(gameState);
+            ItemStack blockType = itemsRegistry.getColorItems().get(gameState);
             Block attachedBlock = getAttachedBlock(sign.getBlock());
 
             attachedBlock.setType(blockType.getType());
@@ -281,17 +281,5 @@ public class SignManager implements Listener {
             }
         }
         return null;
-    }
-
-    private Map<GameState, ItemStack> loadStateColors() {
-        Map<GameState, ItemStack> stateColors = new EnumMap<>(GameState.class);
-
-        ConfigurationSection signColorsSection = plugin.getConfig().getConfigurationSection("sign-colors");
-        for (GameState state : GameState.values()) {
-            ItemStack stateItem = XMaterial.matchXMaterial(signColorsSection.getString(state.toString())).get().parseItem();
-            stateColors.put(state, stateItem);
-        }
-
-        return stateColors;
     }
 }
