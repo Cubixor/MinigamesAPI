@@ -13,14 +13,17 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.inventory.Inventory;
 
+import java.util.Collection;
 import java.util.Collections;
 
 public class MenuHandler implements Listener {
 
     private final ArenasRegistry arenasRegistry;
+    private final MenuRegistry globalMenuRegistry;
 
-    public MenuHandler(ArenasRegistry arenasRegistry) {
+    public MenuHandler(ArenasRegistry arenasRegistry, MenuRegistry globalMenuRegistry) {
         this.arenasRegistry = arenasRegistry;
+        this.globalMenuRegistry = globalMenuRegistry;
 
         Bukkit.getPluginManager().registerEvents(this, MinigamesAPI.getPlugin());
     }
@@ -31,15 +34,26 @@ public class MenuHandler implements Listener {
         if (evt.getCurrentItem() == null || evt.getCurrentItem().getType().equals(Material.AIR)) return;
 
         Player player = (Player) evt.getWhoClicked();
-        LocalArena arena = arenasRegistry.getPlayerLocalArena(player);
 
+        GlobalMenu globalMenu = getMenuByInventory(globalMenuRegistry.getMenus(), evt.getClickedInventory());
+        if (globalMenu != null) {
+            globalMenu.handleClick(evt, player);
+            menuClick(player, globalMenu, evt);
+            return;
+        }
+
+        LocalArena arena = arenasRegistry.getPlayerLocalArena(player);
         if (arena == null) return;
 
-        GlobalMenu menu = getMenuByInventory(arena, evt.getClickedInventory());
-        if (menu == null) return;
+        Menu arenaMenu = (Menu) getMenuByInventory(arena.getMenuRegistry().getMenus(), evt.getClickedInventory());
+        if (arenaMenu == null) return;
 
+        menuClick(player, arenaMenu, evt);
+        arenaMenu.handleClick(evt, player);
+    }
+
+    private void menuClick(Player player, GlobalMenu menu, InventoryClickEvent evt) {
         evt.setCancelled(true);
-        menu.handleClick(evt, player, arena);
 
         Sounds.playSound("click", player.getLocation(), Collections.singleton(player));
         player.getOpenInventory().close();
@@ -50,17 +64,23 @@ public class MenuHandler implements Listener {
     @EventHandler
     public void onInventoryOpen(InventoryOpenEvent evt) {
         Player player = (Player) evt.getPlayer();
+        GlobalMenu globalMenu = getMenuByInventory(globalMenuRegistry.getMenus(), evt.getInventory());
+        if (globalMenu != null) {
+            globalMenu.update();
+            return;
+        }
+
         LocalArena arena = arenasRegistry.getPlayerLocalArena(player);
         if (arena == null) return;
 
-        GlobalMenu menu = getMenuByInventory(arena, evt.getInventory());
+        GlobalMenu menu = getMenuByInventory(arena.getMenuRegistry().getMenus(), evt.getInventory());
         if (menu == null) return;
 
         menu.update();
     }
 
-    private GlobalMenu getMenuByInventory(LocalArena arena, Inventory inventory) {
-        for (GlobalMenu menu : arena.getMenuRegistry().getMenus()) {
+    private GlobalMenu getMenuByInventory(Collection<GlobalMenu> menus, Inventory inventory) {
+        for (GlobalMenu menu : menus) {
             if (inventory.equals(menu.getInventory())) {
                 return menu;
             }

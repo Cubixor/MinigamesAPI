@@ -5,11 +5,7 @@ import java.util.Set;
 
 public class MenuRegistry {
 
-    private final Set<GlobalMenu> menus;
-
-    public MenuRegistry() {
-        this.menus = new HashSet<>();
-    }
+    private final Set<GlobalMenu> menus = new HashSet<>();
 
     public Set<GlobalMenu> getMenus() {
         return menus;

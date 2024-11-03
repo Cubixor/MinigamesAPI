@@ -11,6 +11,7 @@ import me.cubixor.minigamesapi.spigot.events.TimerTickEvent;
 import me.cubixor.minigamesapi.spigot.game.*;
 import me.cubixor.minigamesapi.spigot.game.arena.GameState;
 import me.cubixor.minigamesapi.spigot.game.inventories.MenuHandler;
+import me.cubixor.minigamesapi.spigot.game.inventories.MenuRegistry;
 import me.cubixor.minigamesapi.spigot.game.items.ItemHandler;
 import me.cubixor.minigamesapi.spigot.game.items.ItemsRegistry;
 import me.cubixor.minigamesapi.spigot.sockets.PacketManagerSpigot;
@@ -55,7 +56,7 @@ public class MockMain extends JavaPlugin implements Listener {
         PacketManagerSpigot packetManager = new PacketManagerSpigot(arenasManager, packetSender);
         ArenaProtection arenaProtection = new ArenaProtection(arenasManager);
         ItemHandler itemHandler = new ItemHandler(arenasManager, itemsRegistry);
-        MenuHandler menuHandler = new MenuHandler(arenasRegistry);
+        MenuHandler menuHandler = new MenuHandler(arenasRegistry, new MenuRegistry());
         ChatBlocker chatBlocker = new ChatBlocker(arenasRegistry);
         SimpleBungeeMode simpleBungeeMode = new SimpleBungeeMode(arenasManager);
         ArenaSetupChecker arenaSetupChecker = new ArenaSetupChecker(configManager.getArenasConfigManager());
