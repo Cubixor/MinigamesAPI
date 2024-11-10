@@ -1,31 +1,157 @@
+# MGAPI plugin configuration file (config.yml)
+#
+# If there aren't any other comments in this file, check this page for explanation: https://github.com/Cubixor/SheepQuest/wiki/Config-explanation
+#
+# READ ALL COMMENTS REGARDING A PARTICULAR SECTION BEFORE CHANGING ANYTHING!!!
+
+
+# Plugin messages language.
+# Available languages are:
+# en - English - default
+#
+# If you have translated the plugin and would like me to add your translation here, let me know on my discord server:
+# http://discord.gg/AQhUVfm
+language: en
+
+
+# Settings related to a database.
+# You have to use a database if you are using bungee mode.
 database:
+
+  # If set to true, player stats will be saved in a database.
+  # If set to false, player stats will be saved in a local file.
+  # WARNING! You have to set it to "true" if you are using bungee mode! [true/false]
   enabled-stats: false
+
+  # Database address.
+  # If you have a mysql database, it will look like: "jdbc:mysql://<host>:<port>/<database>".
   address: "jdbc:mysql://localhost:3306/minigame?useSSL=false&autoReConnect=true"
+
+  # MySQL username.
+  # It's not recommended to use the root account here for security reasons.
   username: "root"
+
+  # MySQL password.
+  # If you are not using a password, just leave it blank (not recommended).
   password: ""
+
+  # MySQL table used for saving player statistics.
   table: "stats"
 
+
+# Settings related to the plugin bungee mode.
+#
+# WARNING!!!
+# BEFORE CONFIGURING IT, READ THE TUTORIAL:
+# https://github.com/Cubixor/SheepQuest/wiki/Installation#bungeecord-installation
 bungee:
+
+  # Should the plugin be in simple bungee mode?
+  # Players will automatically join an arena after they join this server if it's enabled. [true/false]
   simple-bungee-mode: false
+
+  # Should the plugin be in bungee mode?
+  # If it's set true, you will be able to join all arenas in your bungeecord network.
+  #
+  # WARNING! You can use it only if you have enabled saving stats to a database.
+  #
+  # WARNING! If you enable this option, remember to upload the plugin to the bungeecord server and
+  # fill in the connection.yml file with info that is necessary to connect to bungeecord server. [true/false]
   bungee-mode: false
+
+  # What should happen to the player who left the game?
+  # Use JOIN_SERVER to put the player back to the server from where he had joined the game.
+  # Use LOBBY_SERVER to put the player in the lobby server.
+  # USE GAME_SERVER to leave the player in the server that he was playing on.
+  # Use LEAVE_COMMAND to make spigot server console execute custom command when the player leaves the game.
   on-leave: JOIN_SERVER
+
+  # Lobby server.
+  # Use the bungeecord server name that you set in bungeecord config.yml.
   lobby-server: hub
+
+  # Leave commands.
+  # They are used only when the "on-leave" option is set to "LEAVE_COMMAND" and will be executed from the spigot server's console.
+  # You can use %player% placeholder - it will be replaced with the player's name.
+  # Do not put slash (/) at the beginning!
   leave-commands:
     - "custom command %player%"
     - "custom command2"
 
-language: en
-
+# Cooldown between commands, sign clicks, menu clicks and other actions
+# Use higher values if your server is slow, you are using bungee mode or saving in mysql.
+# You can set it to 0 if you are not using bungee mode and database. [seconds]
 cooldown: 1
+
+# Countdown time.
+# The Countdown will start when the arena minimum players count will be reached. [seconds]
 waiting-time: 40
+
+# Countdown time, when the game is full and players can no longer join it. [seconds]
 full-waiting-time: 10
+
+# Time that will game ending take [seconds]
 ending-time: 10
+
+# If set to true, when the arena ends, players will be teleported to the main lobby location.
+# If set to false, a player is teleported to the place where he was before he joined the arena. [true/false]
 use-main-lobby: true
+
+# If set to true, player will be put in the next arena after the previous ends.
+# If set to false, the player will be teleported to the main lobby or previous location, depending on "use-main-lobby" is set to true or false. [true/false]
 auto-join-on-end: true
+
+# Date format in plugin messages.
+# If you don't know how to create a proper date format, check this page: https://docs.oracle.com/javase/8/docs/api/java/time/format/DateTimeFormatter.html
+# (Scroll down to "Patterns for Formatting and Parsing" section)
 date-format: "yyyy-MM-dd"
+
+# Time format in plugin messages.
+# If you don't know how to create a proper date format, check this page: https://docs.oracle.com/javase/8/docs/api/java/time/format/DateTimeFormatter.html
+# (Scroll down to "Patterns for Formatting and Parsing" section)
 time-format: "mm:ss"
 
+# Set how often the tip in waiting lobby will change. [seconds]
+tip-rate: 5
 
+# Should game use private game chat?
+# Player messages will be sent only to players in the same arena If set to true. [true/false]
+game-chat: true
+
+# If set to true, blocks behind signs will be changed depending on game state. [true/false]
+color-signs: true
+
+# Types of blocks behind signs.
+# Full item list on https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html [item name]
+sign-colors:
+  offline: LIGHT_GRAY_STAINED_GLASS
+  inactive: BLACK_STAINED_GLASS
+  waiting: LIME_STAINED_GLASS
+  starting: CYAN_STAINED_GLASS
+  game: RED_STAINED_GLASS
+  ending: PURPLE_STAINED_GLASS
+
+
+# Configure which commands will be available in game and put them in the command-blocker-list section below.
+# Set to WHITELIST to allow players to use only commands from the command-blocker-list section.
+# Set to BLACKLIST to allow players to use all commands except these from the command-blocker-list section. [BLACKLIST/WHITELIST]
+command-blocker: BLACKLIST
+
+# List of all commands allowed/blocked in game (without "/").
+# You can leave this list empty to block or allow to use all commands. [command name]
+command-blocker-list:
+  - me
+  - spawn
+
+
+# Item types and slots.
+#
+# Basic fields which need to be set:
+# material - item name; Full item list on https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html [item name]
+# slot - slot number; Only set for some items; Available slot numbers are [0-8]
+#
+# Other (optional) fields used for item customization (enchants, amount) are available: https://github.com/CryptoMorin/XSeries/wiki/XItemStack
+# Name and lore are not set here, but in the messages.yml file
 items:
   leave-item:
     material: CLOCK
@@ -35,6 +161,17 @@ items:
   menu-arenas-close:
     material: ARROW
 
+
+# All sounds that are played during the game.
+#
+# Full sound list available here: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Sound.html [sound]
+#
+# How to configure:
+# name: - sound name, do not change it
+#   enabled: true - enable or disable the sound [true/false]
+#   sound: UI_BUTTON_CLICK - sound type, choose one from the list mentioned above [sound]
+#   volume: 1.0 - sound volume [float]
+#   pitch: 1.0 - sound pitch [float]
 sounds:
   join:
     enabled: true
@@ -71,6 +208,18 @@ sounds:
     volume: 100
     pitch: 1
 
+
+# All particles that appear in game.
+#
+# Full particle list available here: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Particle.html
+#
+# How to configure:
+# name: - particle name, do not change it
+#   enabled: true - enable or disable the particle [true/false]
+#   particle: CLOUD - particle type, choose one from the list mentioned above [particle]
+#   count: 50 - the number of particles [number]
+#   offset: 1 - the maximum random offset on all the axis [float]
+#   speed: 1 - particle speed [float]
 particles:
   join:
     enabled: true
@@ -91,20 +240,13 @@ particles:
     offset: 0.5
     speed: 0.1
 
-color-signs: true
-sign-colors:
-  offline: LIGHT_GRAY_STAINED_GLASS
-  inactive: BLACK_STAINED_GLASS
-  waiting: LIME_STAINED_GLASS
-  starting: CYAN_STAINED_GLASS
-  game: RED_STAINED_GLASS
-  ending: PURPLE_STAINED_GLASS
-
-command-blocker: BLACKLIST
-command-blocker-list:
-  - me
-  - spawn
+# If set to true, when the game ends for each player (depends on which place the player took) will be executed right command. [true/false]
 win-rewards-enabled: true
+
+# Rewards list.
+# If you don't want to execute commands for some place, leave it blank.
+# You can use "%player%" placeholder - it will be changed to player name.
+# Section 1 is for first place, 2 for second etc. [command]
 win-rewards:
   1:
     - eco give %player% 100
