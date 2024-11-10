@@ -11,10 +11,12 @@ public class GameEndEvent extends Event {
     private static final HandlerList HANDLERS = new HandlerList();
     private final LocalArena localArena;
     private final List<Player> winners;
+    private final int gameTime;
 
-    public GameEndEvent(LocalArena localArena, List<Player> winners) {
+    public GameEndEvent(LocalArena localArena, List<Player> winners, int gameTime) {
         this.localArena = localArena;
         this.winners = winners;
+        this.gameTime = gameTime;
     }
 
     public static HandlerList getHandlerList() {
@@ -32,5 +34,9 @@ public class GameEndEvent extends Event {
 
     public List<Player> getWinners() {
         return winners;
+    }
+
+    public int getGameTime() {
+        return gameTime;
     }
 }

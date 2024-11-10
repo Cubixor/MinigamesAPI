@@ -105,9 +105,10 @@ public class StateManager {
     }
 
     public void setEnd(List<Player> winners) {
-        updatePhase(new PhaseEnding(localArena, arenasManager, statsManager, winners));
+        PhaseEnding phaseEnding = new PhaseEnding(localArena, arenasManager, statsManager, winners);
+        updatePhase(phaseEnding);
 
-        Bukkit.getPluginManager().callEvent(new GameEndEvent(localArena, winners));
+        Bukkit.getPluginManager().callEvent(new GameEndEvent(localArena, winners, phaseEnding.getGameTime()));
     }
 
 

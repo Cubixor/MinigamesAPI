@@ -23,6 +23,7 @@ public class PhaseEnding extends GamePhase {
     private final ArenasManager arenasManager;
     private final StatsManager statsManager;
     private final List<Player> winners;
+    private int gameTime;
     private BukkitTask endingTask;
 
     public PhaseEnding(LocalArena localArena, ArenasManager arenasManager, StatsManager statsManager, List<Player> winners) {
@@ -64,6 +65,8 @@ public class PhaseEnding extends GamePhase {
     }
 
     private void endGame() {
+        gameTime = localArena.getTimer();
+
         for (Player p : localArena.getBukkitPlayers()) {
             ActionBar.clearActionBar(p);
             p.setGameMode(GameMode.ADVENTURE);
@@ -103,5 +106,9 @@ public class PhaseEnding extends GamePhase {
 
     public List<Player> getWinners() {
         return winners;
+    }
+
+    public int getGameTime() {
+        return gameTime;
     }
 }
