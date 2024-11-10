@@ -67,9 +67,6 @@ public class MockMain extends JavaPlugin implements Listener {
         MainCommandCompleter mainCommandCompleter = new MainCommandCompleter(args);
         LeaveCommand leaveCommand = new LeaveCommand();
 
-        getServer().getPluginCommand(getName()).setExecutor(mainCommand);
-        getServer().getPluginCommand(getName()).setTabCompleter(mainCommandCompleter);
-
         MinigamesAPI.registerPAPI(arenasRegistry, configManager.getStatsManager());
     }
 

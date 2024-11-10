@@ -1,5 +1,6 @@
 package me.cubixor.minigamesapi.spigot.commands;
 
+import me.cubixor.minigamesapi.spigot.MinigamesAPI;
 import me.cubixor.minigamesapi.spigot.commands.arguments.CommandArgument;
 import me.cubixor.minigamesapi.spigot.utils.Permissions;
 import org.bukkit.command.Command;
@@ -20,6 +21,8 @@ public class MainCommandCompleter implements TabCompleter {
     public MainCommandCompleter(List<CommandArgument> arguments) {
         this.arguments = arguments.stream()
                 .collect(Collectors.toMap(CommandArgument::getName, arg -> arg));
+
+        MinigamesAPI.getPlugin().getServer().getPluginCommand(MinigamesAPI.getPlugin().getName()).setTabCompleter(this);
     }
 
 

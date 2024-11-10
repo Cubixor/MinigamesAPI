@@ -1,5 +1,6 @@
 package me.cubixor.minigamesapi.spigot.commands;
 
+import me.cubixor.minigamesapi.spigot.MinigamesAPI;
 import me.cubixor.minigamesapi.spigot.commands.arguments.CommandArgument;
 import me.cubixor.minigamesapi.spigot.commands.arguments.impl.help.ArgHelpAdmin;
 import me.cubixor.minigamesapi.spigot.commands.arguments.impl.help.ArgHelpGeneral;
@@ -34,6 +35,8 @@ public class MainCommand implements CommandExecutor {
         this.arguments = arguments.stream()
                 .collect(Collectors.toMap(CommandArgument::getName, arg -> arg));
         cooldownManager = new CooldownManager();
+
+        MinigamesAPI.getPlugin().getServer().getPluginCommand(MinigamesAPI.getPlugin().getName()).setExecutor(this);
     }
 
     public static List<CommandArgument> getCommonArguments(ArenasManager arenasManager, ArenaSetupChecker arenaSetupChecker, StatsManager statsManager, GlobalMenuRegistry globalMenuRegistry) {
