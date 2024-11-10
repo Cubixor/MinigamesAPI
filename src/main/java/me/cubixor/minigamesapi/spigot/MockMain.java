@@ -60,6 +60,7 @@ public class MockMain extends JavaPlugin implements Listener {
         MenuHandler menuHandler = new MenuHandler(arenasRegistry, globalMenuRegistry);
         ChatBlocker chatBlocker = new ChatBlocker(arenasRegistry);
         SimpleBungeeMode simpleBungeeMode = new SimpleBungeeMode(arenasManager);
+        WaitingTips waitingTips = new WaitingTips(arenasRegistry);
         ArenaSetupChecker arenaSetupChecker = new ArenaSetupChecker(configManager.getArenasConfigManager());
 
         List<CommandArgument> args = MainCommand.getCommonArguments(arenasManager, arenaSetupChecker, configManager.getStatsManager(), globalMenuRegistry);

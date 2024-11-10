@@ -16,6 +16,10 @@ public class WaitingTips {
 
     private final Random random = new Random();
 
+    public WaitingTips(ArenasRegistry arenasRegistry) {
+        runTipTask(arenasRegistry);
+    }
+
     public void runTipTask(ArenasRegistry arenasRegistry) {
         List<String> tips = Messages.getList("other.tips",
                 ImmutableMap.of("%tip-prefix%", Messages.get("other.tip-prefix")));
