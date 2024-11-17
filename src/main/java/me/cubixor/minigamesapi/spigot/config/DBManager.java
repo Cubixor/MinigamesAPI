@@ -18,7 +18,11 @@ public class DBManager {
     //Sample address: jdbc:mysql://localhost:3306/minigame?useSSL=false&autoReConnect=true
     public DBManager(String address, String username, String password, String table) {
         HikariDataSource ds = new HikariDataSource();
-        ds.setDriverClassName("com.mysql.cj.jdbc.Driver");
+        try {
+            ds.setDriverClassName("com.mysql.cj.jdbc.Driver");
+        } catch (RuntimeException e) {
+            ds.setDriverClassName("com.mysql.jdbc.Driver");
+        }
         ds.setJdbcUrl(address);
         ds.setUsername(username);
         ds.setPassword(password);
