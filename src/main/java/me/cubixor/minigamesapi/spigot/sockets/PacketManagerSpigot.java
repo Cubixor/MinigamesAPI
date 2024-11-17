@@ -91,7 +91,8 @@ public class PacketManagerSpigot implements Listener {
             Arena arena = playersToJoin.remove(evt.getPlayer().getName());
 
             if (!arenasManager.getArenaPlayersManager().joinArena(evt.getPlayer(), arena.getName())) {
-                packetSender.sendLeavePacket(evt.getPlayer().getName());
+                //TODO Check if needed
+                //packetSender.sendLeavePacket(evt.getPlayer().getName());
             }
         }
     }
