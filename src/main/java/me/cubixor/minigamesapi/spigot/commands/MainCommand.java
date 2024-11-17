@@ -40,7 +40,6 @@ public class MainCommand implements CommandExecutor {
     }
 
     public static List<CommandArgument> getCommonArguments(ArenasManager arenasManager, ArenaSetupChecker arenaSetupChecker, StatsManager statsManager, GlobalMenuRegistry globalMenuRegistry) {
-        //TODO Implement reload
         return Arrays.asList(
                 new ArgHelpGeneral(),
                 new ArgHelpStaff(),
