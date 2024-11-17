@@ -87,27 +87,27 @@ public abstract class AbstractClientManager {
     private void sendBackToServer(LeavePacket leavePacket) {
         String playerName = leavePacket.getPlayer();
 
-        if (!playerServers.containsKey(playerName)) {
-            return;
+        String prevServer;
+        if (playerServers.containsKey(playerName)) {
+            prevServer = playerServers.remove(leavePacket.getPlayer());
+        } else {
+            prevServer = getPlayerServerName(playerName);
         }
 
         String firstChoiceServer;
         String secondChoiceServer;
 
         if (leavePacket.shouldUsePrevServer()) {
-            firstChoiceServer = playerServers.get(playerName);
+            firstChoiceServer = prevServer;
             secondChoiceServer = leavePacket.getLobby();
         } else {
             firstChoiceServer = leavePacket.getLobby();
-            secondChoiceServer = playerServers.get(playerName);
+            secondChoiceServer = prevServer;
         }
 
         if (!connectToServer(playerName, firstChoiceServer)) {
             connectToServer(playerName, secondChoiceServer);
         }
-
-
-        playerServers.remove(leavePacket.getPlayer());
     }
 
     protected boolean joinArena(JoinPacket joinPacket) {
