@@ -17,6 +17,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Sign;
+import org.bukkit.command.PluginCommand;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
@@ -40,6 +41,7 @@ public class SignManager implements Listener {
     private final ArenasRegistry arenasRegistry;
     private final ItemsRegistry itemsRegistry;
     private final boolean colorSigns;
+    private final String alias;
 
     public SignManager(ArenasConfigManager arenasConfigManager, ArenasRegistry arenasRegistry, ItemsRegistry itemsRegistry) {
         this.itemsRegistry = itemsRegistry;
@@ -48,6 +50,9 @@ public class SignManager implements Listener {
         this.arenasRegistry = arenasRegistry;
 
         this.colorSigns = plugin.getConfig().getBoolean("color-signs");
+
+        PluginCommand cmd = plugin.getCommand(plugin.getName());
+        this.alias = cmd.getAliases().isEmpty() ? cmd.getName() : cmd.getAliases().get(0);
 
         signs = arenasConfigManager.getAllSigns();
         Bukkit.getServer().getPluginManager().registerEvents(this, MinigamesAPI.getPlugin());
@@ -102,9 +107,11 @@ public class SignManager implements Listener {
     @EventHandler
     public void signCreate(SignChangeEvent evt) {
         Sign sign = (Sign) evt.getBlock().getState();
+
+
         if (!(evt.getLine(0) != null
                 && evt.getLine(1) != null
-                && evt.getLine(0).equalsIgnoreCase("[" + plugin.getName() + "]")
+                && (evt.getLine(0).equalsIgnoreCase("[" + plugin.getName() + "]") || evt.getLine(0).equalsIgnoreCase("[" + alias + "]"))
                 && Permissions.has(evt.getPlayer(), "setup.signs"))) {
             return;
         }
