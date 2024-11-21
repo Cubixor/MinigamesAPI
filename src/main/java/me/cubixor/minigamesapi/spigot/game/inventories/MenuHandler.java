@@ -48,15 +48,17 @@ public class MenuHandler implements Listener {
         Menu arenaMenu = (Menu) getMenuByInventory(arena.getMenuRegistry().getMenus(), evt.getClickedInventory());
         if (arenaMenu == null) return;
 
-        menuClick(player, arenaMenu, evt);
         arenaMenu.handleClick(evt, player);
+        menuClick(player, arenaMenu, evt);
     }
 
     private void menuClick(Player player, GlobalMenu menu, InventoryClickEvent evt) {
         evt.setCancelled(true);
 
         Sounds.playSound("click", player.getLocation(), Collections.singleton(player));
-        player.getOpenInventory().close();
+        if (player.getOpenInventory().getTopInventory().equals(evt.getInventory())) {
+            player.getOpenInventory().close();
+        }
 
         menu.update();
     }
