@@ -87,7 +87,13 @@ public class ChatBlocker implements Listener {
                 Bukkit.getPluginManager().callEvent(gameChatEvent);
 
                 if (!gameChatEvent.isCancelled()) {
-                    gameChatEvent.getReceivers().forEach(p -> p.sendMessage(gameChatEvent.getMessage()));
+                    String finalMessage = gameChatEvent.getMessage();
+                    if (MinigamesAPI.usesPAPI()) {
+                        finalMessage = me.clip.placeholderapi.PlaceholderAPI.setPlaceholders(evt.getPlayer(), finalMessage);
+                    }
+                    for (Player receiver : gameChatEvent.getReceivers()) {
+                        receiver.sendMessage(finalMessage);
+                    }
                 }
 
             }
