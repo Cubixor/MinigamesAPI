@@ -82,11 +82,11 @@ public class PlaceholderExpansion extends me.clip.placeholderapi.expansion.Place
 
                 return arena.getName();
             case "playtime":
-                if (player == null) return null;
+                if (player == null) return "0";
 
                 return MessageUtils.convertPlaytime(statsManager.getCachedStats(player.getName(), BasicStatsField.PLAYTIME));
             default:
-                if (player == null) return null;
+                if (player == null) return "0";
 
                 for (StatsField field : statsManager.getFields()) {
                     if (params.equals(field.getCode())) {

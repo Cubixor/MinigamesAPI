@@ -42,7 +42,7 @@ public abstract class StatsManager implements Listener {
         if (cachedStats.containsKey(player)) {
             return cachedStats.get(player).get(field);
         } else {
-            return -1;
+            return 0;
         }
     }
 
