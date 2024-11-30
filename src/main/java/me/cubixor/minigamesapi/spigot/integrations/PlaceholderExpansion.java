@@ -7,7 +7,6 @@ import me.cubixor.minigamesapi.spigot.config.stats.StatsManager;
 import me.cubixor.minigamesapi.spigot.game.ArenasRegistry;
 import me.cubixor.minigamesapi.spigot.game.arena.Arena;
 import me.cubixor.minigamesapi.spigot.utils.MessageUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;
 
@@ -15,10 +14,12 @@ public class PlaceholderExpansion extends me.clip.placeholderapi.expansion.Place
 
     private final ArenasRegistry arenasRegistry;
     private final StatsManager statsManager;
+    private final PlaceholderParser placeholderParser;
 
-    public PlaceholderExpansion(ArenasRegistry arenasRegistry, StatsManager statsManager) {
+    public PlaceholderExpansion(ArenasRegistry arenasRegistry, StatsManager statsManager, PlaceholderParser placeholderParser) {
         this.arenasRegistry = arenasRegistry;
         this.statsManager = statsManager;
+        this.placeholderParser = placeholderParser;
     }
 
     @Override
@@ -96,7 +97,9 @@ public class PlaceholderExpansion extends me.clip.placeholderapi.expansion.Place
         }
 
         PlaceholderParseEvent placeholderParseEvent = new PlaceholderParseEvent(player, params);
-        Bukkit.getPluginManager().callEvent(placeholderParseEvent);
+        if (placeholderParser != null) {
+            placeholderParser.onPlaceholderParse(placeholderParseEvent);
+        }
 
         return placeholderParseEvent.getParsed();
     }
