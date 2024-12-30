@@ -38,12 +38,7 @@ public class ArgList extends CommandArgument {
         for (String arenaString : arenasRegistry.getAllArenaNames()) {
             Arena arena = arenasRegistry.getArena(arenaString);
 
-            String count = Integer.toString(arena.getPlayers().size());
-            String gameState = MessageUtils.getStringState(arena);
-            String max = Integer.toString(arena.getMaxPlayers());
-            String vip = arena.isVip() ? Messages.get("general.vip-prefix") : "";
-
-            Map<String, String> replacement = ImmutableMap.of("%arena%", arenaString, "%count%", count, "%max%", max, "%state%", gameState, "%?vip?%", vip);
+            Map<String, String> replacement = MessageUtils.getArenaStatusReplacement(arena);
 
             TextComponent message = new TextComponent(Messages.get("other.list-arena", replacement));
             message.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(Messages.get("other.list-hover")).create()));

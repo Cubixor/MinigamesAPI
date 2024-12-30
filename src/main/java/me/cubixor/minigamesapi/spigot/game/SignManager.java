@@ -1,7 +1,6 @@
 package me.cubixor.minigamesapi.spigot.game;
 
 import com.cryptomorin.xseries.XBlock;
-import com.google.common.collect.ImmutableMap;
 import me.cubixor.minigamesapi.spigot.MinigamesAPI;
 import me.cubixor.minigamesapi.spigot.config.arenas.ArenasConfigManager;
 import me.cubixor.minigamesapi.spigot.game.arena.Arena;
@@ -95,6 +94,7 @@ public class SignManager implements Listener {
     }
 
     public void removeArena(String arena) {
+        if (!signs.containsKey(arena)) return;
         for (Location location : signs.get(arena)) {
             removeSignBlock(location.getBlock());
         }
@@ -251,19 +251,7 @@ public class SignManager implements Listener {
     }
 
     private void updateArenaSignOffline(Sign sign, String arenaName) {
-        String count = "?";
-        String max = "?";
-        String gameState = MessageUtils.getStringState(null);
-        String vip = "";
-
-        Map<String, String> replacement = ImmutableMap.of(
-                "%arena%", arenaName,
-                "%count%", count,
-                "%max%", max,
-                "%state%", gameState,
-                "%?vip?%", vip);
-
-        setArenaSignLines(sign, replacement);
+        setArenaSignLines(sign, MessageUtils.getNullStatusReplacement(arenaName));
     }
 
     private void setArenaSignLines(Sign sign, Map<String, String> replacement) {

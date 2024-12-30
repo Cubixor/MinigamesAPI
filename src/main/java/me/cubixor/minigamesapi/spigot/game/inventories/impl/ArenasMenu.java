@@ -82,16 +82,7 @@ public class ArenasMenu extends GlobalMenu {
         ItemStack arenaItem = itemsRegistry.getColorItems().get(arena.getState()).clone();
         ItemMeta arenaItemItemMeta = arenaItem.getItemMeta();
 
-        String vip = arena.isVip() ? Messages.get("general.vip-prefix") : "";
-        String count = String.valueOf(arena.getPlayers().size());
-        String max = String.valueOf(arena.getMaxPlayers());
-        String state = MessageUtils.getStringState(arena);
-        Map<String, String> replacement = ImmutableMap.of(
-                "%arena%", arena.getName(),
-                "%?vip?%", vip,
-                "%count%", count,
-                "%max%", max,
-                "%state%", state);
+        Map<String, String> replacement = MessageUtils.getArenaStatusReplacement(arena);
 
         String itemName = Messages.get("arenas-menu.arena-item-name", replacement);
         List<String> itemLore = Messages.getList("arenas-menu.arena-item-lore", replacement);

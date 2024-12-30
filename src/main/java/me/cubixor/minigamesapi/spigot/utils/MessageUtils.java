@@ -97,4 +97,17 @@ public class MessageUtils {
 
         return replacement;
     }
+
+    public static Map<String, String> getNullStatusReplacement(String arenaName) {
+        Map<String, String> replacement = new LinkedHashMap<>();
+        replacement.put("%arena%", arenaName);
+        replacement.put("%count%", "?");
+        replacement.put("%max%", "?");
+        replacement.put("%state%", getStringState(null));
+        replacement.put("%?vip?%", "");
+
+        Bukkit.getServer().getPluginManager().callEvent(new ArenaStatusParseEvent(!Bukkit.isPrimaryThread(), null, replacement));
+
+        return replacement;
+    }
 }
