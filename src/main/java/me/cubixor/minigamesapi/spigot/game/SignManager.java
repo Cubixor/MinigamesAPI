@@ -220,10 +220,11 @@ public class SignManager implements Listener {
             Arena arena = arenasRegistry.getArena(arenaString);
             if (arena == null) {
                 updateArenaSignOffline(sign, arenaString);
+                updateSignColors(sign, GameState.OFFLINE);
             } else {
                 updateArenaSignOnline(sign, arena);
+                updateSignColors(sign, arena.getState());
             }
-            updateSignColors(sign, arena.getState());
         }
 
         if (plugin.isEnabled()) {
