@@ -1,6 +1,5 @@
 package me.cubixor.minigamesapi.spigot.game.inventories.impl;
 
-import com.google.common.collect.ImmutableMap;
 import me.cubixor.minigamesapi.spigot.game.ArenasManager;
 import me.cubixor.minigamesapi.spigot.game.arena.Arena;
 import me.cubixor.minigamesapi.spigot.game.inventories.GlobalMenu;
@@ -51,6 +50,7 @@ public class ArenasMenu extends GlobalMenu {
     @Override
     public void update() {
         List<Arena> arenas = arenasManager.getRegistry().getAllArenas().collect(Collectors.toList());
+        arenaSlots.forEach((slot, arena) -> getInventory().setItem(slot, null));
         arenaSlots.clear();
 
         int slot = 0;
