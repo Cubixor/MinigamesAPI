@@ -37,7 +37,7 @@ public class LocalArena extends Arena {
     }
 
     public Arena toArena() {
-        return new Arena(getName(), getServer(), isActive(), isVip(), getMinPlayers(), getMaxPlayers(), getState(), getPlayers());
+        return new Arena(getName(), getServer(), isActive(), isVip(), getMinPlayers(), getMaxPlayers(), getState(), getPlayers(), getData());
     }
 
     public void setMinPlayers(int minPlayers) {

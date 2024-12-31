@@ -1,32 +1,35 @@
 package me.cubixor.minigamesapi.spigot.game.arena;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Arena implements Serializable {
 
     private final String name;
     private final String server;
-    //private final List<String> playersLeft = new ArrayList<>();
     protected boolean vip;
     protected int minPlayers;
     protected int maxPlayers;
     protected GameState state;
     private List<String> players = new ArrayList<>();
-
+    private final Map<String, String> data;
 
     public Arena(String name, String server, boolean active, boolean vip, int minPlayers, int maxPlayers) {
+        this(name, server, active, vip, minPlayers, maxPlayers, new HashMap<>());
+    }
+
+    public Arena(String name, String server, boolean active, boolean vip, int minPlayers, int maxPlayers, Map<String, String> data) {
         this.name = name;
         this.server = server;
         this.vip = vip;
         this.minPlayers = minPlayers;
         this.maxPlayers = maxPlayers;
         this.state = active ? GameState.WAITING : GameState.INACTIVE;
+        this.data = data;
     }
 
-    public Arena(String name, String server, boolean active, boolean vip, int minPlayers, int maxPlayers, GameState state, List<String> players) {
-        this(name, server, active, vip, minPlayers, maxPlayers);
+    public Arena(String name, String server, boolean active, boolean vip, int minPlayers, int maxPlayers, GameState state, List<String> players, Map<String, String> data) {
+        this(name, server, active, vip, minPlayers, maxPlayers,data);
         this.state = state;
         this.players = players;
     }
@@ -69,6 +72,10 @@ public class Arena implements Serializable {
 
     public boolean isLocal() {
         return this instanceof LocalArena;
+    }
+
+    public Map<String, String> getData() {
+        return data;
     }
 
     @Override
