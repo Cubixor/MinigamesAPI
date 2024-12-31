@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.inventory.Inventory;
 
@@ -31,12 +32,15 @@ public class MenuHandler implements Listener {
     @EventHandler
     public void onInventoryClick(InventoryClickEvent evt) {
         if (evt.getClickedInventory() == null) return;
-        if (evt.getCurrentItem() == null || evt.getCurrentItem().getType().equals(Material.AIR)) return;
 
         Player player = (Player) evt.getWhoClicked();
 
         GlobalMenu globalMenu = getMenuByInventory(globalMenuRegistry.getMenus(), evt.getClickedInventory());
         if (globalMenu != null) {
+            if (evt.getCurrentItem() == null || evt.getCurrentItem().getType().equals(Material.AIR)) {
+                evt.setCancelled(true);
+                return;
+            }
             globalMenu.handleClick(evt, player);
             menuClick(player, globalMenu, evt);
             return;
@@ -48,8 +52,33 @@ public class MenuHandler implements Listener {
         Menu arenaMenu = (Menu) getMenuByInventory(arena.getMenuRegistry().getMenus(), evt.getClickedInventory());
         if (arenaMenu == null) return;
 
+        if (evt.getCurrentItem() == null || evt.getCurrentItem().getType().equals(Material.AIR)) {
+            evt.setCancelled(true);
+            return;
+        }
         arenaMenu.handleClick(evt, player);
         menuClick(player, arenaMenu, evt);
+    }
+
+    @EventHandler
+    public void onInventoryDrag(InventoryDragEvent evt) {
+        if (evt.getInventory() == null) return;
+
+        Player player = (Player) evt.getWhoClicked();
+
+        GlobalMenu globalMenu = getMenuByInventory(globalMenuRegistry.getMenus(), evt.getInventory());
+        if (globalMenu != null) {
+            evt.setCancelled(true);
+            return;
+        }
+
+        LocalArena arena = arenasRegistry.getPlayerLocalArena(player);
+        if (arena == null) return;
+
+        Menu arenaMenu = (Menu) getMenuByInventory(arena.getMenuRegistry().getMenus(), evt.getInventory());
+        if (arenaMenu != null) {
+            evt.setCancelled(true);
+        }
     }
 
     private void menuClick(Player player, GlobalMenu menu, InventoryClickEvent evt) {

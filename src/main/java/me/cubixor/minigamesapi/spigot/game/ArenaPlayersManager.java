@@ -38,6 +38,9 @@ public class ArenaPlayersManager {
 
     public boolean joinArena(Player player, String arenaString) {
         Arena arena = arenasRegistry.getArena(arenaString);
+        if (arena == null) {
+            return false;
+        }
         if (!checkArenaJoin(player, arena)) {
             return false;
         }
