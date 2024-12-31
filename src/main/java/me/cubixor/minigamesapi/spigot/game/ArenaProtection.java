@@ -71,7 +71,20 @@ public class ArenaProtection implements Listener {
 
         evt.setCancelled(true);
 
-        if (localArena.getState().isWaitingStarting() && evt.getCause().equals(EntityDamageEvent.DamageCause.VOID)) {
+        /*if (localArena.getState().isWaitingStarting() && evt.getCause().equals(EntityDamageEvent.DamageCause.VOID)) {
+            Location loc = arenasManager.getConfigManager().getLocation(localArena.getName(), BasicConfigField.WAITING_LOBBY);
+            player.teleport(loc);
+        }*/
+    }
+
+    @EventHandler
+    public void onMove(PlayerMoveEvent evt) {
+        Player player = evt.getPlayer();
+        LocalArena localArena = arenasManager.getRegistry().getPlayerLocalArena(player);
+
+        if (localArena == null) return;
+
+        if (localArena.getState().isWaitingStarting() && evt.getTo().getY() < -64) {
             Location loc = arenasManager.getConfigManager().getLocation(localArena.getName(), BasicConfigField.WAITING_LOBBY);
             player.teleport(loc);
         }
