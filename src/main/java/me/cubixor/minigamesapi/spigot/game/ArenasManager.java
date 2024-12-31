@@ -136,10 +136,10 @@ public class ArenasManager {
         for (Map.Entry<String, Arena> entry : updatedArenas.entrySet()) {
             if (entry.getValue() == null) {
                 registry.getRemoteArenas().remove(entry.getKey());
-                continue;
+            } else {
+                registry.getRemoteArenas().put(entry.getKey(), entry.getValue());
             }
 
-            registry.getRemoteArenas().put(entry.getKey(), entry.getValue());
             signManager.updateSigns(entry.getKey());
         }
         signManager.updateSigns("quickjoin");
