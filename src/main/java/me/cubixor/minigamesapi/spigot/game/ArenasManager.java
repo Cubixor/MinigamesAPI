@@ -5,12 +5,15 @@ import me.cubixor.minigamesapi.spigot.config.arenas.ArenasConfigManager;
 import me.cubixor.minigamesapi.spigot.config.arenas.BasicConfigField;
 import me.cubixor.minigamesapi.spigot.config.arenas.ConfigField;
 import me.cubixor.minigamesapi.spigot.config.stats.StatsManager;
+import me.cubixor.minigamesapi.spigot.events.GameCreateEvent;
+import me.cubixor.minigamesapi.spigot.events.GameResetEvent;
 import me.cubixor.minigamesapi.spigot.game.arena.Arena;
 import me.cubixor.minigamesapi.spigot.game.arena.GameState;
 import me.cubixor.minigamesapi.spigot.game.arena.LocalArena;
 import me.cubixor.minigamesapi.spigot.game.items.ItemsRegistry;
 import me.cubixor.minigamesapi.spigot.sockets.PacketSenderSpigot;
 import me.cubixor.minigamesapi.spigot.utils.Messages;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.Collections;
@@ -66,6 +69,8 @@ public class ArenasManager {
         signManager.updateSigns("quickjoin");
 
         updateArena(localArena);
+
+        Bukkit.getPluginManager().callEvent(new GameCreateEvent(localArena));
     }
 
     public void removeArena(String arena) {
