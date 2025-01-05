@@ -150,12 +150,12 @@ public class ArenaPlayersManager {
         String maxString = String.valueOf(localArena.getMaxPlayers());
         String countString = String.valueOf(count);
 
-        Messages.sendAll(localArena.getBukkitPlayers(), "game.arena-join-success", ImmutableMap.of(
+        String msg = Messages.getPAPI(player, "game.arena-join-success", ImmutableMap.of(
                 "%player%", player.getName(),
                 "%count%", countString,
                 "%max%", maxString)
         );
-
+        localArena.getBukkitPlayers().forEach(p -> p.sendMessage(msg));
 
         localArena.getStateManager().updateOnJoin();
 
@@ -170,11 +170,12 @@ public class ArenaPlayersManager {
 
         kickFromLocalArena(player, localArena, false);
 
-        Messages.sendAll(players, "game.arena-leave-success", ImmutableMap.of(
+        String msg = Messages.getPAPI(player, "game.arena-leave-success", ImmutableMap.of(
                 "%player%", player.getName(),
                 "%count%", count,
                 "%max%", max
         ));
+        players.forEach(p -> p.sendMessage(msg));
     }
 
     public void kickFromArena(String playerName, Arena arena) {

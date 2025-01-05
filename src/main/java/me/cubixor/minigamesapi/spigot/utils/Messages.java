@@ -1,8 +1,10 @@
 package me.cubixor.minigamesapi.spigot.utils;
 
+import me.cubixor.minigamesapi.spigot.MinigamesAPI;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
 
 import java.util.Collections;
 import java.util.List;
@@ -65,6 +67,14 @@ public class Messages {
             message = message.replace(entry.getKey(), entry.getValue());
         }
 
+        return message;
+    }
+
+    public static String getPAPI(Player player, String path, Map<String, String> replacement) {
+        String message = get(path, replacement);
+        if (MinigamesAPI.usesPAPI()) {
+            return me.clip.placeholderapi.PlaceholderAPI.setPlaceholders(player, message);
+        }
         return message;
     }
 
