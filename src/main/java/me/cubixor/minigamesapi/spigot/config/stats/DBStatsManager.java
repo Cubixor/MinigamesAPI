@@ -2,6 +2,7 @@ package me.cubixor.minigamesapi.spigot.config.stats;
 
 
 import me.cubixor.minigamesapi.spigot.config.DBManager;
+import org.bukkit.Bukkit;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -22,7 +23,7 @@ public class DBStatsManager extends StatsManager {
 
     @Override
     public int fetchSavedStats(String player, StatsField field) {
-        //assert (!Bukkit.isPrimaryThread());
+        assert (!Bukkit.isPrimaryThread());
 
         String query = "SELECT $field FROM $table WHERE player=?"
                 .replace("$table", dbManager.getTable())
@@ -46,7 +47,7 @@ public class DBStatsManager extends StatsManager {
 
     @Override
     public void addSavedStats(String player, StatsField field, int count) {
-        //assert (!Bukkit.isPrimaryThread());
+        assert (!Bukkit.isPrimaryThread());
 
         String query = "INSERT INTO $table (player, $field) VALUES (?, ?) ON DUPLICATE KEY UPDATE $field = $field + VALUES($field);"
                 .replace("$table", dbManager.getTable())
@@ -65,7 +66,7 @@ public class DBStatsManager extends StatsManager {
 
     @Override
     public Set<String> getAllPlayers() {
-        //assert (!Bukkit.isPrimaryThread());
+        assert (!Bukkit.isPrimaryThread());
 
         String query = "SELECT player FROM $table"
                 .replace("$table", dbManager.getTable());
@@ -90,9 +91,9 @@ public class DBStatsManager extends StatsManager {
 
     @Override
     public Map<String, Integer> getRanking(StatsField field) {
-        //assert (!Bukkit.isPrimaryThread());
+        assert (!Bukkit.isPrimaryThread());
 
-        String query = "SELECT player, $field FROM $table ORDER BY $field DESC"
+        String query = "SELECT player, $field FROM $table ORDER BY $field DESC LIMIT 10"
                 .replace("$table", dbManager.getTable())
                 .replace("$field", field.getCode());
 

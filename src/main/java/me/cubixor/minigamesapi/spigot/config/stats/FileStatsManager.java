@@ -59,7 +59,7 @@ public class FileStatsManager extends StatsManager {
         players.forEach(p -> ranking.put(p, getStats(p, field)));
         Utils.sortByValueInPlace(ranking);
 
-        return ranking;
+        return Utils.getFirstXEntries(ranking, 10);
     }
 
 

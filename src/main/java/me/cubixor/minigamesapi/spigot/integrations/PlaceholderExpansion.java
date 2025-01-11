@@ -56,6 +56,7 @@ public class PlaceholderExpansion extends me.clip.placeholderapi.expansion.Place
             return null;
         }
         String param1 = paramsSplit.length > 1 ? paramsSplit[1] : null;
+        String param2 = paramsSplit.length > 2 ? paramsSplit[2] : null;
 
         switch (paramsSplit[0]) {
             case "status": {
@@ -73,6 +74,12 @@ public class PlaceholderExpansion extends me.clip.placeholderapi.expansion.Place
                 }
                 return Integer.toString(arena.getPlayers().size());
             }
+            case "totalplayers": {
+                return Integer.toString(arenasRegistry
+                        .getAllArenas()
+                        .mapToInt(arena -> arena.getPlayers().size())
+                        .sum());
+            }
             case "arena":
                 if (player == null) return null;
 
@@ -86,6 +93,31 @@ public class PlaceholderExpansion extends me.clip.placeholderapi.expansion.Place
                 if (player == null) return "0";
 
                 return MessageUtils.convertPlaytime(statsManager.getCachedStats(player.getName(), BasicStatsField.PLAYTIME));
+            case "top":
+                if (param1 == null || param2 == null) return "-";
+
+                int pos;
+                try {
+                    pos = Integer.parseInt(param2) - 1;
+                } catch (NumberFormatException e) {
+                    return "-";
+                }
+
+                if (pos < 0 || pos > 9) {
+                    return "-";
+                }
+
+                if (param1.equals("player")) {
+                    String target = statsManager.getPlayerFromCachedRanking(pos);
+                    if (target == null) {
+                        return "-";
+                    }
+                    return target;
+                } else if (param1.equals("value")) {
+                    return String.valueOf(statsManager.getValueFromCachedRanking(pos));
+                }
+
+                return "-";
             default:
                 if (player == null) return "0";
 

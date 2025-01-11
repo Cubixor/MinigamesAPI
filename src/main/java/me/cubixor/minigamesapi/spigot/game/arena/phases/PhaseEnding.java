@@ -76,7 +76,7 @@ public class PhaseEnding extends GamePhase {
             statsManager.addStats(p.getName(), BasicStatsField.PLAYTIME, localArena.getTimer());
             statsManager.addStats(p.getName(), BasicStatsField.GAMES, 1);
             if (winners.contains(p)) {
-                statsManager.addStats(p.getName(), BasicStatsField.WINS, 1);
+                statsManager.addWin(p.getName());
                 Sounds.playSound("win", p);
             } else {
                 statsManager.addStats(p.getName(), BasicStatsField.LOOSES, 1);

@@ -1,6 +1,7 @@
 package me.cubixor.minigamesapi.spigot;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Utils {
 
@@ -45,4 +46,14 @@ public class Utils {
         return shuffledMap;
     }
 
+    public static <K, V> LinkedHashMap<K, V> getFirstXEntries(LinkedHashMap<K, V> originalMap, int count) {
+        return originalMap.entrySet().stream()
+                .limit(count)
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        Map.Entry::getValue,
+                        (e1, e2) -> e1,
+                        LinkedHashMap::new
+                ));
+    }
 }
