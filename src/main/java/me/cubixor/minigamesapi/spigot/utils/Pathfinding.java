@@ -60,24 +60,24 @@ public class Pathfinding {
         MinecraftClassHandle aiGoalPackage = XReflection.ofMinecraft()
                 .inPackage(MinecraftPackage.NMS, "world.entity.ai.goal");
 
-        MinecraftClassHandle pathfinderGoalSelectorClass = aiGoalPackage.clone()
+        MinecraftClassHandle pathfinderGoalSelectorClass = aiGoalPackage.copy()
                 .named("PathfinderGoalSelector");
-        MinecraftClassHandle pathfinderGoalClass = aiGoalPackage.clone()
+        MinecraftClassHandle pathfinderGoalClass = aiGoalPackage.copy()
                 .named("PathfinderGoal");
         MinecraftClassHandle navigationAbstractClass = XReflection.ofMinecraft()
                 .inPackage(MinecraftPackage.NMS, "world.entity.ai.navigation")
                 .named("NavigationAbstract");
 
         // Goal classes
-        goalRandomLookaroundConstructor = aiGoalPackage.clone()
+        goalRandomLookaroundConstructor = aiGoalPackage.copy()
                 .named("PathfinderGoalRandomLookaround")
                 .constructor(entityInsentientClass)
                 .reflect();
-        goalRandomStrollConstructor = aiGoalPackage.clone()
+        goalRandomStrollConstructor = aiGoalPackage.copy()
                 .named("PathfinderGoalRandomStroll")
                 .constructor(entityCreatureClass.reflect(), double.class)
                 .reflect();
-        goalFloatConstructor = aiGoalPackage.clone()
+        goalFloatConstructor = aiGoalPackage.copy()
                 .named("PathfinderGoalFloat")
                 .constructor(entityInsentientClass)
                 .reflect();
@@ -132,13 +132,13 @@ public class Pathfinding {
             MinecraftClassHandle attributesPackage = XReflection.ofMinecraft()
                     .inPackage(MinecraftPackage.NMS, "world.entity.ai.attributes");
 
-            MinecraftClassHandle genericAttributesClass = attributesPackage.clone()
+            MinecraftClassHandle genericAttributesClass = attributesPackage.copy()
                     .named("GenericAttributes");
-            MinecraftClassHandle attributeBaseClass = attributesPackage.clone()
+            MinecraftClassHandle attributeBaseClass = attributesPackage.copy()
                     .named("IAttribute", "AttributeBase");
-            MinecraftClassHandle attributeModifiableClass = attributesPackage.clone()
+            MinecraftClassHandle attributeModifiableClass = attributesPackage.copy()
                     .named("AttributeModifiable");
-            MinecraftClassHandle attributeInstanceClass = attributesPackage.clone()
+            MinecraftClassHandle attributeInstanceClass = attributesPackage.copy()
                     .named("AttributeInstance");
 
             followRangeGetter = genericAttributesClass
