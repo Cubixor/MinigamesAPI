@@ -7,6 +7,7 @@ import org.bukkit.event.HandlerList;
 public class GameResetEvent extends Event {
     private static final HandlerList HANDLERS = new HandlerList();
     private final LocalArena localArena;
+    private boolean resetFinished = true;
 
     public GameResetEvent(LocalArena localArena) {
         this.localArena = localArena;
@@ -23,5 +24,13 @@ public class GameResetEvent extends Event {
 
     public LocalArena getLocalArena() {
         return localArena;
+    }
+
+    public boolean isResetFinished() {
+        return resetFinished;
+    }
+
+    public void setResetFinished(boolean resetFinished) {
+        this.resetFinished = resetFinished;
     }
 }

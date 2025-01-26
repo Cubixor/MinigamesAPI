@@ -86,7 +86,7 @@ public class StateManager {
         localArena.getScoreboardManager().updateScoreboard();
     }
 
-    private void setWaiting() {
+    public void setWaiting() {
         updatePhase(new PhaseWaiting(localArena));
     }
 
@@ -125,9 +125,12 @@ public class StateManager {
         }
         localArena.cancelTasks();
 
-        Bukkit.getPluginManager().callEvent(new GameResetEvent(localArena));
+        GameResetEvent gameResetEvent = new GameResetEvent(localArena);
+        Bukkit.getPluginManager().callEvent(gameResetEvent);
 
-        setWaiting();
+        if (gameResetEvent.isResetFinished()) {
+            setWaiting();
+        }
     }
 
     public GamePhase getGamePhase() {
