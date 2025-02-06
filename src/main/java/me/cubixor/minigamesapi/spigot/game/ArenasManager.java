@@ -6,7 +6,7 @@ import me.cubixor.minigamesapi.spigot.config.arenas.BasicConfigField;
 import me.cubixor.minigamesapi.spigot.config.arenas.ConfigField;
 import me.cubixor.minigamesapi.spigot.config.stats.StatsManager;
 import me.cubixor.minigamesapi.spigot.events.GameCreateEvent;
-import me.cubixor.minigamesapi.spigot.events.GameResetEvent;
+import me.cubixor.minigamesapi.spigot.events.GameDeleteEvent;
 import me.cubixor.minigamesapi.spigot.game.arena.Arena;
 import me.cubixor.minigamesapi.spigot.game.arena.GameState;
 import me.cubixor.minigamesapi.spigot.game.arena.LocalArena;
@@ -74,7 +74,7 @@ public class ArenasManager {
     }
 
     public void removeArena(String arena) {
-        registry.getLocalArenas().remove(arena);
+        LocalArena localArena = registry.getLocalArenas().remove(arena);
         configManager.removeArena(arena);
         signManager.removeArena(arena);
 
@@ -82,6 +82,8 @@ public class ArenasManager {
             Map<String, Arena> arenaMap = Collections.singletonMap(arena, null);
             packetSender.sendUpdateArenasPacket(arenaMap);
         }
+
+        Bukkit.getPluginManager().callEvent(new GameDeleteEvent(localArena));
     }
 
     public void updateArenaMinPlayers(String arena, int count) {
