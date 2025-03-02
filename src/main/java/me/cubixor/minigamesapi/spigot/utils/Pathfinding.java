@@ -91,7 +91,7 @@ public class Pathfinding {
                 .reflect();
         entityInsentientGetNavigation = entityInsentientClass
                 .method()
-                .named("getNavigation", "D", "G", "N")
+                .named("getNavigation", "D", "G", "N", "P")
                 .returns(navigationAbstractClass)
                 .reflect();
         navigationAbstractNavigateTo = navigationAbstractClass
@@ -118,7 +118,7 @@ public class Pathfinding {
                 .reflect();
         entityInsentientGoalSelectorGetter = entityInsentientClass
                 .field()
-                .named("bW", "b0", "bN", "bR", "bP", "goalSelector")
+                .named("bW", "b0", "bN", "bR", "bP", "bS", "goalSelector")
                 .getter()
                 .returns(pathfinderGoalSelectorClass)
                 .reflect();
