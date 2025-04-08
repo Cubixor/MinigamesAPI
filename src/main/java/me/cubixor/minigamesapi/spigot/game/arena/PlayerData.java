@@ -66,7 +66,7 @@ public class PlayerData {
         potionEffects.forEach(player::addPotionEffect);
         player.setGameMode(gameMode);
         player.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(20);
-        player.setHealth(health);
+        player.setHealth(Math.min(health, player.getMaxHealth()));
         player.setFoodLevel(food);
         player.setExp(exp);
         player.setLevel(level);
