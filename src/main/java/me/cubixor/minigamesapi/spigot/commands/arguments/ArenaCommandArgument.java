@@ -76,7 +76,7 @@ public abstract class ArenaCommandArgument extends CommandArgument {
 
             return arenasRegistry.getAllArenaNames()
                     .stream()
-                    .filter(arena -> arena.startsWith(args[1]))
+                    .filter(arena -> arena.toLowerCase().startsWith(args[1]))
                     .collect(Collectors.toList());
         }
 
