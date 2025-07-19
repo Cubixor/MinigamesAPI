@@ -1,6 +1,7 @@
 package me.cubixor.minigamesapi.spigot.game;
 
 import com.cryptomorin.xseries.messages.ActionBar;
+import com.cryptomorin.xseries.messages.MessageComponents;
 import com.google.common.collect.ImmutableMap;
 import me.cubixor.minigamesapi.spigot.MinigamesAPI;
 import me.cubixor.minigamesapi.spigot.game.arena.LocalArena;
@@ -35,7 +36,7 @@ public class WaitingTips {
                     }
 
                     for (Player player : localArena.getBukkitPlayers()) {
-                        ActionBar.sendActionBar(MinigamesAPI.getPlugin(), player, tip, 100);
+                        ActionBar.sendActionBar(MinigamesAPI.getPlugin(), player, MessageComponents.fromLegacy(tip), 100);
                     }
                 }
             }
