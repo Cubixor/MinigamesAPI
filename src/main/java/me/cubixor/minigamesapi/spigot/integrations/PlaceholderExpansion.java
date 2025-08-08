@@ -122,7 +122,7 @@ public class PlaceholderExpansion extends me.clip.placeholderapi.expansion.Place
                 if (player == null) return "0";
 
                 for (StatsField field : statsManager.getFields()) {
-                    if (params.equals(field.getCode())) {
+                    if (params.equals(field.getCode().replace("_", "-"))) {
                         return String.valueOf(statsManager.getCachedStats(player.getName(), field));
                     }
                 }
