@@ -1,11 +1,12 @@
 package me.cubixor.minigamesapi.spigot;
 
+import com.cryptomorin.xseries.XMaterial;
+import com.cryptomorin.xseries.XSound;
 import me.cubixor.minigamesapi.spigot.config.stats.StatsManager;
 import me.cubixor.minigamesapi.spigot.game.ArenasManager;
 import me.cubixor.minigamesapi.spigot.game.ArenasRegistry;
 import me.cubixor.minigamesapi.spigot.integrations.PlaceholderExpansion;
 import me.cubixor.minigamesapi.spigot.integrations.PlaceholderParser;
-import me.cubixor.minigamesapi.spigot.utils.VersionUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -23,7 +24,8 @@ public class MinigamesAPI {
 
     public static void INIT(JavaPlugin javaPlugin) {
         //Initialize legacy material support
-        VersionUtils.initialize();
+        XMaterial.matchXMaterial("BLACK_STAINED_GLASS").get().parseItem().getData();
+        XSound.matchXSound("CLICK").get().parseSound();
 
         plugin = javaPlugin;
     }

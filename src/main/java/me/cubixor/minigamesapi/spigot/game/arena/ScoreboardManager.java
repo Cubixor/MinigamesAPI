@@ -1,9 +1,9 @@
 package me.cubixor.minigamesapi.spigot.game.arena;
 
+import com.cryptomorin.xseries.reflection.XReflection;
 import me.cubixor.minigamesapi.spigot.events.ScoreboardUpdateEvent;
 import me.cubixor.minigamesapi.spigot.utils.MessageUtils;
 import me.cubixor.minigamesapi.spigot.utils.Messages;
-import me.cubixor.minigamesapi.spigot.utils.VersionUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -105,7 +105,7 @@ public class ScoreboardManager {
     }
 
     private void setRow(Team team, String text) {
-        if (!VersionUtils.isBefore13() || text.length() <= 16) {
+        if (XReflection.supports(13) || text.length() <= 16) {
             team.setPrefix(text);
             return;
         }
