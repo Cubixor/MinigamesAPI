@@ -1,5 +1,6 @@
 package me.cubixor.minigamesapi.spigot.utils;
 
+import com.cryptomorin.xseries.reflection.XReflection;
 import me.cubixor.minigamesapi.spigot.MinigamesAPI;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -10,6 +11,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class Messages {
@@ -18,13 +21,27 @@ public class Messages {
     private static String prefix;
     private static String cmd;
 
+    private static final Pattern HEX_PATTERN = Pattern.compile("#[a-fA-F0-9]{6}");
+
     private Messages() {
     }
 
     public static void init(FileConfiguration messagesConfig, String cmd) {
         Messages.messagesConfig = messagesConfig;
-        Messages.prefix = ChatColor.translateAlternateColorCodes('&', messagesConfig.getString("prefix"));
+        Messages.prefix = parseColors(messagesConfig.getString("prefix"));
         Messages.cmd = cmd;
+    }
+
+    private static String parseColors(String message) {
+        if (XReflection.supports(16)) {
+            Matcher match = HEX_PATTERN.matcher(message);
+            while (match.find()) {
+                String color = message.substring(match.start(), match.end());
+                message = message.replace(color, net.md_5.bungee.api.ChatColor.of(color) + "");
+                match = HEX_PATTERN.matcher(message);
+            }
+        }
+        return ChatColor.translateAlternateColorCodes('&', message);
     }
 
     public static String get(String path) {
@@ -36,7 +53,8 @@ public class Messages {
         message = message
                 .replace("%prefix%", prefix)
                 .replace("%cmd%", cmd);
-        return ChatColor.translateAlternateColorCodes('&', message);
+
+        return parseColors(message);
     }
 
     public static List<String> getList(String path) {
@@ -46,7 +64,7 @@ public class Messages {
     public static List<String> getList(String path, Map<String, String> replacement) {
         List<String> message = messagesConfig.getStringList(path);
         return message.stream()
-                .map(msg -> ChatColor.translateAlternateColorCodes('&', msg))
+                .map(Messages::parseColors)
                 .map(msg -> msg.replace("%cmd%", cmd))
                 .map(msg -> {
                     for (Map.Entry<String, String> entry : replacement.entrySet()) {
