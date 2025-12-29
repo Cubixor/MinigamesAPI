@@ -11,8 +11,8 @@ import java.util.stream.Stream;
 
 public class ArenasRegistry {
 
-    private final Map<String, LocalArena> localArenas = new HashMap<>();
-    private final Map<String, Arena> remoteArenas = new HashMap<>();
+    private final Map<String, LocalArena> localArenas = new LinkedHashMap<>();
+    private final Map<String, Arena> remoteArenas = new LinkedHashMap<>();
 
     public boolean isInArena(Player player) {
         return localArenas.values().stream().anyMatch(arena -> arena.getPlayers().contains(player.getName()))
