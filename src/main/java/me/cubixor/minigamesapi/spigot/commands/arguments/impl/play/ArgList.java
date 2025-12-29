@@ -1,6 +1,5 @@
 package me.cubixor.minigamesapi.spigot.commands.arguments.impl.play;
 
-import com.google.common.collect.ImmutableMap;
 import me.cubixor.minigamesapi.spigot.MinigamesAPI;
 import me.cubixor.minigamesapi.spigot.commands.arguments.CommandArgument;
 import me.cubixor.minigamesapi.spigot.game.ArenasRegistry;
