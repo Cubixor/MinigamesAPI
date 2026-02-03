@@ -73,6 +73,7 @@ public class PlayerData {
         player.setAllowFlight(fly);
         player.setFlying(flying);
         player.setInvulnerable(false);
+        player.setCanPickupItems(true);
     }
 
     private void clearGameData() {

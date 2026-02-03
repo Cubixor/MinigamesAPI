@@ -6,7 +6,7 @@
 
     <groupId>me.cubixor</groupId>
     <artifactId>MinigamesAPI</artifactId>
-    <version>1.0</version>
+    <version>1.0-spec</version>
     <packaging>jar</packaging>
 
     <name>MinigamesAPI</name>

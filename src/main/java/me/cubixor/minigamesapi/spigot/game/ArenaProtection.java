@@ -124,7 +124,7 @@ public class ArenaProtection implements Listener {
 
         if (localArena == null) return false;
 
-        return !localArena.getState().equals(GameState.GAME);
+        return !localArena.getState().equals(GameState.GAME) || localArena.getSpectators().contains(player);
     }
 
     protected void cancelInArena(Player player, Cancellable evt) {

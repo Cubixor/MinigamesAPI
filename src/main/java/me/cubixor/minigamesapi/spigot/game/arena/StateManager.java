@@ -52,7 +52,7 @@ public class StateManager {
                 setStarting();
             }
 
-            if (count >= max) {
+            if (count >= max && gamePhase instanceof PhaseStarting) {
                 setFullStarting();
                 for (Player p : localArena.getBukkitPlayers()) {
                     Messages.send(p, "game.full-countdown", "%time%", String.valueOf(localArena.getTimer()));
@@ -64,7 +64,7 @@ public class StateManager {
     }
 
     public void updateOnLeave() {
-        int count = localArena.getPlayers().size();
+        int count = localArena.getPlayers().size() - localArena.getSpectators().size();
         if (localArena.getState() == GameState.STARTING) {
             int min = localArena.getMinPlayers();
 
@@ -76,11 +76,13 @@ public class StateManager {
                 setWaiting();
             }
         } else if (localArena.getState() == GameState.GAME && count < 2) {
-            if (count == 1) {
+            if (count == 1 && plugin.getConfig().getBoolean("stop-one-player")) {
                 Messages.send(localArena.getBukkitPlayers().stream().findFirst().get(),
                         "game.stopped-one-player");
+                reset();
+            } else if (count < 1) {
+                reset();
             }
-            reset();
         }
 
         localArena.getScoreboardManager().updateScoreboard();

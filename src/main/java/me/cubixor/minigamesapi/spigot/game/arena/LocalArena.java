@@ -8,10 +8,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class LocalArena extends Arena {
 
@@ -21,6 +18,7 @@ public class LocalArena extends Arena {
     private StateManager stateManager;
     private MenuRegistry menuRegistry;
     private int timer = -1;
+    private final List<Player> spectators = new ArrayList<>();
 
     public LocalArena(String name, String server) {
         this(name, server, false, false, 0, 0);
@@ -95,5 +93,9 @@ public class LocalArena extends Arena {
     public void cancelTasks() {
         tasks.forEach(BukkitTask::cancel);
         tasks.clear();
+    }
+
+    public List<Player> getSpectators() {
+        return spectators;
     }
 }

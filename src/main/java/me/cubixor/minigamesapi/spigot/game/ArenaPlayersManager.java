@@ -68,12 +68,12 @@ public class ArenaPlayersManager {
             return false;
         }
 
-        if (!arena.getState().isWaitingStarting()) {
+        if (arena.getState().equals(GameState.ENDING)) {
             Messages.send(player, "game.arena-join-arena-in-game", "%arena%", arenaString);
             return false;
         }
 
-        if (arena.isFull()) {
+        if (arena.isFull() && arena.getState().isWaitingStarting()) {
             Messages.send(player, "game.arena-join-arena-full", "%arena%", arenaString);
             return false;
         }
@@ -135,27 +135,30 @@ public class ArenaPlayersManager {
         localArena.getPlayerData().put(player, playerData);
         playerData.clearPlayerData();
 
-        Location waitingLobby = arenasManager.getConfigManager().getLocation(arenaString, BasicConfigField.WAITING_LOBBY);
-        player.teleport(waitingLobby);
-
         arenasManager.getItemsRegistry().getLeaveItem().give(player);
         player.getInventory().setHeldItemSlot(4);
         player.setGameMode(GameMode.ADVENTURE);
 
+        if (localArena.getState().isWaitingStarting()) {
+            Location waitingLobby = arenasManager.getConfigManager().getLocation(arenaString, BasicConfigField.WAITING_LOBBY);
+            player.teleport(waitingLobby);
 
-        Sounds.playSound("join", player.getLocation(), localArena.getBukkitPlayers());
-        Particles.spawnParticle(waitingLobby.add(0, 1.5, 0), "join");
+            Sounds.playSound("join", player.getLocation(), localArena.getBukkitPlayers());
+            Particles.spawnParticle(waitingLobby.add(0, 1.5, 0), "join");
 
-        int count = localArena.getPlayers().size();
-        String maxString = String.valueOf(localArena.getMaxPlayers());
-        String countString = String.valueOf(count);
+            int count = localArena.getPlayers().size();
+            String maxString = String.valueOf(localArena.getMaxPlayers());
+            String countString = String.valueOf(count);
 
-        String msg = Messages.getPAPI(player, "game.arena-join-success", ImmutableMap.of(
-                "%player%", player.getName(),
-                "%count%", countString,
-                "%max%", maxString)
-        );
-        localArena.getBukkitPlayers().forEach(p -> p.sendMessage(msg));
+            String msg = Messages.getPAPI(player, "game.arena-join-success", ImmutableMap.of(
+                    "%player%", player.getName(),
+                    "%count%", countString,
+                    "%max%", maxString)
+            );
+            localArena.getBukkitPlayers().forEach(p -> p.sendMessage(msg));
+        } else {
+            putInSpectator(player, localArena);
+        }
 
         localArena.getStateManager().updateOnJoin();
 
@@ -163,19 +166,29 @@ public class ArenaPlayersManager {
         Bukkit.getPluginManager().callEvent(new GameJoinEvent(localArena, player));
     }
 
+    public void putInSpectator(Player player, LocalArena localArena) {
+        localArena.getSpectators().add(player);
+        player.setInvulnerable(true);
+        player.setAllowFlight(true);
+        player.setCanPickupItems(false);
+    }
+
     public void leaveArena(Player player, LocalArena localArena) {
         Set<Player> players = new HashSet<>(localArena.getBukkitPlayers());
         String count = String.valueOf(players.size() - 1);
         String max = String.valueOf(localArena.getMaxPlayers());
 
+        boolean spec = localArena.getSpectators().contains(player);
         kickFromLocalArena(player, localArena, false);
 
-        String msg = Messages.getPAPI(player, "game.arena-leave-success", ImmutableMap.of(
-                "%player%", player.getName(),
-                "%count%", count,
-                "%max%", max
-        ));
-        players.forEach(p -> p.sendMessage(msg));
+        if (!spec) {
+            String msg = Messages.getPAPI(player, "game.arena-leave-success", ImmutableMap.of(
+                    "%player%", player.getName(),
+                    "%count%", count,
+                    "%max%", max
+            ));
+            players.forEach(p -> p.sendMessage(msg));
+        }
     }
 
     public void kickFromArena(String playerName, Arena arena) {
@@ -193,20 +206,28 @@ public class ArenaPlayersManager {
         playerData.restorePlayerData();
         player.eject();
 
-        if (localArena.getState().equals(GameState.GAME)) {
-            arenasManager.getStatsManager().addStats(player.getName(), BasicStatsField.PLAYTIME, localArena.getTimer());
-        }
-
         if (MinigamesAPI.getPlugin().getConfig().getBoolean("use-main-lobby")) {
             player.teleport(arenasManager.getConfigManager().getLocation(localArena.getName(), BasicConfigField.MAIN_LOBBY));
         } else {
             player.teleport(playerData.getLocation());
         }
 
+        if (localArena.getSpectators().contains(player)) {
+            localArena.getSpectators().remove(player);
+        } else {
+            if (localArena.getState().equals(GameState.GAME)) {
+                arenasManager.getStatsManager().addStats(player.getName(), BasicStatsField.PLAYTIME, localArena.getTimer());
+            }
 
-        Sounds.playSound("leave", playerLocation, localArena.getBukkitPlayers());
-        Particles.spawnParticle(playerLocation.add(0, 1.5, 0), "leave");
-        Titles.clearTitle(player);
+            Sounds.playSound("leave", playerLocation, localArena.getBukkitPlayers());
+            Particles.spawnParticle(playerLocation.add(0, 1.5, 0), "leave");
+            Titles.clearTitle(player);
+        }
+
+        for (Player p : localArena.getBukkitPlayers()) {
+            p.showPlayer(player);
+            player.showPlayer(p);
+        }
 
         localArena.getPlayers().remove(player.getName());
         localArena.getScoreboardManager().removePlayer(player);
