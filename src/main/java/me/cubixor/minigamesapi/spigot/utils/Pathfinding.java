@@ -41,13 +41,13 @@ public class Pathfinding {
                 .named("CraftLivingEntity");
         MinecraftClassHandle entityLivingClass = XReflection.ofMinecraft()
                 .inPackage(MinecraftPackage.NMS, "world.entity")
-                .named("EntityLiving");
+                .named("EntityLiving", "LivingEntity");
         MinecraftClassHandle entityCreatureClass = XReflection.ofMinecraft()
                 .inPackage(MinecraftPackage.NMS, "world.entity")
-                .named("EntityCreature");
+                .named("EntityCreature", "PathfinderMob");
         entityInsentientClass = XReflection.ofMinecraft()
                 .inPackage(MinecraftPackage.NMS, "world.entity")
-                .named("EntityInsentient");
+                .named("EntityInsentient", "Mob");
 
         // CraftLivingEntity#getHandle() - cast CraftLivingEntity to EntityLiving
         craftLivingEntityGetHandle = craftLivingEntityClass
@@ -61,31 +61,31 @@ public class Pathfinding {
                 .inPackage(MinecraftPackage.NMS, "world.entity.ai.goal");
 
         MinecraftClassHandle pathfinderGoalSelectorClass = aiGoalPackage.copy()
-                .named("PathfinderGoalSelector");
+                .named("PathfinderGoalSelector", "GoalSelector");
         MinecraftClassHandle pathfinderGoalClass = aiGoalPackage.copy()
-                .named("PathfinderGoal");
+                .named("PathfinderGoal", "Goal");
         MinecraftClassHandle navigationAbstractClass = XReflection.ofMinecraft()
                 .inPackage(MinecraftPackage.NMS, "world.entity.ai.navigation")
-                .named("NavigationAbstract");
+                .named("NavigationAbstract", "PathNavigation");
 
         // Goal classes
         goalRandomLookaroundConstructor = aiGoalPackage.copy()
-                .named("PathfinderGoalRandomLookaround")
+                .named("PathfinderGoalRandomLookaround", "RandomLookAroundGoal")
                 .constructor(entityInsentientClass)
                 .reflect();
         goalRandomStrollConstructor = aiGoalPackage.copy()
-                .named("PathfinderGoalRandomStroll")
+                .named("PathfinderGoalRandomStroll", "RandomStrollGoal")
                 .constructor(entityCreatureClass.reflect(), double.class)
                 .reflect();
         goalFloatConstructor = aiGoalPackage.copy()
-                .named("PathfinderGoalFloat")
+                .named("PathfinderGoalFloat", "FloatGoal")
                 .constructor(entityInsentientClass)
                 .reflect();
 
         // Adding goals methods
         pathfinderGoalSelectorAddGoal = pathfinderGoalSelectorClass
                 .method()
-                .named("a")
+                .named("a", "addGoal")
                 .parameters(int.class, pathfinderGoalClass.reflect())
                 .returns(Void.TYPE)
                 .reflect();
@@ -96,7 +96,7 @@ public class Pathfinding {
                 .reflect();
         navigationAbstractNavigateTo = navigationAbstractClass
                 .method()
-                .named("a")
+                .named("a", "moveTo")
                 .parameters(double.class, double.class, double.class, double.class)
                 .returns(boolean.class)
                 .reflect();
@@ -111,7 +111,7 @@ public class Pathfinding {
         // Clearing goals methods
         pathfinderGoalSelectorGoalSetter = pathfinderGoalSelectorClass
                 .field()
-                .named("b", "c", "d")
+                .named("b", "c", "d", "availableGoals")
                 .makeAccessible()
                 .setter()
                 .returns(Set.class)
@@ -165,6 +165,7 @@ public class Pathfinding {
 
     private String getNavigationAbstractTimerFieldName() {
         return XReflection
+                .v(21, "timeoutTimer")
                 .v(13, "i")
                 .v(12, "m")
                 .v(10, "k")
