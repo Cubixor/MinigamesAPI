@@ -35,13 +35,13 @@ public class SimpleBungeeMode implements Listener {
 
         boolean joined = arenasManager.getArenaPlayersManager().joinArena(evt.getPlayer(), localArena.getName());
         if (!joined) {
-            evt.getPlayer().kickPlayer(Messages.get("bungee.kick-message"));
+            evt.getPlayer().kickPlayer(Messages.get(evt.getPlayer(), "bungee.kick-message"));
         }
     }
 
     @EventHandler
     public void onGameQuit(GameLeaveEvent evt) {
-        evt.getPlayer().kickPlayer(Messages.get("bungee.leave-message"));
+        evt.getPlayer().kickPlayer(Messages.get(evt.getPlayer(), "bungee.leave-message"));
     }
 
 

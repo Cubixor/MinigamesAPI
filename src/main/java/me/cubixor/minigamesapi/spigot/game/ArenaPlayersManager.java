@@ -150,7 +150,7 @@ public class ArenaPlayersManager {
         String maxString = String.valueOf(localArena.getMaxPlayers());
         String countString = String.valueOf(count);
 
-        String msg = Messages.getPAPI(player, "game.arena-join-success", ImmutableMap.of(
+        String msg = Messages.get(player, "game.arena-join-success", ImmutableMap.of(
                 "%player%", player.getName(),
                 "%count%", countString,
                 "%max%", maxString)
@@ -170,7 +170,7 @@ public class ArenaPlayersManager {
 
         kickFromLocalArena(player, localArena, false);
 
-        String msg = Messages.getPAPI(player, "game.arena-leave-success", ImmutableMap.of(
+        String msg = Messages.get(player, "game.arena-leave-success", ImmutableMap.of(
                 "%player%", player.getName(),
                 "%count%", count,
                 "%max%", max

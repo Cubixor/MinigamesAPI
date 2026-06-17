@@ -44,27 +44,70 @@ public class Messages {
         return ChatColor.translateAlternateColorCodes('&', message);
     }
 
+    private static Player getTargetPlayer(CommandSender sender) {
+        return sender instanceof Player ? (Player) sender : null;
+    }
+
+    private static String parsePAPI(Player player, String message) {
+        if (player != null && MinigamesAPI.usesPAPI()) {
+            return me.clip.placeholderapi.PlaceholderAPI.setPlaceholders(player, message);
+        }
+        return message;
+    }
+
     public static String get(String path) {
+        return get(null, path);
+    }
+
+    public static String get(Player player, String path) {
+        return get(player, path, Collections.emptyMap());
+    }
+
+    public static String get(String path, String toReplace, String replacement) {
+        return get(null, path, toReplace, replacement);
+    }
+
+    public static String get(Player player, String path, String toReplace, String replacement) {
+        return get(player, path, Collections.singletonMap(toReplace, replacement));
+    }
+
+    public static String get(String path, Map<String, String> replacement) {
+        return get(null, path, replacement);
+    }
+
+    public static String get(Player player, String path, Map<String, String> replacement) {
         String message = messagesConfig.getString(path);
         if (message == null) {
-            return "�";
+            return "?";
         }
 
         message = message
                 .replace("%prefix%", prefix)
                 .replace("%cmd%", cmd);
 
-        return parseColors(message);
+        for (Map.Entry<String, String> entry : replacement.entrySet()) {
+            message = message.replace(entry.getKey(), entry.getValue());
+        }
+
+        return parseColors(parsePAPI(player, message));
     }
 
     public static List<String> getList(String path) {
-        return getList(path, Collections.emptyMap());
+        return getList(null, path);
+    }
+
+    public static List<String> getList(Player player, String path) {
+        return getList(player, path, Collections.emptyMap());
     }
 
     public static List<String> getList(String path, Map<String, String> replacement) {
+        return getList(null, path, replacement);
+    }
+
+    public static List<String> getList(Player player, String path, Map<String, String> replacement) {
         List<String> message = messagesConfig.getStringList(path);
         return message.stream()
-                .map(Messages::parseColors)
+                .map(msg -> msg.replace("%prefix%", prefix))
                 .map(msg -> msg.replace("%cmd%", cmd))
                 .map(msg -> {
                     for (Map.Entry<String, String> entry : replacement.entrySet()) {
@@ -72,57 +115,37 @@ public class Messages {
                     }
                     return msg;
                 })
+                .map(msg -> parsePAPI(player, msg))
+                .map(Messages::parseColors)
                 .collect(Collectors.toList());
     }
 
-    public static String get(String path, String toReplace, String replacement) {
-        return get(path, Collections.singletonMap(toReplace, replacement));
+    public static void send(CommandSender sender, String path) {
+        sender.sendMessage(get(getTargetPlayer(sender), path));
     }
 
-    public static String get(String path, Map<String, String> replacement) {
-        String message = get(path);
-        for (Map.Entry<String, String> entry : replacement.entrySet()) {
-            message = message.replace(entry.getKey(), entry.getValue());
-        }
-
-        return message;
+    public static void sendList(CommandSender sender, String path) {
+        sender.sendMessage(getList(getTargetPlayer(sender), path).toArray(new String[]{}));
     }
 
-    public static String getPAPI(Player player, String path, Map<String, String> replacement) {
-        String message = get(path, replacement);
-        if (MinigamesAPI.usesPAPI()) {
-            return me.clip.placeholderapi.PlaceholderAPI.setPlaceholders(player, message);
-        }
-        return message;
-    }
-
-    public static void send(CommandSender player, String path) {
-        player.sendMessage(get(path));
-    }
-
-    public static void sendList(CommandSender player, String path) {
-        player.sendMessage(getList(path).toArray(new String[]{}));
-    }
-
-    public static void sendList(CommandSender player, String path, Map<String, String> replacement) {
-        player.sendMessage(getList(path, replacement).toArray(new String[]{}));
+    public static void sendList(CommandSender sender, String path, Map<String, String> replacement) {
+        sender.sendMessage(getList(getTargetPlayer(sender), path, replacement).toArray(new String[]{}));
     }
 
     public static void sendListAll(Set<? extends CommandSender> players, String path, Map<String, String> replacement) {
-        String[] message = getList(path, replacement).toArray(new String[]{});
-        players.forEach(p -> p.sendMessage(message));
+        players.forEach(p -> p.sendMessage(getList(getTargetPlayer(p), path, replacement).toArray(new String[]{})));
     }
 
-    public static void send(CommandSender player, String path, String toReplace, String replacement) {
-        player.sendMessage(get(path, toReplace, replacement));
+    public static void send(CommandSender sender, String path, String toReplace, String replacement) {
+        sender.sendMessage(get(getTargetPlayer(sender), path, toReplace, replacement));
     }
 
-    public static void send(CommandSender player, String path, Map<String, String> replacement) {
-        player.sendMessage(get(path, replacement));
+    public static void send(CommandSender sender, String path, Map<String, String> replacement) {
+        sender.sendMessage(get(getTargetPlayer(sender), path, replacement));
     }
 
     public static void sendAll(Set<? extends CommandSender> players, String path) {
-        players.forEach(p -> p.sendMessage(get(path)));
+        players.forEach(p -> p.sendMessage(get(getTargetPlayer(p), path)));
     }
 
     public static void sendAll(Set<? extends CommandSender> players, String path, String toReplace, String replacement) {
@@ -130,7 +153,6 @@ public class Messages {
     }
 
     public static void sendAll(Set<? extends CommandSender> players, String path, Map<String, String> replacement) {
-        String message = get(path, replacement);
-        players.forEach(p -> p.sendMessage(message));
+        players.forEach(p -> p.sendMessage(get(getTargetPlayer(p), path, replacement)));
     }
 }

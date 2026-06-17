@@ -58,7 +58,7 @@ public class ScoreboardManager {
 
     private void updatePlayerScoreboard(Player player, GameState gameState, Map<String, String> replacement, Map<String, List<String>> multiLineReplacements) {
         String stateString = gameState.toString();
-        List<String> message = Messages.getList("game.scoreboard-" + stateString);
+        List<String> message = Messages.getList(player, "game.scoreboard-" + stateString);
         message.replaceAll(s -> {
             for (Map.Entry<String, String> entry : replacement.entrySet()) {
                 s = s.replace(entry.getKey(), entry.getValue());
@@ -83,7 +83,7 @@ public class ScoreboardManager {
         if (scoreboard == null || scoreboard.getObjective(stateString) == null) {
             scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
             Objective objective = scoreboard.registerNewObjective(stateString, "");
-            objective.setDisplayName(Messages.get("game.scoreboard-title"));
+            objective.setDisplayName(Messages.get(player, "game.scoreboard-title"));
             objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 
 

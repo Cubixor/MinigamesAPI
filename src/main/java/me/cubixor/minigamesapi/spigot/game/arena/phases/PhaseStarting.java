@@ -90,10 +90,10 @@ public class PhaseStarting extends GamePhase {
         }
 
         String timeStr = time + "s";
-        String title = Messages.get("game.countdown-" + timeStr + "-title", "%time%", String.valueOf(time));
-        String subTitle = Messages.get("game.countdown-" + timeStr + "-subtitle", "%time%", String.valueOf(time));
 
         for (Player p : localArena.getBukkitPlayers()) {
+            String title = Messages.get(p, "game.countdown-" + timeStr + "-title", "%time%", String.valueOf(time));
+            String subTitle = Messages.get(p, "game.countdown-" + timeStr + "-subtitle", "%time%", String.valueOf(time));
             p.setLevel(localArena.getTimer());
             Sounds.playSoundWithPitch("countdown", p, pitch);
             Titles.sendTitle(p, titleFade, titleStay, titleFade, title, subTitle);
