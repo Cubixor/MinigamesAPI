@@ -126,7 +126,7 @@ public class Pathfinding {
 
         // Setting follow range
         //TODO Check on which versions it's needed
-        if (!XReflection.supports(20)) {
+        if (!XReflection.supports(1, 20)) {
             changeFollowRangeNeeded = true;
 
             MinecraftClassHandle attributesPackage = XReflection.ofMinecraft()
@@ -165,10 +165,10 @@ public class Pathfinding {
 
     private String getNavigationAbstractTimerFieldName() {
         return XReflection
-                .v(21, "timeoutTimer")
-                .v(13, "i")
-                .v(12, "m")
-                .v(10, "k")
+                .v(1, 21, "timeoutTimer")
+                .v(1, 13, "i")
+                .v(1, 12, "m")
+                .v(1, 10, "k")
                 .orElse("l");
     }
 

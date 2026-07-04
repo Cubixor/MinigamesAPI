@@ -33,7 +33,7 @@ public class Messages {
     }
 
     private static String parseColors(String message) {
-        if (XReflection.supports(16)) {
+        if (XReflection.supports(1, 16)) {
             Matcher match = HEX_PATTERN.matcher(message);
             while (match.find()) {
                 String color = message.substring(match.start(), match.end());

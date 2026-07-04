@@ -105,7 +105,7 @@ public class ScoreboardManager {
     }
 
     private void setRow(Team team, String text) {
-        if (XReflection.supports(13) || text.length() <= 16) {
+        if (XReflection.supports(1, 13) || text.length() <= 16) {
             team.setPrefix(text);
             return;
         }
