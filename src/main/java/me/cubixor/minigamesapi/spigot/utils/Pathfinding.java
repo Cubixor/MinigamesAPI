@@ -54,6 +54,7 @@ public class Pathfinding {
                 .method()
                 .named("getHandle")
                 .returns(entityLivingClass)
+                .makeAccessible()
                 .reflect();
 
 
@@ -72,14 +73,17 @@ public class Pathfinding {
         goalRandomLookaroundConstructor = aiGoalPackage.copy()
                 .named("PathfinderGoalRandomLookaround", "RandomLookAroundGoal")
                 .constructor(entityInsentientClass)
+                .makeAccessible()
                 .reflect();
         goalRandomStrollConstructor = aiGoalPackage.copy()
                 .named("PathfinderGoalRandomStroll", "RandomStrollGoal")
                 .constructor(entityCreatureClass.reflect(), double.class)
+                .makeAccessible()
                 .reflect();
         goalFloatConstructor = aiGoalPackage.copy()
                 .named("PathfinderGoalFloat", "FloatGoal")
                 .constructor(entityInsentientClass)
+                .makeAccessible()
                 .reflect();
 
         // Adding goals methods
@@ -88,17 +92,20 @@ public class Pathfinding {
                 .named("a", "addGoal")
                 .parameters(int.class, pathfinderGoalClass.reflect())
                 .returns(Void.TYPE)
+                .makeAccessible()
                 .reflect();
         entityInsentientGetNavigation = entityInsentientClass
                 .method()
                 .named("getNavigation", "D", "G", "N", "P")
                 .returns(navigationAbstractClass)
+                .makeAccessible()
                 .reflect();
         navigationAbstractNavigateTo = navigationAbstractClass
                 .method()
                 .named("a", "moveTo")
                 .parameters(double.class, double.class, double.class, double.class)
                 .returns(boolean.class)
+                .makeAccessible()
                 .reflect();
         navigationAbstractSetTimer = navigationAbstractClass
                 .field()
@@ -119,6 +126,7 @@ public class Pathfinding {
         entityInsentientGoalSelectorGetter = entityInsentientClass
                 .field()
                 .named("bW", "b0", "bN", "bR", "bP", "bS", "goalSelector")
+                .makeAccessible()
                 .getter()
                 .returns(pathfinderGoalSelectorClass)
                 .reflect();
@@ -133,32 +141,35 @@ public class Pathfinding {
                     .inPackage(MinecraftPackage.NMS, "world.entity.ai.attributes");
 
             MinecraftClassHandle genericAttributesClass = attributesPackage.copy()
-                    .named("GenericAttributes");
+                    .named("GenericAttributes", "Attributes");
             MinecraftClassHandle attributeBaseClass = attributesPackage.copy()
-                    .named("IAttribute", "AttributeBase");
+                    .named("IAttribute", "AttributeBase", "Attribute");
             MinecraftClassHandle attributeModifiableClass = attributesPackage.copy()
-                    .named("AttributeModifiable");
+                    .named("AttributeModifiable", "AttributeInstance");
             MinecraftClassHandle attributeInstanceClass = attributesPackage.copy()
                     .named("AttributeInstance");
 
             followRangeGetter = genericAttributesClass
                     .field()
                     .named("FOLLOW_RANGE", "m")
+                    .makeAccessible()
                     .returns(attributeBaseClass)
                     .getter()
                     .asStatic()
                     .reflect();
             getAttributeInstance = entityLivingClass
                     .method()
-                    .named("getAttributeInstance")
+                    .named("getAttributeInstance", "getAttribute")
                     .returns(attributeInstanceClass)
                     .parameters(attributeBaseClass)
+                    .makeAccessible()
                     .reflect();
             setAttributeModifiable = attributeModifiableClass
                     .method()
-                    .named("setValue", "a")
+                    .named("setValue", "a", "setBaseValue")
                     .returns(Void.TYPE)
                     .parameters(double.class)
+                    .makeAccessible()
                     .reflect();
         }
     }
